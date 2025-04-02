@@ -35,21 +35,11 @@ class PeriodReleaseController extends Controller
             $dados['user_id'] = auth()->user()->id;
             $model = PeriodRelease::create($dados);
 
-            if ($model->situacao === 'debitado') {
-                $period = $model->period;
-                $result = $period->saldo_atual - $model->valor_total;
-
-                $period->update(['saldo_atual' => $result]);
-            }
-            if ($model->situacao === 'creditado') {
-
-            }
-
-
+            $this->lidarComLancamento($model);
 
             return response()->json([
                 'message' => 'Lançamento da Competência criada com sucesso!',
-                'data' => $model->with('period:id,saldo_atual')
+                'data' => $model->load('period:id,saldo_atual')
             ], 201);
 
         } catch (\Exception $e) {
@@ -57,6 +47,24 @@ class PeriodReleaseController extends Controller
                 'message' => $e->getMessage(),
                 'data' => null
             ], 500);
+        }
+    }
+
+    private function lidarComLancamento(PeriodRelease $model): void
+    {
+
+        if ($model->situacao === 'debitado') {
+            $period = $model->period;
+            $result = $period->saldo_atual - $model->valor_total;
+
+            $period->update(['saldo_atual' => $result]);
+        }
+
+        if ($model->situacao === 'creditado') {
+            $period = $model->period;
+            $result = $period->saldo_atual + $model->valor_total;
+
+            $period->update(['saldo_atual' => $result]);
         }
     }
 

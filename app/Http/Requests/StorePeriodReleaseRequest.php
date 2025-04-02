@@ -23,12 +23,14 @@ class StorePeriodReleaseRequest extends FormRequest
      */
     public function rules(): array
     {
+//        todo: receber o tipo do meu lancamento
         return [
             'valor_total' => 'required|numeric',
             'observacao' => 'required|string',
             'data_debito_credito' => 'required|date|date_format:Y-m-d',
             'situacao' => 'required|in:creditado,debitado,nao_debitado',
-            'period_id' => 'required|integer|exists:periods,id'
+            'period_id' => 'required|integer|exists:periods,id',
+            'type_release_id' => 'required|integer|exists:type_releases,id',
         ];
     }
 

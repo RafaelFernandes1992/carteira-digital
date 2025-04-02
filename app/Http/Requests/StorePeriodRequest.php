@@ -26,7 +26,7 @@ class StorePeriodRequest extends FormRequest
         return [
             'mes' => 'required|integer|between:1,12',
             'ano' => 'required|integer|between:2000,2100',
-            'saldo_inicial' => 'required|numeric|decimal:2',
+            'saldo_inicial' => 'required|numeric',
             'descricao' => 'required|string',
             'observacao' => 'nullable|string',
         ];

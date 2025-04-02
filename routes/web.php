@@ -53,6 +53,8 @@ Route::resource('usuario', UserController::class)
 Route::resource('competencia', PeriodController::class)
     ->middleware('auth');
 
+Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
+    ->middleware('auth');
 
 //todo: verificar o modelo de url a ser utilizado.
 //Route::post('/competencia/{competencia}/lancamento', [UserController::class, 'store']);
