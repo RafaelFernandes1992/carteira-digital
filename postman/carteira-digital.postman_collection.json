@@ -61,6 +61,12 @@
 									"type": "text"
 								},
 								{
+									"key": "email",
+									"value": "afonso01@example.org",
+									"type": "text",
+									"disabled": true
+								},
+								{
 									"key": "password",
 									"value": "password",
 									"type": "text"
@@ -393,12 +399,12 @@
 								},
 								{
 									"key": "saldo_inicial",
-									"value": "1000.50",
+									"value": "10",
 									"type": "text"
 								},
 								{
 									"key": "descricao",
-									"value": "Abril - Normal",
+									"value": "Normal",
 									"type": "text"
 								},
 								{
@@ -420,6 +426,59 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getDetalhesCompetenciaById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mes",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "ano",
+									"value": "2025",
+									"type": "text"
+								},
+								{
+									"key": "saldo_inicial",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "descricao",
+									"value": "Normal",
+									"type": "text"
+								},
+								{
+									"key": "observacao",
+									"value": "teste",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/competencia/detalhes/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"competencia",
+								"detalhes",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -436,7 +495,7 @@
 							"formdata": [
 								{
 									"key": "valor_total",
-									"value": "150",
+									"value": "5000",
 									"type": "text"
 								},
 								{
@@ -451,7 +510,7 @@
 								},
 								{
 									"key": "situacao",
-									"value": "debitado",
+									"value": "nao_debitado",
 									"type": "text"
 								},
 								{
