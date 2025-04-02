@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\FrontRenderController;
-use App\Http\Controllers\PostingController;
+use App\Http\Controllers\PeriodController;
+use App\Http\Controllers\PeriodReleaseController;
+use App\Http\Controllers\TypeReleaseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +50,17 @@ Route::post('/usuario/logout', [UserController::class, 'logout'])
 Route::resource('usuario', UserController::class)
     ->middleware('auth');
 
-Route::resource('tipo-lancamento', PostingController::class)
+Route::resource('competencia', PeriodController::class)
+    ->middleware('auth');
+
+
+//todo: verificar o modelo de url a ser utilizado.
+//Route::post('/competencia/{competencia}/lancamento', [UserController::class, 'store']);
+
+Route::resource('competencia-lancamento', PeriodReleaseController::class)
+    ->middleware('auth');
+
+Route::resource('tipo-lancamento', TypeReleaseController::class)
     ->middleware('auth');
 
 

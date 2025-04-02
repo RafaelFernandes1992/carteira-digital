@@ -150,7 +150,7 @@ class UserController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $data = User::withCount(['postings'])->get();
+            $data = User::withCount(['typeReleases'])->get();
 
             $success = count($data) > 0;
             $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';

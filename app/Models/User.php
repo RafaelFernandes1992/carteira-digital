@@ -19,9 +19,39 @@ class User extends Authenticatable
         'password'
     ];
 
-    //um usuário está em muitos postings
-    public function postings(): HasMany
+    //um usuário está em muitos typeReleases
+    public function typeReleases(): HasMany
     {
-        return $this->hasMany(Posting::class);
+        return $this->hasMany(TypeRelease::class);
+    }
+
+    public function cars(): HasMany
+    {
+        return $this->hasMany(Car::class);
+    }
+
+    public function carReleases(): HasMany
+    {
+        return $this->hasMany(CarRelease::class);
+    }
+
+    public function creditCards(): HasMany
+    {
+        return $this->hasMany(CreditCard::class);
+    }
+
+    public function creditCardReleases(): HasMany
+    {
+        return $this->hasMany(CreditCardRelease::class);
+    }
+
+    public function periods(): HasMany
+    {
+        return $this->hasMany(Period::class);
+    }
+
+    public function periodReleases(): HasMany
+    {
+        return $this->hasMany(PeriodRelease::class);
     }
 }
