@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "eb45bbb7-d51f-4f99-a9cb-4829e0a74fe2",
+		"name": "carteira-digital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29018492"
+	},
+	"item": [
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nome",
+									"value": "{{$randomFirstName}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{$randomEmail}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "Samantha.King69@yahoo.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/usuario",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "rafael.fernandes@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "Samantha.King69@yahoo.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "jbauch@example.net",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "Samantha.King69@yahoo.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/usuario/logout",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"usuario",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/usuario",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/usuario/12",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"usuario",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nome",
+									"value": "Rafael",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{$randomEmail}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/usuario/7",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"usuario",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/usuario/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "posting",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "descricao",
+									"value": " teste",
+									"type": "text"
+								},
+								{
+									"key": "rotineira",
+									"value": " teste",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "dedutivel",
+									"value": " teste",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "isenta",
+									"value": " teste",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": " investimento",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tipo-lancamento",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tipo-lancamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/tipo-lancamento",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tipo-lancamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/tipo-lancamento/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tipo-lancamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "descricao",
+									"value": " bolsa de valores 22",
+									"type": "text"
+								},
+								{
+									"key": "rotineira",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "dedutivel",
+									"value": " teste",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "isenta",
+									"value": " teste",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": " investimento",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/tipo-lancamento/2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tipo-lancamento",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/tipo-lancamento/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"tipo-lancamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "period",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mes",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "ano",
+									"value": "2025",
+									"type": "text"
+								},
+								{
+									"key": "saldo_inicial",
+									"value": "1000.50",
+									"type": "text"
+								},
+								{
+									"key": "descricao",
+									"value": "Abril - Normal",
+									"type": "text"
+								},
+								{
+									"key": "observacao",
+									"value": "teste",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/competencia",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"competencia"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "periodRelease",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "valor_total",
+									"value": "150",
+									"type": "text"
+								},
+								{
+									"key": "observacao",
+									"value": "teclado",
+									"type": "text"
+								},
+								{
+									"key": "data_debito_credito",
+									"value": "2025-04-01",
+									"type": "text"
+								},
+								{
+									"key": "situacao",
+									"value": "debitado",
+									"type": "text"
+								},
+								{
+									"key": "period_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/competencia-lancamento",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"competencia-lancamento"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
