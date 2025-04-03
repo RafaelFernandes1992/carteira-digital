@@ -6,7 +6,7 @@
     <title>{{ config('app.name') }}</title>
     @yield('header')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/login.css','resources/js/app.js'])
 </head>
 <body>
 <div class="container">
