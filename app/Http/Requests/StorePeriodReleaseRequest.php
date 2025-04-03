@@ -30,16 +30,7 @@ class StorePeriodReleaseRequest extends FormRequest
             'data_debito_credito' => 'required|date|date_format:Y-m-d',
             'situacao' => 'required|in:creditado,debitado,nao_debitado',
             'period_id' => 'required|integer|exists:periods,id',
-            'type_release_id' => 'required|integer|exists:type_releases,id',
+//            'type_release_id' => 'required|integer|exists:type_releases,id',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'message' => 'Os dados fornecidos são inválidos.',
-            'error' => $validator->errors(),
-        ], 422));
     }
 }

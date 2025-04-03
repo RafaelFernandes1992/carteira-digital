@@ -19,6 +19,17 @@ class PeriodRelease extends Model
         'period_id',
     ];
 
+    public const SITUACAO = [
+      'debitado' => 'Debitado',
+      'creditado' => 'Creditado',
+      'nao_debitado' => 'Não Debitado'
+    ];
+
+    public function getSituacaoFormatada(): string
+    {
+        return self::SITUACAO[$this->situacao];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

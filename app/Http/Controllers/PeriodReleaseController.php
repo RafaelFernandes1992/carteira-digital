@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Period;
+use App\Http\Requests\DestroyPeriodReleaseRequest;
 use App\Models\PeriodRelease;
 use App\Http\Requests\StorePeriodReleaseRequest;
 use App\Http\Requests\UpdatePeriodReleaseRequest;
+use App\Services\Period\PeriodService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PeriodReleaseController extends Controller
 {
+    protected PeriodService $periodService;
+
+    //injeção de dependência, conceito de SOLID e POO
+    public function __construct(PeriodService $periodService)
+    {
+        $this->periodService = $periodService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -22,7 +33,21 @@ class PeriodReleaseController extends Controller
      */
     public function create()
     {
-        //
+        $dados['period'] = $this->periodService->getDetalhesCompetenciaById(1);
+        $dados['items'] = PeriodRelease::where('period_id', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $dados['items'] = $dados['items']->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'valor_total' => number_format($item->valor_total, 2, ',', '.'),
+                'observacao' => $item->observacao,
+                'situacao' => $item->getSituacaoFormatada(),
+                'data_debito_credito' => Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
+            ];
+        });
+
+        return view('period-release.create')->with($dados);
     }
 
     /**
@@ -37,16 +62,13 @@ class PeriodReleaseController extends Controller
 
             $this->lidarComLancamento($model);
 
-            return response()->json([
-                'message' => 'Lançamento da Competência criada com sucesso!',
-                'data' => $model->load('period:id,saldo_atual')
-            ], 201);
+            $dados['period'] = $this->periodService->getDetalhesCompetenciaById($dados['period_id']);
+            $dados['message'] = 'Lançamento criado com sucesso';
 
+
+            return back()->with($dados);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -95,8 +117,17 @@ class PeriodReleaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PeriodRelease $periodRelease)
+    public function destroy(DestroyPeriodReleaseRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            $model = PeriodRelease::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            $model->delete();
+            return back()->with(['message' => 'Lancamento excluido com sucesso']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePeriodRequest;
 use App\Models\PeriodRelease;
 use App\Traits\ValidateScopeTrait;
 use Illuminate\Http\JsonResponse;
+use Mockery\Exception;
 
 class PeriodController extends Controller
 {
@@ -52,9 +53,9 @@ class PeriodController extends Controller
             ], 500);
         }
     }
-    public function getDetalhesCompetenciaById(string $id): JsonResponse
+    public function getDetalhesCompetenciaById(string $id): array
     {
-        try {
+//        try {
             $period = Period::find($id);
             $userId = $period->user_id;
             $this->validateScope($userId);
@@ -75,7 +76,7 @@ class PeriodController extends Controller
             //debitada + não debitada = previsão debitada
             //saldo atual = saldo atual - não debitada
 
-            $dados = [
+            return [
                 'debitadas_total' => (float) $somaDebitadas,
                 'creditadas_total' => (float) $somaCreditadas,
                 'nao_debitadas_total' => (float) $somaNaoDebitadas,
@@ -83,22 +84,23 @@ class PeriodController extends Controller
                 'previsao_debitada' => (float) $somaDebitadas + $somaNaoDebitadas,
             ];
 
-            return response()->json([
-                'message' => 'Detalhes encontrados',
-                'data' => $dados
-            ], 201);
 
-        } catch (UnauthorizedScopeException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], $e->getCode());
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
+//            return response()->json([
+//                'message' => 'Detalhes encontrados',
+//                'data' => $dados
+//            ], 201);
+//
+//        } catch (UnauthorizedScopeException $e) {
+//            return response()->json([
+//                'message' => $e->getMessage(),
+//                'data' => null
+//            ], $e->getCode());
+//        } catch (\Exception $e) {
+//            return response()->json([
+//                'message' => $e->getMessage(),
+//                'data' => null
+//            ], 500);
+//        }
     }
 
     /**
