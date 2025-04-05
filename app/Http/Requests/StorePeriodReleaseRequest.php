@@ -26,7 +26,7 @@ class StorePeriodReleaseRequest extends FormRequest
 //        todo: receber o tipo do meu lancamento
         return [
             'valor_total' => 'required|numeric',
-            'observacao' => 'required|string',
+            'observacao' => 'nullable|string',
             'data_debito_credito' => 'required|date|date_format:Y-m-d',
             'situacao' => 'required|in:creditado,debitado,nao_debitado',
             'period_id' => 'required|integer|exists:periods,id',

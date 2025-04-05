@@ -1,1 +1,13 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+body {
+    background-color: white;
+  }
+
+.custom-title {
+    background: linear-gradient(135deg, #022d5c, #0069d9); /* Gradiente do azul escuro para o azul claro */
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  Sombra mais leve */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    font-size: 1.6rem; /* Tamanho do texto mais moderado */
+}

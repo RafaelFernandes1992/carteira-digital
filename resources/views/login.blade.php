@@ -1,6 +1,5 @@
 @extends('layouts.guest')
 
-
 @session('header')
 
 @endsession

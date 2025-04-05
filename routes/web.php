@@ -36,12 +36,14 @@ Route::get('/carteira/competencia', function () {
 //Route::put('/usuario/{id}', [UserController::class, 'update']);
 //Route::delete('/usuario/{id}', [UserController::class, 'destroy']);
 
+
 Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
 Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
 
 
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login');
+
 
 Route::post('/usuario/logout', [UserController::class, 'logout'])
     ->name('usuario.logout')

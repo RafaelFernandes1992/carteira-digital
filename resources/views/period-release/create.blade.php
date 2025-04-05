@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <h3>Lançamentos da competência</h3>
+    <br>
     <x-competencia.competencia-header
             :saldo_inicial="$period['saldo_inicial'] ?? 0"
             :saldo_atual="$period['saldo_atual'] ?? 0"
