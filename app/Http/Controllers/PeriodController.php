@@ -2,24 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\UnauthorizedScopeException;
 use App\Models\Period;
 use App\Http\Requests\StorePeriodRequest;
 use App\Http\Requests\UpdatePeriodRequest;
 use App\Models\PeriodRelease;
 use App\Traits\ValidateScopeTrait;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Mockery\Exception;
+use Illuminate\Support\Facades\Auth;
 
 class PeriodController extends Controller
 {
     use ValidateScopeTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $periods = Period::where('user_id', $user->id)->get();
+        $periods = $periods->map(function ($period) {
+            $competencia = Carbon::createFromDate($period->ano, $period->mes, 1);
+            return [
+                'id' => $period->id,
+                'competencia' => $competencia->format('m/Y'),
+                'descricao' => $period->descricao,
+                'saldo_inicial' => $period->saldo_inicial,
+                'saldo_atual' => $period->saldo_atual,
+                'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
+            ];
+        });
+        return view('components.competencia.index')->with(['items' => $periods]);
     }
 
     /**
@@ -27,7 +41,13 @@ class PeriodController extends Controller
      */
     public function create()
     {
-        //
+        $anoAtual = Carbon::now()->format('Y');
+        $mesAtual = Carbon::now()->format('m');
+        return view('components.competencia.create')
+            ->with([
+                'anoAtual' => $anoAtual,
+                'mesAtual' => $mesAtual
+            ]);
     }
 
     /**
@@ -53,36 +73,37 @@ class PeriodController extends Controller
             ], 500);
         }
     }
+
     public function getDetalhesCompetenciaById(string $id): array
     {
 //        try {
-            $period = Period::find($id);
-            $userId = $period->user_id;
-            $this->validateScope($userId);
+        $period = Period::find($id);
+        $userId = $period->user_id;
+        $this->validateScope($userId);
 
-            $somaDebitadas = PeriodRelease::where('period_id', $id)
-                ->where('situacao', 'debitado')
-                ->sum('valor_total');
+        $somaDebitadas = PeriodRelease::where('period_id', $id)
+            ->where('situacao', 'debitado')
+            ->sum('valor_total');
 
-            $somaCreditadas = PeriodRelease::where('period_id', $id)
-                ->where('situacao', 'creditado')
-                ->sum('valor_total');
+        $somaCreditadas = PeriodRelease::where('period_id', $id)
+            ->where('situacao', 'creditado')
+            ->sum('valor_total');
 
-            $somaNaoDebitadas = PeriodRelease::where('period_id', $id)
-                ->where('situacao', 'nao_debitado')
-                ->sum('valor_total');
+        $somaNaoDebitadas = PeriodRelease::where('period_id', $id)
+            ->where('situacao', 'nao_debitado')
+            ->sum('valor_total');
 
 
-            //debitada + não debitada = previsão debitada
-            //saldo atual = saldo atual - não debitada
+        //debitada + não debitada = previsão debitada
+        //saldo atual = saldo atual - não debitada
 
-            return [
-                'debitadas_total' => (float) $somaDebitadas,
-                'creditadas_total' => (float) $somaCreditadas,
-                'nao_debitadas_total' => (float) $somaNaoDebitadas,
-                'saldo_atual_previsto' => (float) $period->saldo_atual - $somaNaoDebitadas,
-                'previsao_debitada' => (float) $somaDebitadas + $somaNaoDebitadas,
-            ];
+        return [
+            'debitadas_total' => (float)$somaDebitadas,
+            'creditadas_total' => (float)$somaCreditadas,
+            'nao_debitadas_total' => (float)$somaNaoDebitadas,
+            'saldo_atual_previsto' => (float)$period->saldo_atual - $somaNaoDebitadas,
+            'previsao_debitada' => (float)$somaDebitadas + $somaNaoDebitadas,
+        ];
 
 
 //            return response()->json([

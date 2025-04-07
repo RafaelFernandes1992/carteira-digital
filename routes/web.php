@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
-})->middleware('auth');
+    return view('login');
+});
 
 Route::get('/home', function () {
     return view('home');
@@ -52,8 +52,22 @@ Route::post('/usuario/logout', [UserController::class, 'logout'])
 Route::resource('usuario', UserController::class)
     ->middleware('auth');
 
-Route::resource('competencia', PeriodController::class)
+//Route::resource('competencia', PeriodController::class)
+//    ->middleware('auth')->except(['index', 'create', 'store']);
+
+Route::get('competencia', [PeriodController::class, 'index'])
+    ->name('competencia.index')
     ->middleware('auth');
+
+Route::get('competencia/create', [PeriodController::class, 'create'])
+    ->name('competencia.create')
+    ->middleware('auth');
+
+Route::post('competencia/store', [PeriodController::class, 'store'])
+    ->name('competencia.store')
+    ->middleware('auth');
+
+
 
 Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');

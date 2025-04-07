@@ -24,7 +24,7 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function login(LoginUserRequest $request): JsonResponse
+    public function loginOld(LoginUserRequest $request): JsonResponse
     {
         try {
             $dados = $request->validated();
@@ -45,7 +45,7 @@ class UserController extends Controller
         }
     }
 
-    public function loginV2(LoginV2UserRequest $request)
+    public function login(LoginV2UserRequest $request)
     {
         $dados = $request->validated();
 

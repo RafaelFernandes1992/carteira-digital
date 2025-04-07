@@ -13,6 +13,6 @@ class FrontRenderController extends Controller
 
     public function loginV2()
     {
-        return view('login2');
+        return view('login-old');
     }
 }
