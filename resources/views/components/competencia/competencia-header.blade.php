@@ -10,7 +10,7 @@
 
 <div class="row g-3 align-items-end">
     <div class="col-md-2">
-        <a href="#">
+        <a href="{{ route('competencia.index') }}">
             <button type="submit" class="btn btn-secondary" name="cancelar" id="cancelar">Cancelar</button>
         </a>
     </div>

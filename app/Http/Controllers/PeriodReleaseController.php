@@ -31,10 +31,10 @@ class PeriodReleaseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $competenciaId)
     {
-        $dados['period'] = $this->periodService->getDetalhesCompetenciaById(1);
-        $dados['items'] = PeriodRelease::where('period_id', 1)
+        $dados['period'] = $this->periodService->getDetalhesCompetenciaById($competenciaId);
+        $dados['items'] = PeriodRelease::where('period_id', $competenciaId)
             ->orderBy('created_at', 'desc')
             ->get();
         $dados['items'] = $dados['items']->map(function ($item) {
@@ -46,6 +46,7 @@ class PeriodReleaseController extends Controller
                 'data_debito_credito' => Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
             ];
         });
+        $dados['competenciaId'] = $competenciaId;
 
         return view('period-release.create')->with($dados);
     }

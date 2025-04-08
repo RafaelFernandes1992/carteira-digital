@@ -35,6 +35,14 @@
                         </div>
                     @endif
 
+{{--todo: finalizar corretamente o uso de toast no app--}}
+{{--  @if ($errors->any())
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif--}}
                     @if(session('error') || session('validation_errors'))
                         <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
                             <div class="toast text-bg-danger show align-items-center" role="alert" aria-live="assertive" aria-atomic="true">

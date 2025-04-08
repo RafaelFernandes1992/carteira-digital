@@ -28,7 +28,7 @@
                     <button class="btn btn-warning">
                         Alterar
                     </button>
-                    <form action="{{ route('competencia-lancamento.destroy', $item['id']) }}" method="post">
+                    <form action="{{ route('competencia.lancamento.destroy', $item['id']) }}" method="post">
                         @method('DELETE')
                         <button class="btn btn-danger" type="submit">
                             Excluir

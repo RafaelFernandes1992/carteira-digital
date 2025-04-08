@@ -1,4 +1,8 @@
-<form action="{{ route('competencia-lancamento.store') }}" method="POST" class="row g-3 align-items-end">
+@props([
+    'competenciaId'
+])
+
+<form action="{{ route('competencia.lancamento.store', $competenciaId) }}" method="POST" class="row g-3 align-items-end">
 
     <input type="hidden" name="period_id" value="1">
 

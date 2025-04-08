@@ -24,8 +24,7 @@ class StorePeriodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //'mes' => 'required|integer|between:1,12'
-            'mes' => 'required|string',
+            'mes' => 'required|string|between:1,12',
             'ano' => 'required|integer|between:2000,2100',
             'saldo_inicial' => 'required|numeric',
             'descricao' => 'required|string',

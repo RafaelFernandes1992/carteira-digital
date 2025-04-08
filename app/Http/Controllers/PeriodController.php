@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyPeriodRequest;
 use App\Models\Period;
 use App\Http\Requests\StorePeriodRequest;
 use App\Http\Requests\UpdatePeriodRequest;
 use App\Models\PeriodRelease;
 use App\Traits\ValidateScopeTrait;
 use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class PeriodController extends Controller
@@ -53,16 +53,16 @@ class PeriodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePeriodRequest $request)//: JsonResponse
+    public function store(StorePeriodRequest $request)
     {
         try {
             $dados = $request->validated();
             $dados['user_id'] = auth()->user()->id;
             $dados['saldo_atual'] = $dados['saldo_inicial'];
-            $model = Period::create($dados); //pq diz que não esta sendo usado?
+            Period::create($dados);
 
             $dados['message'] = 'Competência criada com sucesso';
-            return back()->with($dados);
+            return redirect()->route('competencia.index')->with('message', 'Competência criada com sucesso');
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
@@ -146,8 +146,23 @@ class PeriodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Period $period)
+    public function destroy(DestroyPeriodRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            $model = Period::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+
+            $existePeriodRelease = $model->periodReleases()->exists();
+            if ($existePeriodRelease) {
+                return back()->withErrors(['error' => 'Não é possível excluir competencia com lançamentos']);
+            }
+
+            $model->delete();
+            return back()->with(['message' => 'Competencia excluída com sucesso']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

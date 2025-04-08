@@ -20,6 +20,6 @@
             @endforeach
         </div>
     @endif
-    <x-competencia.formulario-lancamento />
+    <x-competencia.formulario-lancamento :competencia-id="$competenciaId" />
     <x-competencia.tabela-lancametos :items="$items" />
 @endsection

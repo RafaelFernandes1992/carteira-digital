@@ -33,4 +33,11 @@ class StorePeriodReleaseRequest extends FormRequest
 //            'type_release_id' => 'required|integer|exists:type_releases,id',
         ];
     }
+
+    public function validationData(): array
+    {
+        return array_merge($this->all(), [
+            'period_id' => $this->route('competenciaId'),
+        ]);
+    }
 }

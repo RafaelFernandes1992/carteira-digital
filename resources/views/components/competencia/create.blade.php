@@ -29,18 +29,18 @@
     </div>
 
     <div class="col-md-2">
-        <label for="inputano" class="form-label">Ano</label>
+        <label for="inputano" class="form-label">Ano *</label>
         <input type="number" class="form-control" name="ano" value="{{ old('ano', $anoAtual) }}" required>
     </div>
 
     <div class="col-md-3">
-        <label for="inputsldInicial" class="form-label">Saldo Inicial</label>
-        <input type="text" class="form-control" name="saldo_inicial" placeholder="0,00" value ="{{ old('saldo_inicial') }}" required>
+        <label for="inputsldInicial" class="form-label">Saldo Inicial *</label>
+        <input type="number" class="form-control" name="saldo_inicial" step="0.01"  placeholder="0,00" value ="{{ old('saldo_inicial') }}" required>
     </div>
 
     <div class="col-md-4">
-        <label for="inputDescricao" class="form-label">Descrição</label>
-        <input type="text" class="form-control" name="descricao" value ="{{ old('descricao') }}" required>
+        <label for="inputDescricao" class="form-label">Descrição *</label>
+        <input type="text" class="form-control" name="descricao" value ="{{ old('descricao') }}" >
     </div>
 
     <div class="col-md-12">

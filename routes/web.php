@@ -74,15 +74,31 @@ Route::post('competencia/store', [PeriodController::class, 'store'])
     ->name('competencia.store')
     ->middleware('auth');
 
+Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'])
+    ->name('competencia.destroy')
+    ->middleware('auth');
+
 
 Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
 
-//todo: verificar o modelo de url a ser utilizado.
-//Route::post('/competencia/{competencia}/lancamento', [UserController::class, 'store']);
-
-Route::resource('competencia-lancamento', PeriodReleaseController::class)
+Route::get('competencia/{competenciaId}/lancamento/create', [PeriodReleaseController::class, 'create'])
+    ->name('competencia.lancamento.create')
     ->middleware('auth');
+
+Route::post('competencia/{competenciaId}/lancamento', [PeriodReleaseController::class, 'store'])
+    ->name('competencia.lancamento.store')
+    ->middleware('auth');
+
+Route::delete('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'destroy'])
+    ->name('competencia.lancamento.destroy')
+    ->middleware('auth');
+
+//todo: verificar o modelo de url a ser utilizado.
+//Route::post('/competencia/{competenciaId}/lancamento', [UserController::class, 'store']);
+
+//Route::resource('competencia-lancamento', PeriodReleaseController::class)
+//    ->middleware('auth');
 
 Route::resource('tipo-lancamento', TypeReleaseController::class)
     ->middleware('auth');

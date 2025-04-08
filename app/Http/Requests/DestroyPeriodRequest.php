@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyPeriodReleaseRequest extends FormRequest
+class DestroyPeriodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,14 @@ class DestroyPeriodReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:period_releases,id'
+            'id' => 'required|integer|exists:periods,id'
         ];
     }
 
     public function validationData(): array
     {
         return array_merge($this->all(), [
-            'id' => $this->route('lancamentoId'),
+            'id' => $this->route('competenciaId'),
         ]);
     }
 }
