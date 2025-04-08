@@ -15,26 +15,17 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    // php artisan serve
-    // npm run dev
-    // acessar url http://localhost:8000
-
-    public function create()
-    {
-        return view('users.create');
-    }
-
-    public function loginOld(LoginUserRequest $request): JsonResponse
+    public function index(): JsonResponse
     {
         try {
-            $dados = $request->validated();
+            $data = User::withCount(['typeReleases'])->get();
 
-            if (!Auth::attempt($dados)) {
-                throw new \Exception('Email ou senha inválidos');
-            }
+            $success = count($data) > 0;
+            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
 
             return response()->json([
-                'message' => 'Usuário logado com sucesso!',
+                'message' => $message,
+                'data' => $data
             ]);
 
         } catch (\Exception $e) {
@@ -45,24 +36,9 @@ class UserController extends Controller
         }
     }
 
-    public function login(LoginV2UserRequest $request)
+    public function create()
     {
-        $dados = $request->validated();
-
-        if (!Auth::attempt($dados)) {
-            return back()
-                ->withErrors(['general' => 'Credenciais inválidas.'])
-                ->withInput();
-        }
-
-        return redirect()->route('index.home');
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        return redirect()->route('index.login');
+        return view('users.create');
     }
 
     public function store(StoreUserRequest $request): JsonResponse
@@ -82,6 +58,29 @@ class UserController extends Controller
                 'data' => null
             ], 500);
         }
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        try {
+            $user = User::find($id);
+            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
+
+            return response()->json([
+                'message' => $message,
+                'data' => $user ?? []
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
+
+    public function edit(){
+
     }
 
     public function update(UpdateUserRequest $request, int $id): JsonResponse
@@ -128,15 +127,19 @@ class UserController extends Controller
         }
     }
 
-    public function show(int $id): JsonResponse
+
+
+    public function loginOld(LoginUserRequest $request): JsonResponse
     {
         try {
-            $user = User::find($id);
-            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
+            $dados = $request->validated();
+
+            if (!Auth::attempt($dados)) {
+                throw new \Exception('Email ou senha inválidos');
+            }
 
             return response()->json([
-                'message' => $message,
-                'data' => $user ?? []
+                'message' => 'Usuário logado com sucesso!',
             ]);
 
         } catch (\Exception $e) {
@@ -147,24 +150,25 @@ class UserController extends Controller
         }
     }
 
-    public function index(): JsonResponse
+    public function login(LoginUserRequest $request)
     {
-        try {
-            $data = User::withCount(['typeReleases'])->get();
+        $dados = $request->validated();
 
-            $success = count($data) > 0;
-            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
-
-            return response()->json([
-                'message' => $message,
-                'data' => $data
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+        if (!Auth::attempt($dados)) {
+            return back()
+                ->withErrors(['general' => 'Credenciais inválidas.'])
+                ->withInput();
         }
+
+        return redirect()->route('index.home');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        return redirect()->route('index.login');
+    }
+
+
 }

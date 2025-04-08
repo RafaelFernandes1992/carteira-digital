@@ -1,2 +1,2 @@
 import './bootstrap.js';
-import '@/plugins/swal.js'
+//import '@/plugins/swal.js'

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="login-container">
-    <div class="login-title">Carteira Digital (Síncrono)</div>
+    <div class="login-title">Carteira Digital</div>
         @if ($errors->any())
             <div class="alert alert-danger">
                 @foreach ($errors->all() as $error)

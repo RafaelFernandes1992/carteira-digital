@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
+
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class LoginUserRequest extends FormRequest
 {
@@ -29,12 +29,4 @@ class LoginUserRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'message' => 'Os dados fornecidos são inválidos.',
-            'error' => $validator->errors(),
-        ], 422));
-    }
 }

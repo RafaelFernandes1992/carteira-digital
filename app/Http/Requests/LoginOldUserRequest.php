@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginV2UserRequest extends FormRequest
+class LoginOldUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,5 +27,14 @@ class LoginV2UserRequest extends FormRequest
             'email' => 'required|email',
             'password' => 'required|string|min:3'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'message' => 'Os dados fornecidos são inválidos.',
+            'error' => $validator->errors(),
+        ], 422));
     }
 }

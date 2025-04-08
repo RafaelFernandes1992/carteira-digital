@@ -26,34 +26,41 @@ Route::get('/home', function () {
     return view('home');
 })->name('index.home')->middleware('auth');
 
+Route::post('/login', [UserController::class, 'login']);
+Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login');
 
-Route::get('/carteira/competencia', function () {
-    echo 'olá, estou na rota /carteira/competencia';
-});
+// Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
+// Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
+
+// Route::resource('usuario', UserController::class)
+//     ->middleware('auth');
 
 //Route::post('/usuario', [UserController::class, 'store']);
 //Route::get('/usuario', [UserController::class, 'index']);
 //Route::put('/usuario/{id}', [UserController::class, 'update']);
 //Route::delete('/usuario/{id}', [UserController::class, 'destroy']);
 
-
-Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
-Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
-
-
-Route::post('/login', [UserController::class, 'login']);
-Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login');
-
+Route::get('usuario', [UserController::class, 'index'])->middleware('auth')->name('usuario.index');
+Route::get('usuario/create', [UserController::class, 'create'])->middleware('auth')->name('usuario.create');
+Route::post('usuario', [UserController::class, 'store'])->middleware('auth')->name('usuario.store');
+Route::get('usuario/{usuario}', [UserController::class, 'show'])->middleware('auth')->name('usuario.show');
+Route::get('usuario/{usuario}/edit', [UserController::class, 'edit'])->middleware('auth')->name('usuario.edit');
+Route::put('usuario/{usuario}', [UserController::class, 'update'])->middleware('auth')->name('usuario.update');
+Route::delete('usuario/{usuario}', [UserController::class, 'destroy'])->middleware('auth')->name('usuario.destroy');
 
 Route::post('/usuario/logout', [UserController::class, 'logout'])
     ->name('usuario.logout')
     ->middleware('auth');
 
-Route::resource('usuario', UserController::class)
-    ->middleware('auth');
+
 
 //Route::resource('competencia', PeriodController::class)
 //    ->middleware('auth')->except(['index', 'create', 'store']);
+
+Route::get('/carteira/competencia', function () {
+    echo 'olá, estou na rota /carteira/competencia';
+});
+
 
 Route::get('competencia', [PeriodController::class, 'index'])
     ->name('competencia.index')
@@ -66,7 +73,6 @@ Route::get('competencia/create', [PeriodController::class, 'create'])
 Route::post('competencia/store', [PeriodController::class, 'store'])
     ->name('competencia.store')
     ->middleware('auth');
-
 
 
 Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])

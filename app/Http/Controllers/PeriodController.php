@@ -53,24 +53,19 @@ class PeriodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePeriodRequest $request): JsonResponse
+    public function store(StorePeriodRequest $request)//: JsonResponse
     {
         try {
             $dados = $request->validated();
             $dados['user_id'] = auth()->user()->id;
             $dados['saldo_atual'] = $dados['saldo_inicial'];
-            $model = Period::create($dados);
+            $model = Period::create($dados); //pq diz que não esta sendo usado?
 
-            return response()->json([
-                'message' => 'Competência criada com sucesso!',
-                'data' => $model
-            ], 201);
+            $dados['message'] = 'Competência criada com sucesso';
+            return back()->with($dados);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 

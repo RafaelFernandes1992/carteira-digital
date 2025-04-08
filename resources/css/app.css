@@ -11,3 +11,10 @@ body {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     font-size: 1.6rem; /* Tamanho do texto mais moderado */
 }
+
+.box-search{
+  display: flex;
+  justify-content: end;
+  gap: .9%;
+  width: 400px;
+}

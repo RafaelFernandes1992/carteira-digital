@@ -24,7 +24,8 @@ class StorePeriodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mes' => 'required|integer|between:1,12',
+            //'mes' => 'required|integer|between:1,12'
+            'mes' => 'required|string',
             'ano' => 'required|integer|between:2000,2100',
             'saldo_inicial' => 'required|numeric',
             'descricao' => 'required|string',
@@ -32,12 +33,20 @@ class StorePeriodRequest extends FormRequest
         ];
     }
 
+    // protected function failedValidation(Validator $validator)
+    // {
+    //     throw new HttpResponseException(response()->json([
+    //         'status' => 'error',
+    //         'message' => 'Os dados fornecidos são inválidos.',
+    //         'error' => $validator->errors(),
+    //     ], 422));
+    // }
+
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'message' => 'Os dados fornecidos são inválidos.',
-            'error' => $validator->errors(),
-        ], 422));
+        session()->flash('error', 'Os dados fornecidos são inválidos.');
+        session()->flash('validation_errors', $validator->errors());
+        return redirect()->back()->withInput();
     }
+
 }
