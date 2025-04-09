@@ -32,13 +32,15 @@ Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login
 // Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
 // Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
 
-// Route::resource('usuario', UserController::class)
-//     ->middleware('auth');
+
 
 //Route::post('/usuario', [UserController::class, 'store']);
 //Route::get('/usuario', [UserController::class, 'index']);
 //Route::put('/usuario/{id}', [UserController::class, 'update']);
 //Route::delete('/usuario/{id}', [UserController::class, 'destroy']);
+
+// Route::resource('usuario', UserController::class)
+//     ->middleware('auth');
 
 Route::get('usuario', [UserController::class, 'index'])->middleware('auth')->name('usuario.index');
 Route::get('usuario/create', [UserController::class, 'create'])->middleware('auth')->name('usuario.create');
@@ -59,7 +61,7 @@ Route::post('/usuario/logout', [UserController::class, 'logout'])
 
 Route::get('/carteira/competencia', function () {
     echo 'olá, estou na rota /carteira/competencia';
-});
+}); //esse aqui podemos excluir?????
 
 
 Route::get('competencia', [PeriodController::class, 'index'])
@@ -74,10 +76,13 @@ Route::post('competencia/store', [PeriodController::class, 'store'])
     ->name('competencia.store')
     ->middleware('auth');
 
+Route::post('competencia/edit', [PeriodController::class, 'edit'])
+    ->name('competencia.edit')
+    ->middleware('auth');
+
 Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'])
     ->name('competencia.destroy')
     ->middleware('auth');
-
 
 Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
@@ -88,6 +93,10 @@ Route::get('competencia/{competenciaId}/lancamento/create', [PeriodReleaseContro
 
 Route::post('competencia/{competenciaId}/lancamento', [PeriodReleaseController::class, 'store'])
     ->name('competencia.lancamento.store')
+    ->middleware('auth');
+
+Route::delete('lancamento/edit', [PeriodReleaseController::class, 'edit'])
+    ->name('competencia.lancamento.edit')
     ->middleware('auth');
 
 Route::delete('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'destroy'])

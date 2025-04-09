@@ -104,7 +104,7 @@ class PeriodReleaseController extends Controller
      */
     public function edit(PeriodRelease $periodRelease)
     {
-        //
+        return view('period-release.edit');
     }
 
     /**

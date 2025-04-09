@@ -3,7 +3,7 @@
 @section('content')
     <h3>Lançamentos da competência</h3>
     <br>
-    <x-period-release.competencia-header
+    <x-period-release.header
             :saldo_inicial="$period['saldo_inicial'] ?? 0"
             :saldo_atual="$period['saldo_atual'] ?? 0"
             :debitadas_total="$period['debitadas_total'] ?? 0"

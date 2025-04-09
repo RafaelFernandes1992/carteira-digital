@@ -132,7 +132,7 @@ class PeriodController extends Controller
      */
     public function edit(Period $period)
     {
-        //
+        return view('period.edit');
     }
 
     /**
