@@ -33,7 +33,7 @@ class PeriodController extends Controller
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
-        return view('components.competencia.index')->with(['items' => $periods]);
+        return view('period.index')->with(['items' => $periods]);
     }
 
     /**
@@ -43,7 +43,7 @@ class PeriodController extends Controller
     {
         $anoAtual = Carbon::now()->format('Y');
         $mesAtual = Carbon::now()->format('m');
-        return view('components.competencia.create')
+        return view('period.create')
             ->with([
                 'anoAtual' => $anoAtual,
                 'mesAtual' => $mesAtual

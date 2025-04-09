@@ -3,7 +3,7 @@
 @section('content')
     <h3>Lançamentos da competência</h3>
     <br>
-    <x-competencia.competencia-header
+    <x-period-release.competencia-header
             :saldo_inicial="$period['saldo_inicial'] ?? 0"
             :saldo_atual="$period['saldo_atual'] ?? 0"
             :debitadas_total="$period['debitadas_total'] ?? 0"
@@ -20,6 +20,6 @@
             @endforeach
         </div>
     @endif
-    <x-competencia.formulario-lancamento :competencia-id="$competenciaId" />
-    <x-competencia.tabela-lancametos :items="$items" />
+    <x-period-release.formulario-lancamento :competencia-id="$competenciaId" />
+    <x-period-release.tabela-lancametos :items="$items" />
 @endsection
