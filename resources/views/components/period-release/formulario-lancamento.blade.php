@@ -2,7 +2,8 @@
     'competenciaId'
 ])
 
-<form action="{{ route('competencia.lancamento.store', $competenciaId) }}" method="POST" class="row g-3 align-items-end">
+<form action="{{ route('competencia.lancamento.store', $competenciaId) }}" method="POST"
+      class="row g-3 align-items-end">
 
     <input type="hidden" name="period_id" value="1">
 
@@ -13,16 +14,15 @@
                 class="form-select" aria-label="Default select example" id="tipoOperacao" name="tipoOperacao"
                 {{--                    required--}}
         >
-            <option selected>Selecione...</option>
+            <option selected value="despesa">Despesa</option>
             <option value="receita">Receita</option>
-            <option value="despesa">Despesa</option>
             <option value="investimento">Investimento</option>
         </select>
     </div>
 
     <div class="col-md-4">
-        <label for="inputidcodigo" class="form-label">Descrição</label>
-        <select class="form-select" aria-label="Default select example" id="inputidcodigo" name="inputidcodigo"
+        <label for="type_release_id" class="form-label">Descrição</label>
+        <select class="form-select" aria-label="Default select example" id="type_release_id" name="type_release_id"
                 {{--                    required--}}
         >
             <!-- usando função JS preencherOpcoesSelect() para carregar a lista -->
@@ -57,3 +57,52 @@
         <button type="submit" class="btn btn-primary" name="gravar" id="gravar">Gravar</button>
     </div>
 </form>
+
+<script>
+    let tiposLancamentos = null;
+    document.addEventListener('DOMContentLoaded', async function () {
+        await getTiposLancamento();
+        lidarComAlteracaoNoSelect();
+        carregaOpcoesAoInicarPagina();
+    });
+
+    function carregaOpcoesAoInicarPagina() {
+        const descricoes = getDescricoesPorTipo("despesa");
+        criaOpcoesNoSelectDescricao(descricoes);
+    }
+
+    function lidarComAlteracaoNoSelect() {
+        const select = document.getElementById('tipoOperacao');
+        select.addEventListener('change', (event) => {
+            const descricoes = getDescricoesPorTipo(event.target.value);
+            criaOpcoesNoSelectDescricao(descricoes);
+        });
+    }
+
+    function criaOpcoesNoSelectDescricao(valores) {
+        const inputDescricao = document.getElementById('type_release_id');
+
+        inputDescricao.innerHTML = '';
+        valores.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.descricao;
+            inputDescricao.appendChild(option);
+        });
+
+    }
+
+    function getDescricoesPorTipo(tipo) {
+        return tiposLancamentos.filter(item => item.tipo === tipo);
+    }
+
+    async function getTiposLancamento() {
+        try {
+            const response = await axios.get('/tipo-lancamento');
+            tiposLancamentos = response.data.data
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+</script>

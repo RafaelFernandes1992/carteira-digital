@@ -21,9 +21,11 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('period_id');
+            $table->unsignedBigInteger('type_release_id');
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('period_id')->references('id')->on('periods');
+            $table->foreign('type_release_id')->references('id')->on('type_releases');
 
             $table->softDeletes();
             $table->timestamps();

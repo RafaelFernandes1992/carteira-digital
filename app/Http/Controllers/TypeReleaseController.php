@@ -36,6 +36,31 @@ class TypeReleaseController extends Controller
         }
     }
 
+    public function getAll()
+    {
+        try {
+            //eager loading
+            $user = Auth::user();
+            $dados = TypeRelease::where('user_id', $user->id)
+                ->select(['id', 'tipo', 'descricao'])
+                ->get();
+
+            $success = count($dados) > 0;
+            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
+
+            return response()->json([
+                'message' => $message,
+                'data' => $dados
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */

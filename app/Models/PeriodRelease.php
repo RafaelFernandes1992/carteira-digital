@@ -17,6 +17,7 @@ class PeriodRelease extends Model
         'situacao',
         'user_id',
         'period_id',
+        'type_release_id',
     ];
 
     public const SITUACAO = [
@@ -48,5 +49,10 @@ class PeriodRelease extends Model
     public function creditCardReleases(): HasMany
     {
         return $this->hasMany(CreditCardRelease::class);
+    }
+
+    public function typeRelease(): BelongsTo
+    {
+        return $this->belongsTo(TypeRelease::class);
     }
 }

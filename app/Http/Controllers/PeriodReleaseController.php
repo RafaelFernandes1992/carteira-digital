@@ -35,15 +35,23 @@ class PeriodReleaseController extends Controller
     {
         $dados['period'] = $this->periodService->getDetalhesCompetenciaById($competenciaId);
         $dados['items'] = PeriodRelease::where('period_id', $competenciaId)
+            ->with('typeRelease:id,tipo,descricao')
             ->orderBy('created_at', 'desc')
             ->get();
-        $dados['items'] = $dados['items']->map(function ($item) {
+
+
+        $dados['items'] = $dados['items']->map(function (PeriodRelease $item) {
             return [
                 'id' => $item->id,
                 'valor_total' => number_format($item->valor_total, 2, ',', '.'),
                 'observacao' => $item->observacao,
                 'situacao' => $item->getSituacaoFormatada(),
                 'data_debito_credito' => Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
+                'type_release' => [
+                    'id' => $item->typeRelease->id,
+                    'tipo' => ucfirst($item->typeRelease->tipo),
+                    'descricao' => ucfirst($item->typeRelease->descricao),
+                ],
             ];
         });
         $dados['competenciaId'] = $competenciaId;
@@ -63,9 +71,7 @@ class PeriodReleaseController extends Controller
 
             $this->lidarComLancamento($model);
 
-            $dados['period'] = $this->periodService->getDetalhesCompetenciaById($dados['period_id']);
             $dados['message'] = 'Lançamento criado com sucesso';
-
 
             return back()->with($dados);
         } catch (\Exception $e) {

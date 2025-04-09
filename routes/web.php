@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontRenderController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PeriodReleaseController;
@@ -26,7 +27,7 @@ Route::get('/home', function () {
     return view('home');
 })->name('index.home')->middleware('auth');
 
-Route::post('/login', [UserController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login');
 
 // Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
@@ -56,7 +57,7 @@ Route::get('usuario/create', [UserController::class, 'create'])
 // Route::put('usuario/{usuario}', [UserController::class, 'update'])->middleware('auth')->name('usuario.update');
 // Route::delete('usuario/{usuario}', [UserController::class, 'destroy'])->middleware('auth')->name('usuario.destroy');
 
-Route::post('/usuario/logout', [UserController::class, 'logout'])
+Route::post('/usuario/logout', [AuthController::class, 'logout'])
     ->name('usuario.logout')
     ->middleware('auth');
 
@@ -82,9 +83,14 @@ Route::post('competencia/store', [PeriodController::class, 'store'])
     ->name('competencia.store')
     ->middleware('auth');
 
-Route::post('competencia/edit', [PeriodController::class, 'edit'])
+Route::get('competencia/{competenciaId}/edit', [PeriodController::class, 'edit'])
     ->name('competencia.edit')
     ->middleware('auth');
+
+Route::put('competencia/{competenciaId}', [PeriodController::class, 'update'])
+    ->name('competencia.update')
+    ->middleware('auth');
+
 
 Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'])
     ->name('competencia.destroy')
@@ -112,11 +118,13 @@ Route::delete('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'des
 //todo: verificar o modelo de url a ser utilizado.
 //Route::post('/competencia/{competenciaId}/lancamento', [UserController::class, 'store']);
 
-//Route::resource('competencia-lancamento', PeriodReleaseController::class)
-//    ->middleware('auth');
 
-Route::resource('tipo-lancamento', TypeReleaseController::class)
+Route::get('tipo-lancamento', [TypeReleaseController::class, 'getAll'])
     ->middleware('auth');
+
+
+//Route::resource('tipo-lancamento', TypeReleaseController::class)
+//    ->middleware('auth');
 
 
 

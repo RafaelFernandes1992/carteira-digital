@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StorePeriodReleaseRequest extends FormRequest
+class EditPeriodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +22,13 @@ class StorePeriodReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'valor_total' => 'required|numeric',
-            'observacao' => 'nullable|string',
-            'data_debito_credito' => 'required|date|date_format:Y-m-d',
-            'situacao' => 'required|in:creditado,debitado,nao_debitado',
-            'period_id' => 'required|integer|exists:periods,id',
-            'type_release_id' => 'required|integer|exists:type_releases,id',
+            'id' => 'required|string|exists:periods,id'
         ];
     }
-
     public function validationData(): array
     {
         return array_merge($this->all(), [
-            'period_id' => $this->route('competenciaId'),
+            'id' => $this->route('competenciaId'),
         ]);
     }
 }

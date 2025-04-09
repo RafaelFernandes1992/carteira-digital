@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DestroyPeriodRequest;
+use App\Http\Requests\EditPeriodRequest;
 use App\Models\Period;
 use App\Http\Requests\StorePeriodRequest;
 use App\Http\Requests\UpdatePeriodRequest;
@@ -130,17 +131,47 @@ class PeriodController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Period $period)
+    public function edit(EditPeriodRequest $request)
     {
-        return view('period.edit');
+//        return view('period.show');
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            $period = Period::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+
+            return view('period.edit')
+                ->with([
+                    'id' => $period->id,
+                    'mes' => $period->mes,
+                    'ano' => $period->ano,
+                    'saldoInicial' => $period->saldo_inicial,
+                    'descricao' => $period->descricao,
+                    'observacao' => $period->observacao,
+                ]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePeriodRequest $request, Period $period)
+    public function update(UpdatePeriodRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $period = Period::where('user_id', Auth::user()->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            $period->update($dados);
+
+            $dados['message'] = 'Competência atualizada com sucesso';
+            return redirect()->route('competencia.index')->with($dados);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**

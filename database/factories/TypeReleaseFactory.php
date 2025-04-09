@@ -17,7 +17,7 @@ class TypeReleaseFactory extends Factory
      */
     public function definition(): array
     {
-        $usersId = User::all()->pluck('id')->toArray();
+        $user = User::where('email', 'rafael.fernandes@example.com')->firstOrFail();
 
         return [
             'descricao' => $this->faker->words(3, true),
@@ -25,7 +25,7 @@ class TypeReleaseFactory extends Factory
             'dedutivel' => $this->faker->randomElement([true, false]),
             'isenta' => $this->faker->randomElement([true, false]),
             'tipo' => $this->faker->randomElement(['receita', 'despesa', 'investimento']),
-            'user_id' => $this->faker->randomElement($usersId)
+            'user_id' => $user->id
         ];
     }
 }

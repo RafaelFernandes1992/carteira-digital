@@ -17,8 +17,8 @@
         <tbody>
         @foreach($items as $item)
             <tr>
-                <td>Algum tipo</td>
-                <td>Alguma descrição</td>
+                <td>{{ $item['type_release']['tipo'] }}</td>
+                <td>{{ $item['type_release']['descricao'] }}</td>
                 <td>{{ $item['valor_total'] }}</td>
                 <td>{{ $item['observacao'] }}</td>
                 <td>{{ $item['situacao'] }}</td>
