@@ -11,29 +11,46 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
 
-    public function index(): JsonResponse
+    //poderiamos criar uma controller só para cuidar do login, e deixar essa para o CRUD do usuário
+
+
+    public function index()//: JsonResponse
     {
-        try {
-            $data = User::withCount(['typeReleases'])->get();
+        $user = Auth::user();
+        $users = User::all();
+        $users = $users->map(function ($user) {
+            
+            return [
+                'id' => $user->id,
+                'nome' => $user->nome,
+                'email' => $user->email,
+                'created_at' => Carbon::parse($user->updated_at)->format('d/m/Y H:i:s'),
+            ];
+        });
+        return view('users.index')->with(['items' => $users]);
 
-            $success = count($data) > 0;
-            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
+        // try {
+        //     $data = User::withCount(['typeReleases'])->get();
 
-            return response()->json([
-                'message' => $message,
-                'data' => $data
-            ]);
+        //     $success = count($data) > 0;
+        //     $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
+        //     return response()->json([
+        //         'message' => $message,
+        //         'data' => $data
+        //     ]);
+
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'message' => $e->getMessage(),
+        //         'data' => null
+        //     ], 500);
+        // }
     }
 
     public function create()
@@ -41,7 +58,7 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(StoreUserRequest $request): JsonResponse
+    public function store(StoreUserRequest $request): JsonResponse //todos esses precisamos verificar
     {
         try {
             $dados = $request->validated();
@@ -60,23 +77,23 @@ class UserController extends Controller
         }
     }
 
-    public function show(int $id): JsonResponse
+    public function show(int $id) //: JsonResponse
     {
-        try {
-            $user = User::find($id);
-            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
+        // try {
+        //     $user = User::find($id);
+        //     $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
 
-            return response()->json([
-                'message' => $message,
-                'data' => $user ?? []
-            ]);
+        //     return response()->json([
+        //         'message' => $message,
+        //         'data' => $user ?? []
+        //     ]);
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'message' => $e->getMessage(),
+        //         'data' => null
+        //     ], 500);
+        // }
     }
 
     public function edit(){

@@ -42,13 +42,19 @@ Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login
 // Route::resource('usuario', UserController::class)
 //     ->middleware('auth');
 
-Route::get('usuario', [UserController::class, 'index'])->middleware('auth')->name('usuario.index');
-Route::get('usuario/create', [UserController::class, 'create'])->middleware('auth')->name('usuario.create');
-Route::post('usuario', [UserController::class, 'store'])->middleware('auth')->name('usuario.store');
-Route::get('usuario/{usuario}', [UserController::class, 'show'])->middleware('auth')->name('usuario.show');
-Route::get('usuario/{usuario}/edit', [UserController::class, 'edit'])->middleware('auth')->name('usuario.edit');
-Route::put('usuario/{usuario}', [UserController::class, 'update'])->middleware('auth')->name('usuario.update');
-Route::delete('usuario/{usuario}', [UserController::class, 'destroy'])->middleware('auth')->name('usuario.destroy');
+Route::get('usuario', [UserController::class, 'index'])
+    ->middleware('auth')
+    ->name('usuario.index');
+
+Route::get('usuario/create', [UserController::class, 'create'])
+    ->middleware('auth')
+    ->name('usuario.create');
+
+// Route::post('usuario', [UserController::class, 'store'])->middleware('auth')->name('usuario.store');
+// Route::get('usuario/{usuario}', [UserController::class, 'show'])->middleware('auth')->name('usuario.show');
+// Route::get('usuario/{usuario}/edit', [UserController::class, 'edit'])->middleware('auth')->name('usuario.edit');
+// Route::put('usuario/{usuario}', [UserController::class, 'update'])->middleware('auth')->name('usuario.update');
+// Route::delete('usuario/{usuario}', [UserController::class, 'destroy'])->middleware('auth')->name('usuario.destroy');
 
 Route::post('/usuario/logout', [UserController::class, 'logout'])
     ->name('usuario.logout')
