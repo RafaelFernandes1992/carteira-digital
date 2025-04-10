@@ -33,16 +33,6 @@ Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login
 // Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
 // Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
 
-
-
-//Route::post('/usuario', [UserController::class, 'store']);
-//Route::get('/usuario', [UserController::class, 'index']);
-//Route::put('/usuario/{id}', [UserController::class, 'update']);
-//Route::delete('/usuario/{id}', [UserController::class, 'destroy']);
-
-// Route::resource('usuario', UserController::class)
-//     ->middleware('auth');
-
 Route::get('usuario', [UserController::class, 'index'])
     ->middleware('auth')
     ->name('usuario.index');
@@ -51,24 +41,9 @@ Route::get('usuario/create', [UserController::class, 'create'])
     ->middleware('auth')
     ->name('usuario.create');
 
-// Route::post('usuario', [UserController::class, 'store'])->middleware('auth')->name('usuario.store');
-// Route::get('usuario/{usuario}', [UserController::class, 'show'])->middleware('auth')->name('usuario.show');
-// Route::get('usuario/{usuario}/edit', [UserController::class, 'edit'])->middleware('auth')->name('usuario.edit');
-// Route::put('usuario/{usuario}', [UserController::class, 'update'])->middleware('auth')->name('usuario.update');
-// Route::delete('usuario/{usuario}', [UserController::class, 'destroy'])->middleware('auth')->name('usuario.destroy');
-
 Route::post('/usuario/logout', [AuthController::class, 'logout'])
     ->name('usuario.logout')
     ->middleware('auth');
-
-
-
-//Route::resource('competencia', PeriodController::class)
-//    ->middleware('auth')->except(['index', 'create', 'store']);
-
-Route::get('/carteira/competencia', function () {
-    echo 'olá, estou na rota /carteira/competencia';
-}); //esse aqui podemos excluir?????
 
 
 Route::get('competencia', [PeriodController::class, 'index'])
@@ -83,6 +58,7 @@ Route::post('competencia/store', [PeriodController::class, 'store'])
     ->name('competencia.store')
     ->middleware('auth');
 
+/** A parte de UPDATE de um CRUD*/
 Route::get('competencia/{competenciaId}/edit', [PeriodController::class, 'edit'])
     ->name('competencia.edit')
     ->middleware('auth');
@@ -90,6 +66,7 @@ Route::get('competencia/{competenciaId}/edit', [PeriodController::class, 'edit']
 Route::put('competencia/{competenciaId}', [PeriodController::class, 'update'])
     ->name('competencia.update')
     ->middleware('auth');
+/** -----------------------------*/
 
 
 Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'])
@@ -107,25 +84,20 @@ Route::post('competencia/{competenciaId}/lancamento', [PeriodReleaseController::
     ->name('competencia.lancamento.store')
     ->middleware('auth');
 
-Route::delete('lancamento/edit', [PeriodReleaseController::class, 'edit'])
-    ->name('competencia.lancamento.edit')
-    ->middleware('auth');
-
 Route::delete('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'destroy'])
     ->name('competencia.lancamento.destroy')
     ->middleware('auth');
 
-//todo: verificar o modelo de url a ser utilizado.
-//Route::post('/competencia/{competenciaId}/lancamento', [UserController::class, 'store']);
+/** A parte de UPDATE de um lancamento da competencia*/
+Route::get('lancamento/{lancamentoId}/edit', [PeriodReleaseController::class, 'edit'])
+    ->name('lancamento.edit')
+    ->middleware('auth');
+
+Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update'])
+    ->name('lancamento.update')
+    ->middleware('auth');
+/** -----------------------------*/
 
 
 Route::get('tipo-lancamento', [TypeReleaseController::class, 'getAll'])
     ->middleware('auth');
-
-
-//Route::resource('tipo-lancamento', TypeReleaseController::class)
-//    ->middleware('auth');
-
-
-
-

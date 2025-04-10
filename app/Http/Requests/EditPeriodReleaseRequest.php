@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePeriodReleaseRequest extends FormRequest
+class EditPeriodReleaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,7 @@ class UpdatePeriodReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:period_releases,id',
-            'valor_total' => 'required|numeric',
-            'observacao' => 'nullable|string',
-            'data_debito_credito' => 'required|date|date_format:Y-m-d',
-            'situacao' => 'required|in:creditado,debitado,nao_debitado',
-            'type_release_id' => 'required|integer|exists:type_releases,id',
+            'id' => 'required|string|exists:period_releases,id'
         ];
     }
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DestroyPeriodReleaseRequest;
+use App\Http\Requests\EditPeriodReleaseRequest;
 use App\Models\PeriodRelease;
 use App\Http\Requests\StorePeriodReleaseRequest;
 use App\Http\Requests\UpdatePeriodReleaseRequest;
+use App\Models\TypeRelease;
 use App\Services\Period\PeriodService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -108,17 +110,51 @@ class PeriodReleaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PeriodRelease $periodRelease)
+    public function edit(EditPeriodReleaseRequest $request)
     {
-        return view('period-release.edit');
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+
+            $item = PeriodRelease::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+
+            $types = TypeRelease::where('user_id', $user->id)->get();
+
+            return view('period-release.edit')
+                ->with([
+                    'id' => $item->id,
+                    'competenciaId' => $item->period_id,
+                    'typeReleaseId' => $item->type_release_id,
+                    'valorTotal' => $item->valor_total,
+                    'situacao' => $item->situacao,
+                    'dataDebitoCredito' => $item->data_debito_credito,
+                    'observacao' => $item->observacao,
+                    'types' => $types
+                ]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePeriodReleaseRequest $request, PeriodRelease $periodRelease)
+    public function update(UpdatePeriodReleaseRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $item = PeriodRelease::where('user_id', Auth::user()->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            $item->update($dados);
+
+            $dados['message'] = 'Competência atualizada com sucesso';
+            return redirect()->route('competencia.lancamento.create', $item->period_id)->with($dados);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
