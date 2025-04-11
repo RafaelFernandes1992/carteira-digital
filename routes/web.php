@@ -28,7 +28,13 @@ Route::get('/home', function () {
 })->name('index.home')->middleware('auth');
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/login', [FrontRenderController::class, 'login'])->name('index.login');
+
+Route::get('/login', [FrontRenderController::class, 'login'])
+    ->name('index.login');
+
+Route::post('/usuario/logout', [AuthController::class, 'logout'])
+    ->name('usuario.logout')
+    ->middleware('auth');
 
 // Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
 // Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
@@ -40,10 +46,6 @@ Route::get('usuario', [UserController::class, 'index'])
 Route::get('usuario/create', [UserController::class, 'create'])
     ->middleware('auth')
     ->name('usuario.create');
-
-Route::post('/usuario/logout', [AuthController::class, 'logout'])
-    ->name('usuario.logout')
-    ->middleware('auth');
 
 
 Route::get('competencia', [PeriodController::class, 'index'])

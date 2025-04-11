@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\LoginV2UserRequest;
+
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class UserController extends Controller
 {
 
-    //poderiamos criar uma controller só para cuidar do login, e deixar essa para o CRUD do usuário
-
-
-    public function index()//: JsonResponse
+    public function index()
     {
         $user = Auth::user();
         $users = User::all();
@@ -33,24 +29,6 @@ class UserController extends Controller
             ];
         });
         return view('users.index')->with(['items' => $users]);
-
-        // try {
-        //     $data = User::withCount(['typeReleases'])->get();
-
-        //     $success = count($data) > 0;
-        //     $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
-
-        //     return response()->json([
-        //         'message' => $message,
-        //         'data' => $data
-        //     ]);
-
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'message' => $e->getMessage(),
-        //         'data' => null
-        //     ], 500);
-        // }
     }
 
     public function create()
@@ -77,23 +55,23 @@ class UserController extends Controller
         }
     }
 
-    public function show(int $id) //: JsonResponse
+    public function show(int $id) : JsonResponse
     {
-        // try {
-        //     $user = User::find($id);
-        //     $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
+        try {
+            $user = User::find($id);
+            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
 
-        //     return response()->json([
-        //         'message' => $message,
-        //         'data' => $user ?? []
-        //     ]);
+            return response()->json([
+                'message' => $message,
+                'data' => $user ?? []
+            ]);
 
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'message' => $e->getMessage(),
-        //         'data' => null
-        //     ], 500);
-        // }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
     }
 
     public function edit(){
@@ -143,28 +121,4 @@ class UserController extends Controller
             ], 500);
         }
     }
-
-
-
-    public function loginOld(LoginUserRequest $request): JsonResponse
-    {
-        try {
-            $dados = $request->validated();
-
-            if (!Auth::attempt($dados)) {
-                throw new \Exception('Email ou senha inválidos');
-            }
-
-            return response()->json([
-                'message' => 'Usuário logado com sucesso!',
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
-    }
-
 }

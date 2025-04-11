@@ -72,7 +72,6 @@ class PeriodController extends Controller
 
     public function getDetalhesCompetenciaById(string $id): array
     {
-//        try {
         $period = Period::find($id);
         $userId = $period->user_id;
         $this->validateScope($userId);
@@ -89,7 +88,6 @@ class PeriodController extends Controller
             ->where('situacao', 'nao_debitado')
             ->sum('valor_total');
 
-
         //debitada + não debitada = previsão debitada
         //saldo atual = saldo atual - não debitada
 
@@ -100,24 +98,6 @@ class PeriodController extends Controller
             'saldo_atual_previsto' => (float)$period->saldo_atual - $somaNaoDebitadas,
             'previsao_debitada' => (float)$somaDebitadas + $somaNaoDebitadas,
         ];
-
-
-//            return response()->json([
-//                'message' => 'Detalhes encontrados',
-//                'data' => $dados
-//            ], 201);
-//
-//        } catch (UnauthorizedScopeException $e) {
-//            return response()->json([
-//                'message' => $e->getMessage(),
-//                'data' => null
-//            ], $e->getCode());
-//        } catch (\Exception $e) {
-//            return response()->json([
-//                'message' => $e->getMessage(),
-//                'data' => null
-//            ], 500);
-//        }
     }
 
     /**
@@ -133,7 +113,6 @@ class PeriodController extends Controller
      */
     public function edit(EditPeriodRequest $request)
     {
-//        return view('period.show');
         try {
             $dados = $request->validated();
             $user = Auth::user();
@@ -192,6 +171,7 @@ class PeriodController extends Controller
 
             $model->delete();
             return back()->with(['message' => 'Competencia excluída com sucesso']);
+
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
