@@ -14,7 +14,7 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
 //            abort(403, 'Usuário não autenticado!');
-            return route('index.login');
+            return route('login.index');
         }
         return $request->expectsJson();
     }

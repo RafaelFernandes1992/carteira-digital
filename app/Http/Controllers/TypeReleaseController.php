@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\TypeRelease;
 use App\Http\Requests\StoreTypeReleaseRequest;
 use App\Http\Requests\UpdateTypeReleaseRequest;
-use Auth;
+//use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class TypeReleaseController extends Controller
@@ -13,28 +14,47 @@ class TypeReleaseController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index()
     {
-        try {
-            //eager loading
-            $data = TypeRelease::with(['user'])->get();
-//            $data = TypeRelease::withTrashed()->get();
-
-            $success = count($data) > 0;
-            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
-
-            return response()->json([
-                'message' => $message,
-                'data' => $data
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
+        $user = Auth::user();
+        $itens = TypeRelease::where('user_id', $user->id)->get();
+        $itens = $itens->map(function ($item) {
+            
+            return [
+                'id' => $item->id,
+                'descricao' => $item->descricao,
+                'isenta' => $item->isenta,
+                'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s'),
+            ];
+        });
+        return view('type-release.index')->with(['itens' => $itens]);
     }
+
+//     public function index()
+//     {
+//         try {
+//             //eager loading
+//             $data = TypeRelease::with(['user'])->get();
+// //            $data = TypeRelease::withTrashed()->get();
+
+//             $success = count($data) > 0;
+//             $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
+
+//             // return response()->json([
+//             //     'message' => $message,
+//             //     'data' => $data
+//             // ]);
+//             return view('type-release.index');
+
+//         } catch (\Exception $e) {
+//             return response()->json([
+//                 'message' => $e->getMessage(),
+//                 'data' => null
+//             ], 500);
+//         }
+//     }
 
     public function getAll()
     {
@@ -80,7 +100,7 @@ class TypeReleaseController extends Controller
             $entityCreated = TypeRelease::create($dados);
 
             return response()->json([
-                'message' => 'Lançamento criado com sucesso!',
+                'message' => 'Tipo de lançamento criado com sucesso!',
                 'data' => $entityCreated
             ], 201);
 
@@ -134,7 +154,7 @@ class TypeReleaseController extends Controller
             $entityUpdated = TypeRelease::findOrFail($id);
 
             return response()->json([
-                'message' => 'TypeRelease atualizado com sucesso!',
+                'message' => 'Tipo de lançamento atualizado com sucesso!',
                 'data' => $entityUpdated
             ]);
 
@@ -155,14 +175,14 @@ class TypeReleaseController extends Controller
             $model = TypeRelease::find($id);
             if (!$model) {
                 return response()->json([
-                    'message' => 'Lancamento não foi encontrado!',
+                    'message' => 'Tipo de lançamento não foi encontrado!',
                     'data' => null
                 ], 404);
             }
             $model->delete();
 
             return response()->json([
-                'message' => 'Lancamento foi excluído com sucesso!',
+                'message' => 'Tipo de lançamento foi excluído com sucesso!',
                 'data' => null
             ]);
 

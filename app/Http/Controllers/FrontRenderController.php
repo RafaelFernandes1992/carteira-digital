@@ -8,11 +8,11 @@ class FrontRenderController extends Controller
 {
     public function login()
     {
-        return view('login');
+        return view('login.index');
     }
 
     public function loginOld()
     {
-        return view('login-old');
+        return view('login.login-old');
     }
 }

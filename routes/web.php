@@ -19,22 +19,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
 
-Route::get('/home', function () {
-    return view('home');
-})->name('index.home')->middleware('auth');
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/', function () {
+    return view('login.index');
+});
+
 Route::get('/login', [FrontRenderController::class, 'login'])
-    ->name('index.login');
+    ->name('login.index');
 
 Route::post('/usuario/logout', [AuthController::class, 'logout'])
-    ->name('usuario.logout')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('usuario.logout');
+
+Route::get('/home', function () {
+    return view('home');
+})
+    ->middleware('auth')
+    ->name('index.home');
+    
+
+
 
 // Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
 // Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
@@ -48,58 +55,76 @@ Route::get('usuario/create', [UserController::class, 'create'])
     ->name('usuario.create');
 
 
+
+/*******************************************************************/
+
 Route::get('competencia', [PeriodController::class, 'index'])
-    ->name('competencia.index')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.index');
 
 Route::get('competencia/create', [PeriodController::class, 'create'])
-    ->name('competencia.create')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.create');
 
 Route::post('competencia/store', [PeriodController::class, 'store'])
-    ->name('competencia.store')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.store');
 
-/** A parte de UPDATE de um CRUD*/
+/** A parte de UPDATE do CRUD*/
 Route::get('competencia/{competenciaId}/edit', [PeriodController::class, 'edit'])
-    ->name('competencia.edit')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.edit');
 
 Route::put('competencia/{competenciaId}', [PeriodController::class, 'update'])
-    ->name('competencia.update')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.update');
 /** -----------------------------*/
 
 
 Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'])
-    ->name('competencia.destroy')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.destroy');
 
 Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
 
+/*******************************************************************/
+
+
+
+
 Route::get('competencia/{competenciaId}/lancamento/create', [PeriodReleaseController::class, 'create'])
-    ->name('competencia.lancamento.create')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.lancamento.create');
 
 Route::post('competencia/{competenciaId}/lancamento', [PeriodReleaseController::class, 'store'])
-    ->name('competencia.lancamento.store')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.lancamento.store');
 
 Route::delete('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'destroy'])
-    ->name('competencia.lancamento.destroy')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('competencia.lancamento.destroy');
 
 /** A parte de UPDATE de um lancamento da competencia*/
 Route::get('lancamento/{lancamentoId}/edit', [PeriodReleaseController::class, 'edit'])
-    ->name('lancamento.edit')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('lancamento.edit');
 
 Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update'])
-    ->name('lancamento.update')
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('lancamento.update');            
 /** -----------------------------*/
 
+/*******************************************************************/
 
 Route::get('tipo-lancamento', [TypeReleaseController::class, 'getAll'])
     ->middleware('auth');
+
+
+Route::get('tipo-lancamento', [TypeReleaseController::class, 'index'])
+    ->middleware('auth')
+    ->name('tipo-lancamento.index');
+
+Route::get('tipo-lancamento/create', [TypeReleaseController::class, 'create'])
+    ->middleware('auth')
+    ->name('tipo-lancamento.create');

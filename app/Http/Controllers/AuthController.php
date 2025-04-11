@@ -27,7 +27,7 @@ class AuthController extends Controller
     {
         Auth::logout();
         $request->session()->invalidate();
-        return redirect()->route('index.login');
+        return redirect()->route('login.index');
     }
 
     public function loginOld(LoginOldUserRequest $request): JsonResponse

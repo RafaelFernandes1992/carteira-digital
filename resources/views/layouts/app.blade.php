@@ -13,7 +13,6 @@
 
     <body>
         @yield('body')
-        <x-navbar-header />
         <div class="container-fluid">
             <div class="row">
                 <x-side-bar/>
