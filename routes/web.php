@@ -117,7 +117,7 @@ Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update
 
 /*******************************************************************/
 
-Route::get('tipo-lancamento', [TypeReleaseController::class, 'getAll'])
+Route::get('tipo-lancamento-getAll', [TypeReleaseController::class, 'getAll'])
     ->middleware('auth');
 
 

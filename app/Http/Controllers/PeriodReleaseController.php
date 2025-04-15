@@ -41,7 +41,6 @@ class PeriodReleaseController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-
         $dados['items'] = $dados['items']->map(function (PeriodRelease $item) {
             return [
                 'id' => $item->id,

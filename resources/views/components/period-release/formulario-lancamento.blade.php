@@ -9,11 +9,7 @@
 
     <div class="col-md-2">
         <label for="tipoOperacao" class="form-label">Tipo</label>
-        <select
-                {{--                onchange="preencherOpcoesSelect(this)" --}}
-                class="form-select" aria-label="Default select example" id="tipoOperacao" name="tipoOperacao"
-                {{--                    required--}}
-        >
+        <select class="form-select" aria-label="Default select example" id="tipoOperacao" name="tipoOperacao">
             <option selected value="despesa">Despesa</option>
             <option value="receita">Receita</option>
             <option value="investimento">Investimento</option>
@@ -22,11 +18,7 @@
 
     <div class="col-md-4">
         <label for="type_release_id" class="form-label">Descrição</label>
-        <select class="form-select" aria-label="Default select example" id="type_release_id" name="type_release_id"
-                {{--                    required--}}
-        >
-            <!-- usando função JS preencherOpcoesSelect() para carregar a lista -->
-        </select>
+        <select class="form-select" aria-label="Default select example" id="type_release_id" name="type_release_id"></select>
     </div>
 
     <div class="col-md-2">
@@ -98,7 +90,7 @@
 
     async function getTiposLancamento() {
         try {
-            const response = await axios.get('/tipo-lancamento');
+            const response = await axios.get('/tipo-lancamento-getAll');
             tiposLancamentos = response.data.data
 
         } catch (error) {
