@@ -16,11 +16,11 @@
     </div>
     <div class="col-md-2">
         <label class="form-label">Saldo Inicial</label>
-        <input type="text" class="form-control" value="{{ $saldo_inicial }}" disabled>
+        <input type="number" class="form-control" value="{{ $saldo_inicial }}" disabled>
     </div>
     <div class="col-md-2">
         <label class="form-label">Receitas</label>
-        <input type="text" class="form-control" value="{{ $creditadas_total }}" disabled>
+        <input type="number" class="form-control" value="{{ $creditadas_total }}" disabled>
     </div>
     <div class="col-md-2">
         <label class="form-label">Despesas
@@ -30,21 +30,21 @@
                 </span>
             @endif
         </label>
-        <input type="text" class="form-control" value="{{ $debitadas_total }}" disabled>
+        <input type="number" class="form-control" value="{{ $debitadas_total }}" disabled>
     </div>
     <div class="col-md-2">
         <label class="form-label">Investimentos</label>
-        <input type="text" class="form-control" value="{{ 0 }}" disabled>
+        <input type="number" class="form-control" value="{{ 0 }}" disabled>
     </div>
     <div class="col-md-2">
         <label class="form-label">Saldo Final
-            @if($nao_debitadas_total !== $saldo_atual)
+            @if($nao_debitadas_total > 0)
                 <span class="badge bg-success-subtle text-success-emphasis rounded-pill">
-                    {{$previsao_debitada}}
+                    {{$saldo_atual_previsto}}
                 </span>
             @endif
         </label>
-        <input type="text" class="form-control" value="{{ $saldo_atual }}" disabled>
+        <input type="number" class="form-control" value="{{ $saldo_atual }}" disabled>
     </div>
 
     <label class="form-label">Dízimo calculado: {{ 0 }}</label>

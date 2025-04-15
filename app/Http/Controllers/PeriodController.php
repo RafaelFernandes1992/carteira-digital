@@ -28,9 +28,9 @@ class PeriodController extends Controller
             return [
                 'id' => $period->id,
                 'competencia' => $competencia->format('m/Y'),
-                'descricao' => $period->descricao,
-                'saldo_inicial' => $period->saldo_inicial,
-                'saldo_atual' => $period->saldo_atual,
+                'descricao' => $period->descricao, 
+                'saldo_inicial' => number_format($period->saldo_inicial, 2, ',', '.'),
+                'saldo_atual' => number_format($period->saldo_atual, 2, ',', '.'),
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
@@ -92,11 +92,11 @@ class PeriodController extends Controller
         //saldo atual = saldo atual - não debitada
 
         return [
-            'debitadas_total' => (float)$somaDebitadas,
-            'creditadas_total' => (float)$somaCreditadas,
-            'nao_debitadas_total' => (float)$somaNaoDebitadas,
-            'saldo_atual_previsto' => (float)$period->saldo_atual - $somaNaoDebitadas,
-            'previsao_debitada' => (float)$somaDebitadas + $somaNaoDebitadas,
+            'debitadas_total' => number_format((float)$somaDebitadas, 2, ',', '.'),
+            'creditadas_total' => number_format((float)$somaCreditadas, 2, ',', '.'),
+            'nao_debitadas_total' => number_format((float)$somaNaoDebitadas, 2, ',', '.'),
+            'saldo_atual_previsto' => number_format((float)$period->saldo_atual - $somaNaoDebitadas, 2, ',', '.'),
+            'previsao_debitada' => number_format((float)$somaDebitadas + $somaNaoDebitadas, 2, ',', '.'),
         ];
     }
 
@@ -166,11 +166,11 @@ class PeriodController extends Controller
 
             $existePeriodRelease = $model->periodReleases()->exists();
             if ($existePeriodRelease) {
-                return back()->withErrors(['error' => 'Não é possível excluir competencia com lançamentos']);
+                return back()->withErrors(['error' => 'Não é possível excluir competência com lançamentos!']);
             }
 
             $model->delete();
-            return back()->with(['message' => 'Competencia excluída com sucesso']);
+            return back()->with(['message' => 'Competencia excluída com sucesso!']);
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);

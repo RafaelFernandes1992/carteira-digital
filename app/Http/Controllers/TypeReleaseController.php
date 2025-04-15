@@ -157,37 +157,11 @@ class TypeReleaseController extends Controller
             $model = TypeRelease::where('user_id', $user->id)
                 ->where('id', $dados['id'])->firstOrFail();
             $model->delete();
-            return back()->with(['message' => 'Lancamento excluido com sucesso']);
+            return back()->with(['message' => 'Tipo de lançamento excluído com sucesso']);
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
-
-    // public function destroy(int $id)
-    // {
-    //     try {
-    //         $model = TypeRelease::find($id);
-    //         if (!$model) {
-    //             return response()->json([
-    //                 'message' => 'Tipo de lançamento não foi encontrado!',
-    //                 'data' => null
-    //             ], 404);
-    //         }
-    //         $model->delete();
-
-    //         return response()->json([
-    //             'message' => 'Tipo de lançamento foi excluído com sucesso!',
-    //             'data' => null
-    //         ]);
-
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'message' => $e->getMessage(),
-    //             'data' => null
-    //         ], 500);
-    //     }
-    // }
 
 
 }
