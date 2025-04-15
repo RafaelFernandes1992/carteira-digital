@@ -128,3 +128,7 @@ Route::get('tipo-lancamento', [TypeReleaseController::class, 'index'])
 Route::get('tipo-lancamento/create', [TypeReleaseController::class, 'create'])
     ->middleware('auth')
     ->name('tipo-lancamento.create');
+
+Route::delete('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('tipo-lancamento.destroy');
