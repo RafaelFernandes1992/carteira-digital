@@ -5,17 +5,7 @@
 
     <h3>Usuários Cadastrados</h3>
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
-        <a href="{{ route('usuario.create') }}">
-            <button type="button" class="btn btn-secondary" title="Incluir">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                </svg>
-                Novo
-            </button>
-        </a>
+    <div class="pt-3 pb-3 mb-3 border-bottom">
         <div class="box-search">
             <input type="search" class="form-control" placeholder="Digite um termo para pesquisar" id="pesquisar">
             <button onclick="" class="btn btn-primary" title="Pesquisar">
@@ -53,16 +43,9 @@
                     <td style="width:05%; vertical-align: middle;">{{ $item['id'] }}</td>
                     <td style="width:09%; vertical-align: middle;">{{ $item['nome'] }}</td>
                     <td style="width:18%; vertical-align: middle;">{{ $item['email'] }}</td>
-                    <td style="width:14%; text-align: end; vertical-align: middle;">{{ $item['created_at'] }}</td>
+                    <td style="width:14%; text-align: center; vertical-align: middle;">{{ $item['created_at'] }}</td>
                     <td style="width:9%; text-align: center; vertical-align: middle;">
                         <div class="d-flex justify-content-center gap-2">
-                            <form action="#" method="POST">
-                                <button class="btn btn-warning" type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                    </svg>
-                                </button>
-                            </form>
                             <form action="#" method="POST">
                                 <button class="btn btn-danger" type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
