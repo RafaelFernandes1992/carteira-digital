@@ -32,15 +32,6 @@ class StorePeriodRequest extends FormRequest
         ];
     }
 
-    // protected function failedValidation(Validator $validator)
-    // {
-    //     throw new HttpResponseException(response()->json([
-    //         'status' => 'error',
-    //         'message' => 'Os dados fornecidos são inválidos.',
-    //         'error' => $validator->errors(),
-    //     ], 422));
-    // }
-
     protected function failedValidation(Validator $validator)
     {
         session()->flash('error', 'Os dados fornecidos são inválidos.');

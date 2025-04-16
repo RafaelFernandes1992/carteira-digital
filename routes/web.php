@@ -6,6 +6,7 @@ use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PeriodReleaseController;
 use App\Http\Controllers\TypeReleaseController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,20 +20,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
+// Rota para login (POST) - Tentando autenticar o usuário
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/', function () {
-    return view('login.index');
-});
-
-Route::get('/login', [FrontRenderController::class, 'login'])
-    ->name('login.index');
-
+// Rota para logout (POST) - Desautenticar o usuário
 Route::post('/usuario/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('usuario.logout');
+
+// Rota para o formulário de login (GET)
+Route::get('/login', [FrontRenderController::class, 'login'])->name('login.index');
+
+// Rota para a home (inicial) - Você pode querer uma rota protegida com middleware auth
+Route::get('/', function () {
+    return view('home');  // Ou a página inicial desejada
+})->middleware('auth'); // Ou você pode adicionar um middleware aqui para proteger essa rota
+
+
+
+
+// Rota para exibir o formulário "Esqueceu a Senha"
+Route::get('/esqueceu-senha', [AuthController::class, 'showForgotPasswordForm'])
+    ->name('senha.request');
+
+// Rota para enviar o link de redefinição de senha
+Route::post('/esqueceu-senha', [AuthController::class, 'sendResetLink'])
+    ->name('senha.email');
+
+
+
+
+Route::get('/esqueci-senha', function () {
+    return 'Página de recuperação de senha ainda não implementada.';
+})->name('password.request');
+
+
+Route::get('/esqueci-senha/{token}', [PasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+
+
+Route::get('/cadastro', [UserController::class, 'create'])
+    ->name('users.create'); 
+Route::post('/cadastro', [UserController::class, 'store'])
+    ->name('users.store');  
+
 
 Route::get('/home', function () {
     return view('home');

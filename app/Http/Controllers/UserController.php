@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -36,7 +35,21 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(StoreUserRequest $request): JsonResponse //todos esses precisamos verificar
+    public function store(StoreUserRequest $request)
+    {
+        try {
+            $dados = $request->validated();
+            $dados['password'] = bcrypt($dados['password']);
+    
+            User::create($dados);
+    
+            return redirect()->route('login.index')->with('message', 'Usuário cadastrado com sucesso');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+/*     public function store(StoreUserRequest $request): JsonResponse //todos esses precisamos verificar
     {
         try {
             $dados = $request->validated();
@@ -53,7 +66,7 @@ class UserController extends Controller
                 'data' => null
             ], 500);
         }
-    }
+    } */
 
     public function show(int $id) : JsonResponse
     {
