@@ -13,7 +13,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        return view('car.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return view('car.create');
     }
 
     /**

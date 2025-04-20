@@ -7,6 +7,8 @@ use App\Http\Controllers\PeriodReleaseController;
 use App\Http\Controllers\TypeReleaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\CreditCardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -152,7 +154,6 @@ Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update
 Route::get('tipo-lancamento-getAll', [TypeReleaseController::class, 'getAll'])
     ->middleware('auth');
 
-
 Route::get('tipo-lancamento', [TypeReleaseController::class, 'index'])
     ->middleware('auth')
     ->name('tipo-lancamento.index');
@@ -168,3 +169,24 @@ Route::post('tipo-lancamento/store', [TypeReleaseController::class, 'store'])
 Route::delete('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 'destroy'])
     ->middleware('auth')
     ->name('tipo-lancamento.destroy');
+
+
+/*******************************************************************/
+
+
+
+Route::get('carro', [CarController::class, 'index'])
+    ->middleware('auth')
+    ->name('carro.index');
+
+Route::get('carro/create', [CarController::class, 'create'])
+    ->middleware('auth')
+    ->name('carro.create');
+
+Route::post('carro/store', [CarController::class, 'store'])
+    ->middleware('auth')
+    ->name('carro.store');
+
+Route::delete('carro/{typeReleaseId}', [CarController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('carro.destroy');
