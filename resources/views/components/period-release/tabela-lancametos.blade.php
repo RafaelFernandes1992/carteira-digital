@@ -1,6 +1,7 @@
 @props([
     'items' => []
 ])
+<br>
 <div class="table-responsive small">
     <table class="table table-striped table-sm">
         <thead>

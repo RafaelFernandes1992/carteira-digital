@@ -187,6 +187,37 @@ Route::post('carro/store', [CarController::class, 'store'])
     ->middleware('auth')
     ->name('carro.store');
 
-Route::delete('carro/{typeReleaseId}', [CarController::class, 'destroy'])
+Route::delete('carro/{carId}', [CarController::class, 'destroy'])
     ->middleware('auth')
     ->name('carro.destroy');
+
+
+
+/*******************************************************************/
+
+
+Route::get('cartao-credito', [CreditCardController::class, 'index'])
+->middleware('auth')
+->name('cartao-credito.index');
+
+Route::get('cartao-credito/create', [CreditCardController::class, 'create'])
+->middleware('auth')
+->name('cartao-credito.create');
+
+Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
+->middleware('auth')
+->name('cartao-credito.store');
+
+Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'destroy'])
+->middleware('auth')
+->name('cartao-credito.destroy');
+
+
+
+
+
+
+
+Route::get('alerta-notificacao', function () {
+    return view('alert-notification.index');
+})->middleware('auth')->name('alerta-notificacao.index');

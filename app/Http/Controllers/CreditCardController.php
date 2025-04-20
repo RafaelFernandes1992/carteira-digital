@@ -13,7 +13,7 @@ class CreditCardController extends Controller
      */
     public function index()
     {
-        //
+        return view('credit-card.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class CreditCardController extends Controller
      */
     public function create()
     {
-        //
+        return view('credit-card.create');
     }
 
     /**

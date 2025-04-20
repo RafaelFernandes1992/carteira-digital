@@ -2,8 +2,9 @@
 
 
 body {
-    background-color: white;
-  }
+  background-color: white;
+}
+ 
 
   /*personalisa o Carteira Digital para ficar com fundo */
 .custom-title {
@@ -32,6 +33,9 @@ h4 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 100vh;
   padding-top: 20px;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
 }
 
 .sidebar .navbar-brand {
