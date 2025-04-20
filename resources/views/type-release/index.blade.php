@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3>Tipos de Lançamento</h3>
+    <h4>Tipos de Lançamento</h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('tipo-lancamento.create') }}">
@@ -25,15 +25,6 @@
             </button>
         </div>
     </div>
-
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
 
     <div class="table-responsive small">
         <table class="table table-striped table-sm">

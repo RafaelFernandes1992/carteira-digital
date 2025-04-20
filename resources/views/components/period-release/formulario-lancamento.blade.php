@@ -2,6 +2,7 @@
     'competenciaId'
 ])
 
+<br>
 <form action="{{ route('competencia.lancamento.store', $competenciaId) }}" method="POST"
       class="row g-3 align-items-end">
 
@@ -40,6 +41,7 @@
         <label for="data_debito_credito" class="form-label">Data</label>
         <input type="date" class="form-control" id="data_debito_credito" name="data_debito_credito" required>
     </div>
+    
     <div class="col-md-11">
         <label for="observacao" class="form-label">Observação</label>
         <input type="text" class="form-control" id="observacao" name="observacao">
@@ -49,6 +51,7 @@
         <button type="submit" class="btn btn-primary" name="gravar" id="gravar">Gravar</button>
     </div>
 </form>
+
 
 <script>
     let tiposLancamentos = null;

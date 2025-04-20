@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreTypeReleaseRequest extends FormRequest
 {
@@ -31,12 +30,13 @@ class StoreTypeReleaseRequest extends FormRequest
             'tipo' => 'required|in:receita,despesa,investimento',
         ];
     }
+
+
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'message' => 'Os dados fornecidos são inválidos.',
-            'error' => $validator->errors(),
-        ], 422));
+        session()->flash('error', 'Os dados fornecidos são inválidos.');
+        session()->flash('validation_errors', $validator->errors());
+        return redirect()->back()->withInput();
     }
+
 }

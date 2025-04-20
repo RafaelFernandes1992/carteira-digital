@@ -55,4 +55,5 @@ class PeriodRelease extends Model
     {
         return $this->belongsTo(TypeRelease::class);
     }
+
 }

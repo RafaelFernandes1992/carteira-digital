@@ -71,23 +71,19 @@ class TypeReleaseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreTypeReleaseRequest $request)
     {
         try {
             $dados = $request->validated();
-            $dados['user_id'] = Auth::user()->id;
-            $entityCreated = TypeRelease::create($dados);
+            $dados['user_id'] = auth()->user()->id;
+            TypeRelease::create($dados);
 
-            return response()->json([
-                'message' => 'Tipo de lançamento criado com sucesso!',
-                'data' => $entityCreated
-            ], 201);
+            $dados['message'] = 'Tipo de lançamento criado com sucesso!';
+            return redirect()->route('tipo-lancamento.index')->with('message', 'Tipo de lançamento criado com sucesso!');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -156,12 +152,21 @@ class TypeReleaseController extends Controller
             $user = Auth::user();
             $model = TypeRelease::where('user_id', $user->id)
                 ->where('id', $dados['id'])->firstOrFail();
+            
+            $existePeriodRelease = $model->periodReleases()->exists();
+            if ($existePeriodRelease) {
+                return back()->withErrors(['error' => 'Não é possível excluir um tipo de lançamento que já está sendo utilizado!']);
+            }  
+
             $model->delete();
-            return back()->with(['message' => 'Tipo de lançamento excluído com sucesso']);
+            return back()->with(['message' => 'Tipo de lançamento excluído com sucesso!']);
+
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+
 
 
 }

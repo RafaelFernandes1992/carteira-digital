@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3>Competências da Carteira</h3>
+    <h4>Competências da Carteira</h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('competencia.create') }}">
@@ -26,12 +26,12 @@
         </div>
     </div>
 
-
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
+                <p class="mb-0">{{ $error }}</p>
             @endforeach
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 

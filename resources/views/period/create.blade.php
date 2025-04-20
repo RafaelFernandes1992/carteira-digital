@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('content')
 
-<h3>Competência da Carteira</h3>
-<br>
-<a href="{{ route('competencia.index') }}">
-    <button type="submit" class="btn btn-secondary" name="cancelar" id="cancelar">Cancelar</button>
-</a>
-<br>
-<br>
+<h4>Cadastra Competência da Carteira</h4>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
+    <a class="btn btn-secondary" href="{{ route('competencia.index') }}">Cancelar</a>
+</div>
+
 <form action="{{ route('competencia.store') }}" method="POST" class="row g-3">
 
     <div class="col-md-3">

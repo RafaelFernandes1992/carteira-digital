@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <h3>Usuários Cadastrados</h3>
+    <h4>Usuários</h4>
 
     <div class="pt-3 pb-3 mb-3 border-bottom">
         <div class="box-search">

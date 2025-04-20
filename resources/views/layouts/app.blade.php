@@ -19,14 +19,11 @@
                 <main class="col-sm-8 col-md-9 col-lg-10 ms-sm-auto py-4 px-5">
 
                     @if(session('message'))
-                        {{--        <div class="alert alert-success">--}}
-                        {{--            {{ session('message') }}--}}
-                        {{--        </div>--}}
                         <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
                             <div class="toast text-bg-success show align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
                                 <div class="d-flex">
                                     <div class="toast-body">
-                                        {{ session('message') }}
+                                        <p>{{ session('message') }}</p>
                                     </div>
                                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
@@ -34,14 +31,21 @@
                         </div>
                     @endif
 
-{{--todo: finalizar corretamente o uso de toast no app--}}
-{{--  @if ($errors->any())
-    <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    </div>
-@endif--}}
+                    @if ($errors->any())
+                        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+                            <div class="toast text-bg-danger show align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        @foreach ($errors->all() as $error)
+                                            <p>{{ $error }}</p>
+                                        @endforeach
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if(session('error') || session('validation_errors'))
                         <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
                             <div class="toast text-bg-danger show align-items-center" role="alert" aria-live="assertive" aria-atomic="true">

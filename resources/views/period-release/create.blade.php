@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3>Lançamentos da competência</h3>
-    <br>
+
+    <h4>Lançamentos da Carteira - Competência # {{ $competenciaId }} </h4>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
+        <a class="btn btn-secondary" href="{{ route('competencia.index') }}">Cancelar</a>
+    </div>
+
     <x-period-release.header
             :saldo_inicial="$period['saldo_inicial'] ?? 0"
             :saldo_atual="$period['saldo_atual'] ?? 0"
@@ -12,14 +17,15 @@
             :saldo_atual_previsto="$period['saldo_atual_previsto'] ?? 0"
             :previsao_debitada="$period['previsao_debitada'] ?? 0"
     />
-{{--    todo: colocar o erros em layout/app.blade.php--}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
+    <br>
+
+    <div class="d-flex justify-content-start gap-3">
+        <a class="btn" style="background-color:rgb(91, 177, 217); color: white;">Inclui itens rotineiros</a>
+        <a class="btn" style="background-color:rgb(156, 217, 91); color: white;">Lançamentos do Carro</a>
+        <a class="btn" style="background-color:rgb(217, 183, 91); color: white;">Lançamentos do Cartão de Crédito</a>
+    </div>
+
     <x-period-release.formulario-lancamento :competencia-id="$competenciaId" />
+
     <x-period-release.tabela-lancametos :items="$items" />
 @endsection

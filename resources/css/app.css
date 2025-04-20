@@ -5,6 +5,7 @@ body {
     background-color: white;
   }
 
+  /*personalisa o Carteira Digital para ficar com fundo */
 .custom-title {
     background: linear-gradient(135deg, #022d5c, #0069d9); /* Gradiente do azul escuro para o azul claro */
     /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  Sombra mais leve */
@@ -18,3 +19,52 @@ body {
   gap: .9%;
   width: 400px;
 }
+
+h4 {
+  color: #007bff !important;
+  font-weight: bold;
+}
+
+.sidebar {
+  
+  background-color: rgb(235, 235, 235) !important;
+  border-radius: 1px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.sidebar .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff !important;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.sidebar .nav-link {
+  padding: 10px 20px;
+  color: #333;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #ffffff;
+  color: #007bff;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.sidebar .nav-link svg {
+  color: #007bff;
+}
+
+.sidebar-heading {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #888;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+

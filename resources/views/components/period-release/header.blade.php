@@ -9,11 +9,12 @@
 ])
 
 <div class="row g-3 align-items-end">
+
     <div class="col-md-2">
-        <a href="{{ route('competencia.index') }}">
-            <button type="submit" class="btn btn-secondary" name="cancelar" id="cancelar">Cancelar</button>
-        </a>
+        <label class="form-label">Dízimo calculado</label>
+        <input type="number" class="form-control" value="{{ 0 }}" disabled>
     </div>
+
     <div class="col-md-2">
         <label class="form-label">Saldo Inicial</label>
         <input type="number" class="form-control" value="{{ $saldo_inicial }}" disabled>
@@ -46,13 +47,5 @@
         </label>
         <input type="number" class="form-control" value="{{ $saldo_atual }}" disabled>
     </div>
-
-    <label class="form-label">Dízimo calculado: {{ 0 }}</label>
-    <form action="" method="POST">
-        <a>
-            <button type="submit" class="btn btn-success" name="rotineiro" id="rotineiro">Inclui itens rotineiros
-            </button>
-        </a>
-    </form>
 
 </div>

@@ -48,14 +48,16 @@ class PeriodReleaseController extends Controller
                 'observacao' => $item->observacao,
                 'situacao' => $item->getSituacaoFormatada(),
                 'data_debito_credito' => Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
-                'type_release' => [
+                'type_release' => $item->typeRelease ? [
                     'id' => $item->typeRelease->id,
                     'tipo' => ucfirst($item->typeRelease->tipo),
                     'descricao' => ucfirst($item->typeRelease->descricao),
-                ],
+                ] : null,
             ];
         });
         $dados['competenciaId'] = $competenciaId;
+
+        //dd($dados['items']);
 
         return view('period-release.create')->with($dados);
     }
@@ -148,7 +150,7 @@ class PeriodReleaseController extends Controller
                 ->where('id', $dados['id'])->firstOrFail();
             $item->update($dados);
 
-            $dados['message'] = 'Competência atualizada com sucesso';
+            $dados['message'] = 'Lançamento atualizado com sucesso!';
             return redirect()->route('competencia.lancamento.create', $item->period_id)->with($dados);
 
         } catch (\Exception $e) {
@@ -167,7 +169,7 @@ class PeriodReleaseController extends Controller
             $model = PeriodRelease::where('user_id', $user->id)
                 ->where('id', $dados['id'])->firstOrFail();
             $model->delete();
-            return back()->with(['message' => 'Lancamento excluido com sucesso']);
+            return back()->with(['message' => 'Lancamento excluído com sucesso!']);
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
