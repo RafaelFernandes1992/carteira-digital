@@ -122,6 +122,10 @@ Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'
 Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
 
+Route::post('/competencia/{competenciaId}/rotineiros', [PeriodController::class, 'addRoutineItems'])
+    ->middleware('auth')
+    ->name('competencia.rotineiros');
+
 /*******************************************************************/
 
 

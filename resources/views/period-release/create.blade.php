@@ -20,7 +20,10 @@
     <br>
 
     <div class="d-flex justify-content-start gap-3">
-        <a class="btn" style="background-color:rgb(91, 177, 217); color: white;">Inclui itens rotineiros</a>
+        <form action="{{ route('competencia.rotineiros', $competenciaId) }}" method="post">
+            @csrf
+            <button type="submit" class="btn" style="background-color:rgb(91, 177, 217); color: white;">Inclui itens rotineiros</button>
+        </form>
         <a class="btn" style="background-color:rgb(156, 217, 91); color: white;">Lançamentos do Carro</a>
         <a class="btn" style="background-color:rgb(217, 183, 91); color: white;">Lançamentos do Cartão de Crédito</a>
     </div>

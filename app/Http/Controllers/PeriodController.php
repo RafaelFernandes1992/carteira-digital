@@ -2,19 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddRoutineItemsRequest;
 use App\Http\Requests\DestroyPeriodRequest;
 use App\Http\Requests\EditPeriodRequest;
 use App\Models\Period;
 use App\Http\Requests\StorePeriodRequest;
 use App\Http\Requests\UpdatePeriodRequest;
 use App\Models\PeriodRelease;
+use App\Models\TypeRelease;
 use App\Traits\ValidateScopeTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PeriodController extends Controller
 {
     use ValidateScopeTrait;
+    public function addRoutineItems(AddRoutineItemsRequest $request)
+    {
+        try {
+            $count = 0;
+            DB::beginTransaction();
+            $dados = $request->validated();
+            $user = Auth::user();
+            $itensRotineiros = TypeRelease
+                ::where('user_id', $user->id)
+                ->where('rotineira', true)
+                ->get();
+
+            foreach ($itensRotineiros as $item) {
+                $dadosParaPeriodRelease = [
+                    'valor_total' => 0,
+                    'data_debito_credito' => Carbon::now(),
+                    'situacao' => $this->getSituacaoByTipo($item->tipo),
+                    'user_id' => $user->id,
+                    'period_id' => $dados['id'],
+                    'type_release_id' => $item->id,
+                ];
+                $this->criaPeriodReleaseSeNaoExiste($dadosParaPeriodRelease, $count);
+            }
+
+            $message = 'Itens rotineiros incluídos com sucesso';
+            if ($count === 0) {
+                $message = 'Nenhum item rotineiro para incluir.';
+            }
+
+            DB::commit();
+            return redirect()->route('competencia.lancamento.create', $dados['id'])
+                ->with('message', $message);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+    private function criaPeriodReleaseSeNaoExiste(array $data, int &$count): void
+    {
+        $existe = PeriodRelease
+            ::where('user_id', $data['user_id'])
+            ->where('period_id', $data['period_id'])
+            ->where('type_release_id', $data['type_release_id'])
+            ->exists();
+        if (!$existe) {
+            $count++;
+            PeriodRelease::create($data);
+        }
+    }
+
+    private function getSituacaoByTipo(string $tipo): string
+    {
+        if ($tipo !== 'receita') {
+            return 'nao_debitado';
+        }
+        return 'creditado';
+    }
 
     /**
      * Display a listing of the resource.
@@ -28,7 +89,7 @@ class PeriodController extends Controller
             return [
                 'id' => $period->id,
                 'competencia' => $competencia->format('m/Y'),
-                'descricao' => $period->descricao, 
+                'descricao' => $period->descricao,
                 'saldo_inicial' => number_format($period->saldo_inicial, 2, ',', '.'),
                 'saldo_atual' => number_format($period->saldo_atual, 2, ',', '.'),
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
