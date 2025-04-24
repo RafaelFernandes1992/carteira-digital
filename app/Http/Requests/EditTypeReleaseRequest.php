@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTypeReleaseRequest extends FormRequest
+class EditTypeReleaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,9 @@ class UpdateTypeReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:type_releases,id',
-            'descricao' => 'required|string|min:3|max:100',
-            'rotineira' => 'nullable|boolean',
-            'dedutivel' => 'nullable|boolean',
-            'isenta' => 'nullable|boolean',
-            'tipo' => 'required|in:receita,despesa,investimento',
+            'id' => 'required|string|exists:type_releases,id'
         ];
     }
-
     public function validationData(): array
     {
         return array_merge($this->all(), [

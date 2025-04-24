@@ -155,25 +155,42 @@ Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update
 
 /*******************************************************************/
 
-Route::get('tipo-lancamento-getAll', [TypeReleaseController::class, 'getAll'])
-    ->middleware('auth');
-
+/** Inicio READ do CRUD */
 Route::get('tipo-lancamento', [TypeReleaseController::class, 'index'])
     ->middleware('auth')
     ->name('tipo-lancamento.index');
+/** Fim READ do CRUD */
 
+/** Inicio CREATE do CRUD */
 Route::get('tipo-lancamento/create', [TypeReleaseController::class, 'create'])
     ->middleware('auth')
     ->name('tipo-lancamento.create');
-
 Route::post('tipo-lancamento/store', [TypeReleaseController::class, 'store'])
     ->middleware('auth')
     ->name('tipo-lancamento.store');
+/** Fim CREATE do CRUD */
 
+/** Inicio UPDATE do CRUD */
+Route::get('tipo-lancamento/{typeReleaseId}/edit', [TypeReleaseController::class, 'edit'])
+    ->middleware('auth')
+    ->name('tipo-lancamento.edit');
+Route::put('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 'update'])
+    ->middleware('auth')
+    ->name('tipo-lancamento.update');
+/** Fim UPDATE do CRUD */
+
+/** Inicio DELETE do CRUD */
 Route::delete('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 'destroy'])
     ->middleware('auth')
     ->name('tipo-lancamento.destroy');
+/** Fim DELETE do CRUD */
 
+/** EXTRAS */
+Route::get('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 'show'])
+    ->middleware('auth');
+
+Route::get('tipo-lancamento-getAll', [TypeReleaseController::class, 'getAll'])
+    ->middleware('auth');
 
 /*******************************************************************/
 

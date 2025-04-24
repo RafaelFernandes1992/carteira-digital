@@ -31,9 +31,23 @@
                         </div>
                     @endif
 
-                    @if ($errors->any())
+                    @if(session('messageWarning'))
                         <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
-                            <div class="toast text-bg-danger show align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast text-bg-warning show align-items-center text-white" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        <p>{{ session('messageWarning') }}</p>
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    
+                    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+                        @if ($errors->any())
+                            <div class="toast text-bg-danger show align-items-center mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                                 <div class="d-flex">
                                     <div class="toast-body">
                                         @foreach ($errors->all() as $error)
@@ -43,12 +57,10 @@
                                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fechar"></button>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
 
-                    @if(session('error') || session('validation_errors'))
-                        <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
-                            <div class="toast text-bg-danger show align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+                        @if(session('error') || session('validation_errors'))
+                            <div class="toast text-bg-danger show align-items-center mb-2" role="alert" aria-live="assertive" aria-atomic="true">
                                 <div class="d-flex">
                                     <div class="toast-body">
                                         <!-- Exibe a mensagem de erro, se houver -->
@@ -68,8 +80,13 @@
                                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
+                    
+
+                    
+
+
                     
                     @yield('content')
                     

@@ -42,14 +42,23 @@ class PeriodController extends Controller
                 $this->criaPeriodReleaseSeNaoExiste($dadosParaPeriodRelease, $count);
             }
 
-            $message = 'Itens rotineiros incluídos com sucesso';
-            if ($count === 0) {
-                $message = 'Nenhum item rotineiro para incluir.';
-            }
+
 
             DB::commit();
-            return redirect()->route('competencia.lancamento.create', $dados['id'])
+
+            
+            if ($count > 0) {
+                $message = 'Itens rotineiros incluídos com sucesso!';
+                return redirect()->route('competencia.lancamento.create', $dados['id'])
                 ->with('message', $message);
+            }
+
+            if ($count === 0) {
+                $messageWarning = 'Nenhum item rotineiro para incluir.';
+                return redirect()->route('competencia.lancamento.create', $dados['id'])
+                ->with('messageWarning', $messageWarning);
+            }
+
 
         } catch (\Exception $e) {
             DB::rollBack();

@@ -49,25 +49,6 @@ class UserController extends Controller
         }
     }
 
-/*     public function store(StoreUserRequest $request): JsonResponse //todos esses precisamos verificar
-    {
-        try {
-            $dados = $request->validated();
-            $entityCreated = User::create($dados);
-
-            return response()->json([
-                'message' => 'Usuário criado com sucesso!',
-                'data' => $entityCreated
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
-    } */
-
     public function show(int $id) : JsonResponse
     {
         try {

@@ -6,15 +6,12 @@ use App\Models\TypeRelease;
 use App\Http\Requests\DestroyTypeReleaseRequest;
 use App\Http\Requests\StoreTypeReleaseRequest;
 use App\Http\Requests\UpdateTypeReleaseRequest;
+use App\Http\Requests\EditTypeReleaseRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class TypeReleaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
 
     public function index()
     {
@@ -35,42 +32,11 @@ class TypeReleaseController extends Controller
         return view('type-release.index')->with(['itens' => $itens]);
     }
 
-    public function getAll()
-    {
-        try {
-            //eager loading
-            $user = Auth::user();
-            $dados = TypeRelease::where('user_id', $user->id)
-                ->select(['id', 'tipo', 'descricao'])
-                ->get();
-
-            $success = count($dados) > 0;
-            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
-
-            return response()->json([
-                'message' => $message,
-                'data' => $dados
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('type-release.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
 
     public function store(StoreTypeReleaseRequest $request)
     {
@@ -80,70 +46,56 @@ class TypeReleaseController extends Controller
             TypeRelease::create($dados);
 
             $dados['message'] = 'Tipo de lançamento criado com sucesso!';
-            return redirect()->route('tipo-lancamento.index')->with('message', 'Tipo de lançamento criado com sucesso!');
+            return redirect()->route('tipo-lancamento.index')->with('message', 'Tipo de lançamento incluído com sucesso!');
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(int $id)
-    {
-        try {
-            $user = TypeRelease::find($id);
-            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
+    
 
-            return response()->json([
-                'message' => $message,
-                'data' => $user ?? []
-            ]);
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTypeReleaseRequest $request, int $id)
+    public function edit(EditTypeReleaseRequest $request)
     {
         try {
             $dados = $request->validated();
-            TypeRelease::find($id)->update($dados);
+            $user = Auth::user();
+            $typeRelease = TypeRelease::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
 
-            $entityUpdated = TypeRelease::findOrFail($id);
-
-            return response()->json([
-                'message' => 'Tipo de lançamento atualizado com sucesso!',
-                'data' => $entityUpdated
-            ]);
+            return view('type-release.edit')
+                ->with([
+                    'id' => $typeRelease->id,
+                    'tipo' => $typeRelease->tipo,
+                    'descricao' => $typeRelease->descricao,
+                    'rotineira' => $typeRelease->rotineira,
+                    'dedutivel' => $typeRelease->dedutivel,
+                    'isenta' => $typeRelease->isenta,
+                ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+    public function update(UpdateTypeReleaseRequest $request)
+    {
+        try {
+            $dados = $request->validated();
+            $typerelease = TypeRelease::where('user_id', Auth::user()->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            $typerelease->update($dados);
+
+            $dados['message'] = 'Tipo de lançamento atualizado com sucesso!';
+            return redirect()->route('tipo-lancamento.index')->with($dados);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
 
     public function destroy(DestroyTypeReleaseRequest $request)
     {
@@ -167,6 +119,47 @@ class TypeReleaseController extends Controller
     }
 
 
+    public function show(int $id)
+    {
+        try {
+            $user = TypeRelease::find($id);
+            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
 
+            return response()->json([
+                'message' => $message,
+                'data' => $user ?? []
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
+
+    public function getAll()
+    {
+        try {
+            $user = Auth::user();
+            $dados = TypeRelease::where('user_id', $user->id)
+                ->select(['id', 'tipo', 'descricao'])
+                ->get();
+
+            $success = count($dados) > 0;
+            $message = $success ? 'Registros encontrados' : 'Nenhum registro encontrado';
+
+            return response()->json([
+                'message' => $message,
+                'data' => $dados
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
 
 }

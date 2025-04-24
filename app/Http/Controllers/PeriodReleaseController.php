@@ -74,7 +74,7 @@ class PeriodReleaseController extends Controller
 
             $this->lidarComLancamento($model);
 
-            $dados['message'] = 'Lançamento criado com sucesso';
+            $dados['message'] = 'Lançamento incluído com sucesso!';
 
             return back()->with($dados);
         } catch (\Exception $e) {
