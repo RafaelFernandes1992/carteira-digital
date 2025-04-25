@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class StorePeriodReleaseRequest extends FormRequest
 {
@@ -39,4 +38,12 @@ class StorePeriodReleaseRequest extends FormRequest
             'period_id' => $this->route('competenciaId'),
         ]);
     }
+
+    protected function failedValidation(Validator $validator)
+    {
+        session()->flash('error', 'Os dados fornecidos são inválidos.');
+        session()->flash('validation_errors', $validator->errors());
+        return redirect()->back()->withInput();
+    }
+
 }

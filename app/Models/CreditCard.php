@@ -15,8 +15,8 @@ class CreditCard extends Model
         'numero_cartao',
         'apelido',
         'valor_limite',
-        'data_vencimento_fatura',
-        'data_fechamento_fatura',
+        'dia_vencimento_fatura',
+        'dia_fechamento_fatura',
         'user_id',
     ];
 

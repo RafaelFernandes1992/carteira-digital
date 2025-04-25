@@ -8,7 +8,7 @@ use App\Models\PeriodRelease;
 use App\Http\Requests\StorePeriodReleaseRequest;
 use App\Http\Requests\UpdatePeriodReleaseRequest;
 use App\Models\TypeRelease;
-use App\Services\Period\PeriodService;
+use App\Services\PeriodService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,17 +22,11 @@ class PeriodReleaseController extends Controller
         $this->periodService = $periodService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(string $competenciaId)
     {
         $dados['period'] = $this->periodService->getDetalhesCompetenciaById($competenciaId);
@@ -62,9 +56,7 @@ class PeriodReleaseController extends Controller
         return view('period-release.create')->with($dados);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StorePeriodReleaseRequest $request)
     {
         try {
@@ -100,17 +92,6 @@ class PeriodReleaseController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PeriodRelease $periodRelease)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(EditPeriodReleaseRequest $request)
     {
         try {
@@ -139,9 +120,7 @@ class PeriodReleaseController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdatePeriodReleaseRequest $request)
     {
         try {
@@ -158,9 +137,7 @@ class PeriodReleaseController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(DestroyPeriodReleaseRequest $request)
     {
         try {

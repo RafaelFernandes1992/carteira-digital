@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Period;
+namespace App\Services;
 
 use App\Models\Period;
 use App\Models\PeriodRelease;

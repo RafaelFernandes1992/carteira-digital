@@ -21,11 +21,11 @@ class TypeReleaseController extends Controller
             
             return [
                 'id' => $item->id,
+                'tipo' => ucfirst($item->tipo),
                 'descricao' => $item->descricao,
-                'rotineira' => $item->rotineira,
-                'dedutivel' => $item->dedutivel,
-                'isenta' => $item->isenta,
-                'tipo' => $item->tipo,
+                'rotineira' => $item->rotineira ? 'Sim' : 'Não',
+                'isenta' => $item->isenta ? 'Sim' : 'Não',
+                'dedutivel' => $item->dedutivel ? 'Sim' : 'Não', 
                 'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
@@ -45,15 +45,13 @@ class TypeReleaseController extends Controller
             $dados['user_id'] = auth()->user()->id;
             TypeRelease::create($dados);
 
-            $dados['message'] = 'Tipo de lançamento criado com sucesso!';
+            $dados['message'] = 'Tipo de lançamento incluído com sucesso!';
             return redirect()->route('tipo-lancamento.index')->with('message', 'Tipo de lançamento incluído com sucesso!');
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
-    
 
 
     public function edit(EditTypeReleaseRequest $request)

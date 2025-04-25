@@ -229,13 +229,22 @@ Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
 ->middleware('auth')
 ->name('cartao-credito.store');
 
+/** Inicio UPDATE do CRUD */
+Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, 'edit'])
+    ->middleware('auth')
+    ->name('cartao-credito.edit');
+Route::put('cartao-credito/{creditCardId}', [CreditCardController::class, 'update'])
+    ->middleware('auth')
+    ->name('cartao-credito.update');
+/** Fim UPDATE do CRUD */
+
 Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'destroy'])
 ->middleware('auth')
 ->name('cartao-credito.destroy');
 
 
 
-
+/*******************************************************************/
 
 
 
