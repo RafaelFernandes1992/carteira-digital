@@ -2,7 +2,10 @@
 
 @section('content')
 
-    <h4>Tipos de Lançamento</h4>
+    <h4>
+        <i class="bi bi-currency-dollar"></i>
+        <span>Tipos de Lançamento</span> 
+    </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('tipo-lancamento.create') }}">

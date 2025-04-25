@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DestroyCreditCardRequest;
 use App\Models\CreditCard;
 use App\Http\Requests\StoreCreditCardRequest;
 use App\Http\Requests\UpdateCreditCardRequest;
-use App\Http\Requests\DestroyTypeReleaseRequest;
+use App\Http\Requests\DestroyCreditCardRequest;
+use App\Http\Requests\EditCreditCardRequest;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -60,20 +60,43 @@ class CreditCardController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CreditCard $creditCards)
+    public function edit(EditCreditCardRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            $typeRelease = CreditCard::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+
+            return view('credit-card.edit')
+                ->with([
+                    'id' => $typeRelease->id,
+                    'numero_cartao' => $typeRelease->numero_cartao,
+                    'apelido' => $typeRelease->apelido,
+                    'valor_limite' => $typeRelease->valor_limite,
+                    'dia_vencimento_fatura' => $typeRelease->dia_vencimento_fatura,
+                    'dia_fechamento_fatura' => $typeRelease->dia_fechamento_fatura,
+                ]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCreditCardRequest $request, CreditCard $creditCards)
+    public function update(UpdateCreditCardRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $typerelease = CreditCard::where('user_id', Auth::user()->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            $typerelease->update($dados);
+
+            $dados['message'] = 'Cartão de Crédito atualizado com sucesso!';
+            return redirect()->route('cartao-credito.index')->with($dados);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**

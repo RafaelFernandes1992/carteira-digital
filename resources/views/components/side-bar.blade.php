@@ -9,14 +9,14 @@
         <ul class="nav flex-column">
 
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('index.home') }}">                   
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('inicio') }}">                   
                     <i class="bi bi-house"></i>
-                    <span>Dashboard</span>
+                    <span>Início</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('competencia.index') }}">                    
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('competencia-carteira.index') }}">                    
                     <i class="bi bi-wallet2"></i>
                     <span>Carteira</span>
                 </a>
@@ -83,7 +83,7 @@
 
         </ul>
     </div>
-    <form action="{{ route('usuario.logout') }}" method="post">
+    <form action="{{ route('usuario.logout') }}" method="POST">
         <div class="d-flex justify-content-center py-3">
             <button type="submit" class="btn btn-secondary"> 
                 <i class="bi bi-power"></i> 

@@ -2,7 +2,10 @@
 
 @section('content')
 
-    <h4>Cartões de Crédito</h4>
+    <h4>
+        <i class="bi bi-credit-card-2-back"></i> 
+        <span>Cartões de Crédito</span>
+    </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('cartao-credito.create') }}">

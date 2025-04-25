@@ -5,7 +5,7 @@
     <h4>Lançamentos da Carteira - Competência # {{ $competenciaId }} </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
-        <a class="btn btn-secondary" href="{{ route('competencia.index') }}">Cancelar</a>
+        <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">Cancelar</a>
     </div>
 
     <x-period-release.header
@@ -20,7 +20,7 @@
     <br>
 
     <div class="d-flex justify-content-start gap-3">
-        <form action="{{ route('competencia.rotineiros', $competenciaId) }}" method="post">
+        <form action="{{ route('competencia-carteira.rotineiros', $competenciaId) }}" method="post">
             @csrf
             <button type="submit" class="btn" style="background-color:rgb(91, 177, 217); color: white;">Inclui itens rotineiros</button>
         </form>

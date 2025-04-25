@@ -133,7 +133,7 @@ class PeriodController extends Controller
             Period::create($dados);
 
             $dados['message'] = 'Competência criada com sucesso';
-            return redirect()->route('competencia.index')->with('message', 'Competência criada com sucesso');
+            return redirect()->route('competencia-carteira.index')->with('message', 'Competência criada com sucesso');
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
@@ -216,7 +216,7 @@ class PeriodController extends Controller
             $period->update($dados);
 
             $dados['message'] = 'Competência atualizada com sucesso';
-            return redirect()->route('competencia.index')->with($dados);
+            return redirect()->route('competencia-carteira.index')->with($dados);
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);

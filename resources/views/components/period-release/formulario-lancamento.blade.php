@@ -6,8 +6,6 @@
 <form action="{{ route('competencia.lancamento.store', $competenciaId) }}" method="POST"
       class="row g-3 align-items-end">
 
-    <!--input type="hidden" name="period_id" value="1"-->
-
     <div class="col-md-2">
         <label for="tipoOperacao" class="form-label">Tipo *</label>
         <select class="form-select" aria-label="Default select example" id="tipoOperacao" name="tipoOperacao" required>

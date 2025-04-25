@@ -33,11 +33,15 @@ Route::post('/usuario/logout', [AuthController::class, 'logout'])
 // Rota para o formulário de login (GET)
 Route::get('/login', [FrontRenderController::class, 'login'])->name('login.index');
 
-// Rota para a home (inicial) - Você pode querer uma rota protegida com middleware auth
+// Rota para a home (inicial)
 Route::get('/', function () {
-    return view('home');  // Ou a página inicial desejada
-})->middleware('auth'); // Ou você pode adicionar um middleware aqui para proteger essa rota
+    return view('home');  
+})->middleware('auth');
 
+Route::get('/inicio', function () {
+    return view('home');
+})->middleware('auth')
+  ->name('inicio');
 
 
 
@@ -68,11 +72,7 @@ Route::post('/cadastro', [UserController::class, 'store'])
     ->name('users.store');  
 
 
-Route::get('/home', function () {
-    return view('home');
-})
-    ->middleware('auth')
-    ->name('index.home');
+
     
 
 
@@ -92,39 +92,39 @@ Route::get('usuario/create', [UserController::class, 'create'])
 
 /*******************************************************************/
 
-Route::get('competencia', [PeriodController::class, 'index'])
+Route::get('competencia-carteira', [PeriodController::class, 'index'])
     ->middleware('auth')
-    ->name('competencia.index');
+    ->name('competencia-carteira.index');
 
-Route::get('competencia/create', [PeriodController::class, 'create'])
+Route::get('competencia-carteira/create', [PeriodController::class, 'create'])
     ->middleware('auth')
-    ->name('competencia.create');
+    ->name('competencia-carteira.create');
 
-Route::post('competencia/store', [PeriodController::class, 'store'])
+Route::post('competencia-carteira/store', [PeriodController::class, 'store'])
     ->middleware('auth')
-    ->name('competencia.store');
+    ->name('competencia-carteira.store');
 
 /** A parte de UPDATE do CRUD*/
-Route::get('competencia/{competenciaId}/edit', [PeriodController::class, 'edit'])
+Route::get('competencia-carteira/{competenciaId}/edit', [PeriodController::class, 'edit'])
     ->middleware('auth')
-    ->name('competencia.edit');
+    ->name('competencia-carteira.edit');
 
-Route::put('competencia/{competenciaId}', [PeriodController::class, 'update'])
+Route::put('competencia-carteira/{competenciaId}', [PeriodController::class, 'update'])
     ->middleware('auth')
-    ->name('competencia.update');
+    ->name('competencia-carteira.update');
 /** -----------------------------*/
 
 
-Route::delete('competencia/{competenciaId}', [PeriodController::class, 'destroy'])
+Route::delete('competencia-carteira/{competenciaId}', [PeriodController::class, 'destroy'])
     ->middleware('auth')
-    ->name('competencia.destroy');
+    ->name('competencia-carteira.destroy');
 
-Route::get('/competencia/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
+Route::get('/competencia-carteira/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
 
-Route::post('/competencia/{competenciaId}/rotineiros', [PeriodController::class, 'addRoutineItems'])
+Route::post('/competencia-carteira/{competenciaId}/rotineiros', [PeriodController::class, 'addRoutineItems'])
     ->middleware('auth')
-    ->name('competencia.rotineiros');
+    ->name('competencia-carteira.rotineiros');
 
 /*******************************************************************/
 
@@ -233,6 +233,7 @@ Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
 Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, 'edit'])
     ->middleware('auth')
     ->name('cartao-credito.edit');
+    
 Route::put('cartao-credito/{creditCardId}', [CreditCardController::class, 'update'])
     ->middleware('auth')
     ->name('cartao-credito.update');

@@ -23,7 +23,7 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        return redirect()->route('index.home');
+        return redirect()->route('inicio');
     }
 
     public function logout(Request $request)
