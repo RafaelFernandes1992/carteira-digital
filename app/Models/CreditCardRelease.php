@@ -18,7 +18,7 @@ class CreditCardRelease extends Model
         'valor_parcela',
         'valor_pago_fatura',
         'data_pagamento_fatura',
-        'period_release_id',
+        'period_id',
         'credit_card_id',
         'user_id',
     ];
@@ -32,8 +32,8 @@ class CreditCardRelease extends Model
         return $this->belongsTo(CreditCard::class);
     }
 
-    public function periodRelease(): BelongsTo
+    public function period(): BelongsTo
     {
-        return $this->belongsTo(PeriodRelease::class);
+        return $this->belongsTo(Period::class);
     }
 }

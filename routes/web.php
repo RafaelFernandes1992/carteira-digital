@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CreditCardReleaseController;
 use App\Http\Controllers\FrontRenderController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PeriodReleaseController;
@@ -35,14 +36,13 @@ Route::get('/login', [FrontRenderController::class, 'login'])->name('login.index
 
 // Rota para a home (inicial)
 Route::get('/', function () {
-    return view('home');  
+    return view('home');
 })->middleware('auth');
 
 Route::get('/inicio', function () {
     return view('home');
 })->middleware('auth')
-  ->name('inicio');
-
+    ->name('inicio');
 
 
 // Rota para exibir o formulário "Esqueceu a Senha"
@@ -54,8 +54,6 @@ Route::post('/esqueceu-senha', [AuthController::class, 'sendResetLink'])
     ->name('senha.email');
 
 
-
-
 Route::get('/esqueci-senha', function () {
     return 'Página de recuperação de senha ainda não implementada.';
 })->name('password.request');
@@ -65,16 +63,10 @@ Route::get('/esqueci-senha/{token}', [PasswordController::class, 'showResetForm'
     ->name('password.reset');
 
 
-
 Route::get('/cadastro', [UserController::class, 'create'])
-    ->name('users.create'); 
+    ->name('users.create');
 Route::post('/cadastro', [UserController::class, 'store'])
-    ->name('users.store');  
-
-
-
-    
-
+    ->name('users.store');
 
 
 // Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
@@ -87,7 +79,6 @@ Route::get('usuario', [UserController::class, 'index'])
 Route::get('usuario/create', [UserController::class, 'create'])
     ->middleware('auth')
     ->name('usuario.create');
-
 
 
 /*******************************************************************/
@@ -129,8 +120,6 @@ Route::post('/competencia-carteira/{competenciaId}/rotineiros', [PeriodControlle
 /*******************************************************************/
 
 
-
-
 Route::get('competencia/{competenciaId}/lancamento/create', [PeriodReleaseController::class, 'create'])
     ->middleware('auth')
     ->name('competencia.lancamento.create');
@@ -150,7 +139,7 @@ Route::get('lancamento/{lancamentoId}/edit', [PeriodReleaseController::class, 'e
 
 Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update'])
     ->middleware('auth')
-    ->name('lancamento.update');            
+    ->name('lancamento.update');
 /** -----------------------------*/
 
 /*******************************************************************/
@@ -195,7 +184,6 @@ Route::get('tipo-lancamento-getAll', [TypeReleaseController::class, 'getAll'])
 /*******************************************************************/
 
 
-
 Route::get('carro', [CarController::class, 'index'])
     ->middleware('auth')
     ->name('carro.index');
@@ -213,40 +201,77 @@ Route::delete('carro/{carId}', [CarController::class, 'destroy'])
     ->name('carro.destroy');
 
 
-
 /*******************************************************************/
 
 
 Route::get('cartao-credito', [CreditCardController::class, 'index'])
-->middleware('auth')
-->name('cartao-credito.index');
+    ->middleware('auth')
+    ->name('cartao-credito.index');
 
 Route::get('cartao-credito/create', [CreditCardController::class, 'create'])
-->middleware('auth')
-->name('cartao-credito.create');
+    ->middleware('auth')
+    ->name('cartao-credito.create');
 
 Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
-->middleware('auth')
-->name('cartao-credito.store');
+    ->middleware('auth')
+    ->name('cartao-credito.store');
 
 /** Inicio UPDATE do CRUD */
 Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, 'edit'])
     ->middleware('auth')
     ->name('cartao-credito.edit');
-    
+
 Route::put('cartao-credito/{creditCardId}', [CreditCardController::class, 'update'])
     ->middleware('auth')
     ->name('cartao-credito.update');
 /** Fim UPDATE do CRUD */
 
 Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'destroy'])
-->middleware('auth')
-->name('cartao-credito.destroy');
-
+    ->middleware('auth')
+    ->name('cartao-credito.destroy');
 
 
 /*******************************************************************/
 
+
+//Route::get('cartao-credito', [CreditCardController::class, 'index'])
+//    ->middleware('auth')
+//    ->name('cartao-credito.index');
+
+//competencia/{competenciaId}/lancamento/create
+
+Route::get(
+    'competencia/{competenciaId}/cartao-credito/lancamento/create',
+    [CreditCardReleaseController::class, 'create']
+)->middleware('auth')
+    ->name('competencia.cartao-credito.lancamento.create');
+
+Route::post(
+    'competencia/{competenciaId}/cartao-credito/lancamento',
+    [CreditCardReleaseController::class, 'store']
+)->middleware('auth')
+    ->name('competencia.cartao-credito.lancamento.store');
+
+//Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
+//    ->middleware('auth')
+//    ->name('cartao-credito.store');
+//
+///** Inicio UPDATE do CRUD */
+//Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, 'edit'])
+//    ->middleware('auth')
+//    ->name('cartao-credito.edit');
+//
+//Route::put('cartao-credito/{creditCardId}', [CreditCardController::class, 'update'])
+//    ->middleware('auth')
+//    ->name('cartao-credito.update');
+///** Fim UPDATE do CRUD */
+//
+//Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'destroy'])
+//    ->middleware('auth')
+//    ->name('cartao-credito.destroy');
+
+
+/*******************************************************************/
 
 
 Route::get('alerta-notificacao', function () {

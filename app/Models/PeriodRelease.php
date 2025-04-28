@@ -46,11 +46,6 @@ class PeriodRelease extends Model
         return $this->hasMany(CarRelease::class);
     }
 
-    public function creditCardReleases(): HasMany
-    {
-        return $this->hasMany(CreditCardRelease::class);
-    }
-
     public function typeRelease(): BelongsTo
     {
         return $this->belongsTo(TypeRelease::class);

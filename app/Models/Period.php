@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Period extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'mes',
         'ano',
@@ -24,8 +25,14 @@ class Period extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function periodReleases(): HasMany
     {
         return $this->hasMany(PeriodRelease::class);
+    }
+
+    public function creditCardReleases(): HasMany
+    {
+        return $this->hasMany(CreditCardRelease::class);
     }
 }

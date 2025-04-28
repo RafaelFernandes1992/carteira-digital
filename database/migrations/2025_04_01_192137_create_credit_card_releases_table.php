@@ -19,14 +19,14 @@ return new class extends Migration
             $table->smallInteger('quantidade_parcelas');
             $table->string('descricao');
             $table->decimal('valor_parcela', 10);
-            $table->decimal('valor_pago_fatura', 10);
-            $table->date('data_pagamento_fatura');
+            $table->decimal('valor_pago_fatura', 10)->nullable();
+            $table->date('data_pagamento_fatura')->nullable();
 
-            $table->unsignedBigInteger('period_release_id');
+            $table->unsignedBigInteger('period_id');
             $table->unsignedBigInteger('credit_card_id');
             $table->unsignedBigInteger('user_id');
 
-            $table->foreign('period_release_id')->references('id')->on('period_releases');
+            $table->foreign('period_id')->references('id')->on('periods');
             $table->foreign('credit_card_id')->references('id')->on('credit_cards');
 
             $table->foreign('user_id')->references('id')->on('users');

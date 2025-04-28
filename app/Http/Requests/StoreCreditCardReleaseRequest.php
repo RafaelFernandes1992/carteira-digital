@@ -11,7 +11,7 @@ class StoreCreditCardReleaseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class StoreCreditCardReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'credit_card_id' => 'required|integer|exists:credit_cards,id',
+            'period_id' => 'required|integer|exists:periods,id',
+            'data_compra' => 'required|date',
+            'data_pagamento_fatura' => 'nullable|date',
+            'descricao' => 'required|string|max:255',
+            'quantidade_parcelas' => 'required|integer|min:1|max:18',
+            'valor' => 'required|numeric|min:0.01',
+            'valor_pago_fatura' => 'nullable|numeric|min:1',
         ];
+    }
+
+    public function validationData(): array
+    {
+        return array_merge($this->all(), [
+            'period_id' => $this->route('competenciaId'),
+        ]);
     }
 }

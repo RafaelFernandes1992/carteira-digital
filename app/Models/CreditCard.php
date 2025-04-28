@@ -20,6 +20,11 @@ class CreditCard extends Model
         'user_id',
     ];
 
+    public function getNome(): string
+    {
+        return "$this->apelido - $this->numero_cartao";
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
