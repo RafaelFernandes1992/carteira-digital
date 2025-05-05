@@ -1,0 +1,4 @@
+.tabela-total-container {
+    max-height: 100px;
+    overflow: auto;
+}

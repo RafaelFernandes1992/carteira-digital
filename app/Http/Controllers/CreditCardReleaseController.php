@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
+use App\Http\Requests\CreateCreditCardReleaseRequest;
 use App\Models\CreditCard;
 use App\Models\CreditCardRelease;
 use App\Http\Requests\StoreCreditCardReleaseRequest;
@@ -22,13 +23,53 @@ class CreditCardReleaseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $competenciaId)
+    public function create(CreateCreditCardReleaseRequest $request)
     {
+        $data = $request->validated();
+        $competenciaId = $data['competenciaId'];
+        $search = $data['search'] ?? null;
+
+
         $user = Auth::user();
-        $items = CreditCardRelease::where('user_id', $user->id)->get();
+
+        $query = CreditCardRelease::where('user_id', $user->id);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('data_compra', 'like', '%' . $search . '%')
+                    ->orWhere('quantidade_parcelas', $search)
+                    ->orWhere('descricao', 'like', '%' . $search . '%')
+                    ->orWhere('valor_parcela', $search)
+                    ->orWhere('valor_pago_fatura', $search)
+                    ->orWhere('data_pagamento_fatura', 'like', '%' . $search . '%')
+                    ->orWhereHas('creditCard', function ($q1) use ($search) {
+                        $q1->where('apelido', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        $items = $query->get();
+
         $cartoes = CreditCard::where('user_id', $user->id)->get();
 
-        $items = $items->map(function ($item) {
+        $totalGeral = (float)CreditCardRelease::where('user_id', $user->id)
+            ->sum('valor_parcela');
+
+
+        $totalCartoes = [];
+        foreach ($cartoes as $cartao) {
+
+            $total = (float)CreditCardRelease::where('user_id', $user->id)
+                ->where('credit_card_id', $cartao->id)
+                ->sum('valor_parcela');
+
+            $totalCartoes[] = [
+                'nome_cartao' => $cartao->getNome(),
+                'total' => Helper::formatToCurrency($total)
+            ];
+        }
+
+        $items = $items->map(function (CreditCardRelease $item) {
             return [
                 'id' => $item->id,
                 'data_compra' => Helper::formatDate($item->data_compra),
@@ -38,13 +79,17 @@ class CreditCardReleaseController extends Controller
                 'valor' => Helper::formatToCurrency($item->valor),
                 'valor_pago_fatura' => Helper::formatToCurrency($item->valor_pago_fatura),
                 'valor_parcela' => Helper::formatToCurrency($item->valor_parcela),
+                'nome_cartao' => $item->creditCard->getNome()
             ];
         });
 
         return view('credit-card-release.create')->with([
             'items' => $items,
             'competenciaId' => $competenciaId,
-            'cartoes' => $cartoes
+            'cartoes' => $cartoes,
+            'totalCartoes' => $totalCartoes,
+            'totalGeral' => Helper::formatToCurrency($totalGeral),
+            'search' => $search
         ]);
     }
 

@@ -1,12 +1,33 @@
 @props([
-    'items' => []
+    'items' => [],
+    'competenciaId',
+    'search'
 ])
+<div class="pt-3 pb-3 mb-3 border-bottom d-flex">
+    <div class="box-search d-flex">
+        <form  class="d-flex gap-1"
+                action="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}" method="get">
+            <input type="search" name="search" class="form-control" placeholder="Digite um termo para pesquisar"
+                   id="search" value="{{ $search }}">
+
+            <button type="submit" class="btn btn-primary" title="Pesquisar">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <a href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}"
+           role="button" class="btn btn-secondary" title="Limpar">
+            <i class="bi bi-trash"></i>
+        </a>
+    </div>
+</div>
 <br>
 <div class="table-responsive small">
     <table class="table table-striped table-sm">
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Cartão</th>
             <th scope="col">Descrição</th>
             <th scope="col">Valor</th>
             <th scope="col">Quantidade Parcelas</th>
@@ -21,6 +42,7 @@
         @foreach($items as $item)
             <tr>
                 <td>{{ $item['id'] }}</td>
+                <td>{{ $item['nome_cartao'] }}</td>
                 <td>{{ $item['descricao'] }}</td>
                 <td>{{ $item['valor'] }}</td>
                 <td>{{ $item['quantidade_parcelas'] }}</td>
