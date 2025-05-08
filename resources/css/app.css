@@ -2,6 +2,10 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import "tabela-total.css";
 
+#chart {
+  max-width: 650px;
+  margin: 35px auto;
+}
 
 body {
   background-color: white;

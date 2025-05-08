@@ -11,6 +11,9 @@ window.axios.defaults.baseURL = import.meta.env.APP_URL;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+import ApexCharts from 'apexcharts';
+window.ApexCharts = ApexCharts;
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CreditCardReleaseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontRenderController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PeriodReleaseController;
@@ -272,6 +273,10 @@ Route::post(
 
 
 /*******************************************************************/
+
+
+Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorCompetenciaAnual']);
+
 
 
 Route::get('alerta-notificacao', function () {
