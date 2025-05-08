@@ -9,9 +9,9 @@
             <th scope="col">Tipo</th>
             <th scope="col">Descrição</th>
             <th scope="col">Valor</th>
-            <th scope="col">Observação</th>
             <th scope="col">Situação</th>
             <th scope="col">Data</th>
+            <th scope="col">Observação</th>
             <th scope="col">Ações</th>
         </tr>
         </thead>
@@ -21,11 +21,11 @@
                 <td>{{ $item['type_release']['tipo'] }}</td>
                 <td>{{ $item['type_release']['descricao'] }}</td>
                 <td>{{ $item['valor_total'] }}</td>
-                <td>{{ $item['observacao'] }}</td>
                 <td>{{ $item['situacao'] }}</td>
                 <td>{{ $item['data_debito_credito'] }}</td>
+                <td>{{ $item['observacao'] }}</td>
                 <td>
-                    <div class="d-flex justify-content-center gap-2">
+                    <div class="d-flex gap-2">
                         <a class="btn btn-warning" href="{{ route('lancamento.edit', $item['id']) }}">
                             <i class="bi bi-pencil"></i>
                         </a>
@@ -39,6 +39,24 @@
                 </td>
             </tr>
         @endforeach
+            <tr>
+                <td colspan="2">Lançamentos do carro</td>
+                <td colspan="4">0,00</td>
+                <td>
+                    <a class="btn btn-light" href="#">
+                        <i class="bi bi-box-arrow-up-right"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Lançamentos do cartão</td>
+                <td colspan="4">0,00</td>
+                <td>
+                    <a class="btn btn-light" href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">
+                        <i class="bi bi-box-arrow-up-right"></i>
+                    </a>
+                </td>
+            </tr>
         @if(count($items) === 0)
             <tr>
                 <td colspan="7">Nenhum registro encontrado.</td>

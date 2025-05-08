@@ -5,7 +5,9 @@
     <h4>Lançamentos da Carteira - Competência # {{ $competenciaId }} </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
-        <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">Cancelar</a>
+        <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">    
+            <i class="bi bi-arrow-left-circle"></i> Cancelar
+        </a>
     </div>
 
     <x-period-release.header
@@ -26,16 +28,16 @@
                 rotineiros
             </button>
         </form>
-        <a class="btn" style="background-color:rgb(156, 217, 91); color: white;">Lançamentos do Carro</a>
-        <a class="btn"
+        <!-- <a class="btn" style="background-color:rgb(156, 217, 91); color: white;">Lançamentos do Carro</a> -->
+        <!-- <a class="btn"
            style="background-color:rgb(217, 183, 91); color: white;"
            href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}"
         >
             Lançamentos do Cartão de Crédito
-        </a>
+        </a> -->
     </div>
 
     <x-period-release.formulario-lancamento :competencia-id="$competenciaId"/>
 
-    <x-period-release.tabela-lancametos :items="$items"/>
+    <x-period-release.tabela-lancametos :items="$items" :competencia-id="$competenciaId"/>
 @endsection

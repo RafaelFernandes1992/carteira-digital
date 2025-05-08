@@ -5,7 +5,9 @@
 <h4>Cadastro de Cartão de Crédito</h4>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
-    <a class="btn btn-secondary" href="{{ route('cartao-credito.index') }}">Cancelar</a>
+    <a class="btn btn-secondary" href="{{ route('cartao-credito.index') }}">
+        <i class="bi bi-arrow-left-circle"></i> Cancelar
+    </a>
 </div>
 
 <form action="{{ route('cartao-credito.store') }}" method="POST" class="row g-3">

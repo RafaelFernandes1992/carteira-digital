@@ -4,7 +4,9 @@
     <h4>Edita Competência da Carteira</h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
-        <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">Cancelar</a>
+        <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">    
+            <i class="bi bi-arrow-left-circle"></i> Cancelar
+        </a>
     </div>
     
     <form action="{{ route('competencia-carteira.update', $id) }}" method="POST" class="row g-3">

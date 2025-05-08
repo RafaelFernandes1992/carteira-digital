@@ -3,25 +3,26 @@
     'competenciaId',
     'search'
 ])
-<div class="pt-3 pb-3 mb-3 border-bottom d-flex">
-    <div class="box-search d-flex">
-        <form  class="d-flex gap-1"
-                action="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}" method="get">
-            <input type="search" name="search" class="form-control" placeholder="Digite um termo para pesquisar"
-                   id="search" value="{{ $search }}">
 
-            <button type="submit" class="btn btn-primary" title="Pesquisar">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
+    <div class="box-search">
+        <form class="box-search"action="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}" 
+            method="GET">
+            <input type="search" class="form-control" placeholder="Digite um termo para pesquisar"
+            name="search" id="search" value="{{ $search }}">
+
+            <button type="submit" class="btn btn-primary">
                 <i class="bi bi-search"></i>
             </button>
         </form>
 
         <a href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}"
-           role="button" class="btn btn-secondary" title="Limpar">
-            <i class="bi bi-trash"></i>
+            role="button" class="btn btn-secondary" title="Limpar">
+            <i class="bi bi-trash3"></i>
         </a>
     </div>
 </div>
-<br>
+
 <div class="table-responsive small">
     <table class="table table-striped table-sm">
         <thead>
@@ -34,7 +35,6 @@
             <th scope="col">Valor Parcela</th>
             <th scope="col">Data Compra</th>
             <th scope="col">Data Pagamento Fatura</th>
-            <th scope="col">Valor Pagamento</th>
             <th scope="col">Ações</th>
         </tr>
         </thead>
@@ -49,13 +49,12 @@
                 <td>{{ $item['valor_parcela'] }}</td>
                 <td>{{ $item['data_compra'] }}</td>
                 <td>{{ $item['data_pagamento_fatura'] }}</td>
-                <td>{{ $item['valor_pago_fatura'] }}</td>
                 <td>
                     <div class="d-flex justify-content-center gap-2">
-                        <a class="btn btn-warning" href="{{ route('lancamento.edit', $item['id']) }}">
+                        <a class="btn btn-warning" href="#">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{{ route('competencia.lancamento.destroy', $item['id']) }}" method="POST">
+                        <form action="#" method="POST">
                             @method('DELETE')
                             <button class="btn btn-danger" type="submit">
                                 <i class="bi bi-trash3"></i>
