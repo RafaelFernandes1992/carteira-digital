@@ -1,12 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import "tabela-total.css";
+@import "dashboard.css";
 
-#chart {
-  width: 100%;
-  max-width: none;
-  margin: 35px auto;
-}
 
 body {
   background-color: white;

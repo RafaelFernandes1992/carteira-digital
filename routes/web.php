@@ -277,6 +277,7 @@ Route::post(
 
 
 Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorCompetenciaAnual']);
+Route::get('/dashboard/cards', [DashboardController::class, 'quantitativosCards']);
 
 
 

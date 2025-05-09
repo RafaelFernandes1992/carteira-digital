@@ -1,19 +1,36 @@
 let anoAtual = new Date().getFullYear();
 let chart;
+const anoDashboard = document.getElementById('dashboard-year');
+
+const totalCompetencia = document.getElementById('total_competencias');
+const totalReceitas = document.getElementById('total_receitas');
+const totalDespesas = document.getElementById('total_despesas');
+const totalInvestimentos = document.getElementById('total_investimentos');
+const btn = document.getElementById('btn-search');
 
 document.addEventListener("DOMContentLoaded", async function () {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+
+    await getQuantitativosCards();
     await getTotalizarPorCompetenciaAnual();
+
+    btn.innerHTML = '<i class="bi bi-search"></i>';
+    btn.disabled = false;
     handleBtnClicked();
 });
 
 function handleBtnClicked() {
-    const btn = document.getElementById('search-graph');
     const yearInput = document.getElementById('search-input');
 
-    btn.addEventListener('click', async function (e) {
-        e.preventDefault();
+    btn.addEventListener('click', async function () {
         anoAtual = yearInput.value;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        await getQuantitativosCards();
         await getTotalizarPorCompetenciaAnual();
+        btn.innerHTML = '<i class="bi bi-search"></i>';
+        btn.disabled = false;
     });
 }
 
@@ -42,6 +59,24 @@ async function getTotalizarPorCompetenciaAnual() {
         ];
 
         await renderGraphCompetencia(options);
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+async function getQuantitativosCards() {
+    try {
+        const response = await axios.get('/dashboard/cards', {
+            params: {
+                year: anoAtual
+            }
+        });
+
+        anoDashboard.innerHTML = anoAtual
+        totalCompetencia.innerHTML = response.data.data.total_competencias;
+        totalReceitas.innerHTML = response.data.data.total_receitas;
+        totalDespesas.innerHTML = response.data.data.total_despesas;
+        totalInvestimentos.innerHTML = response.data.data.total_investimentos;
 
     } catch (e) {
         console.log(e);

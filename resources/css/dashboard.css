@@ -1,0 +1,30 @@
+
+#chart {
+    width: 100%;
+    max-width: none;
+    margin: 35px auto;
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+.card-body {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.card-title {
+    margin-bottom: 0;
+}
+.text-blue {
+    color: #007bff;
+}
+.text-green {
+    color: #28a745;
+}
+.text-red {
+    color: #dc3545;
+}
+.text-purple {
+    color: #6f42c1;
+}
