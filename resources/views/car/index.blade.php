@@ -37,22 +37,22 @@
             </tr>
             </thead>
             <tbody>
-            
+            @foreach($itensCar as $item)
                 <tr>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>{{ 0 }}</td>
+                    <td>{{ $item['id'] }}</td>
+                    <td>{{ $item['apelido'] }}</td>
+                    <td>{{ $item['renavam'] }}</td>
+                    <td>{{ $item['placa'] }}</td>
+                    <td>{{ $item['marca'] }}</td>
+                    <td>{{ $item['modelo'] }}</td>
+                    <td>{{ $item['data_aquisicao'] }}</td>
+                    <td>{{ $item['created_at'] }}</td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a class="btn btn-warning" href="#">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <form action="{{ route('carro.destroy', 0) }}" method="POST">
+                            <form action="{{ route('carro.destroy', $item['id']) }}" method="POST">
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">
                                     <i class="bi bi-trash3"></i>
@@ -61,7 +61,7 @@
                         </div>
                     </td>
                 </tr>
-
+            @endforeach
             </tbody>
         </table>
     </div>

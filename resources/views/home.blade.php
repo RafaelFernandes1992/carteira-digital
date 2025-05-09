@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <h4>Seja bem vindo ao Carteira Digital!</h4>
+    <h4>Seja bem vindo(a)!</h4>
     <br>
 
     <div class="box-search-charts">

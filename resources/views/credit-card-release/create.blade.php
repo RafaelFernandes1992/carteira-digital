@@ -14,7 +14,7 @@
 
     <x-credit-card-release.formulario-lancamento :competencia-id="$competenciaId" :cartoes="$cartoes"/>
 
-    <x-credit-card-release.tabela-lancamentos :items="$items" :competencia-id="$competenciaId" :search="$search" />
+    <x-credit-card-release.tabela-lancamentos :items="$items" :competencia-id="$competenciaId" :search="$search"/>
 
 
 @endsection

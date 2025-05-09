@@ -37,7 +37,6 @@ class TypeReleaseController extends Controller
         return view('type-release.create');
     }
 
-
     public function store(StoreTypeReleaseRequest $request)
     {
         try {
@@ -94,7 +93,6 @@ class TypeReleaseController extends Controller
         }
     }
 
-
     public function destroy(DestroyTypeReleaseRequest $request)
     {
         try {
@@ -116,7 +114,7 @@ class TypeReleaseController extends Controller
         }
     }
 
-
+    //extras - end-point
     public function show(int $id)
     {
         try {

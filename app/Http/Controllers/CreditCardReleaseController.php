@@ -29,10 +29,10 @@ class CreditCardReleaseController extends Controller
         $competenciaId = $data['competenciaId'];
         $search = $data['search'] ?? null;
 
-
         $user = Auth::user();
 
-        $query = CreditCardRelease::where('user_id', $user->id);
+        $query = CreditCardRelease::where('user_id', $user->id)
+                ->where('period_id', $competenciaId);
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -53,14 +53,14 @@ class CreditCardReleaseController extends Controller
         $cartoes = CreditCard::where('user_id', $user->id)->get();
 
         $totalGeral = (float)CreditCardRelease::where('user_id', $user->id)
+            ->where('period_id', $competenciaId)
             ->sum('valor_parcela');
-
 
         $totalCartoes = [];
         foreach ($cartoes as $cartao) {
-
             $total = (float)CreditCardRelease::where('user_id', $user->id)
                 ->where('credit_card_id', $cartao->id)
+                ->where('period_id', $competenciaId)
                 ->sum('valor_parcela');
 
             $totalCartoes[] = [

@@ -5,62 +5,86 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
+use App\Http\Requests\DestroyCarRequest;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return view('car.index');
+        $user = Auth::user();
+        $itensCar = Car::where('user_id', $user->id)->get();
+        $itensCar = $itensCar->map(function ($item) {
+            
+            return [
+                'id' => $item->id,
+                'renavam' => $item->renavam,
+                'apelido' => $item->apelido,
+                'placa' => $item->placa,
+                'marca' => $item->marca,
+                'modelo' => $item->modelo,
+                'data_aquisicao' => Carbon::parse($item->data_aquisicao)->format('d/m/Y'),
+                'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s'),
+            ];
+        });
+        return view('car.index')->with(['itensCar' => $itensCar]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('car.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCarRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $dados['user_id'] = auth()->user()->id;
+            Car::create($dados);
+
+            $dados['message'] = 'Carro incluído com sucesso!';
+            return redirect()->route('carro.index')->with('message', 'Carro incluído com sucesso!');
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Car $car)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Car $car)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCarRequest $request, Car $car)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Car $car)
+    public function destroy(DestroyCarRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            $model = Car::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            
+            // $existePeriodRelease = $model->periodReleases()->exists();
+            // if ($existePeriodRelease) {
+            //     return back()->withErrors(['error' => 'Não é possível excluir um tipo de lançamento que já está sendo utilizado!']);
+            // }  
+
+            $model->delete();
+            return back()->with(['message' => 'Carro excluído com sucesso!']);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

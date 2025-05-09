@@ -70,9 +70,6 @@ Route::post('/cadastro', [UserController::class, 'store'])
     ->name('users.store');
 
 
-// Route::post('/login/v2', [UserController::class, 'loginV2'])->name('login.v2');
-// Route::get('/login/v2', [FrontRenderController::class, 'loginV2']);
-
 Route::get('usuario', [UserController::class, 'index'])
     ->middleware('auth')
     ->name('usuario.index');
@@ -179,7 +176,7 @@ Route::delete('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 
     ->name('tipo-lancamento.destroy');
 /** Fim DELETE do CRUD */
 
-/** EXTRAS */
+/** Extras: End-point-que-usa-Json-no-retorno */
 Route::get('tipo-lancamento/{typeReleaseId}', [TypeReleaseController::class, 'show'])
     ->middleware('auth');
 
