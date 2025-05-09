@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <h4>Lançamentos da Carteira - Competência # {{ $competenciaId }} </h4>
+    <h4><i class="bi bi-wallet2"></i> Lançamentos da Carteira - Competência # {{ $competenciaId }} </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
         <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">    
-            <i class="bi bi-arrow-left-circle"></i> Cancelar
+            <i class="bi bi-arrow-left-square"></i> Voltar 
         </a>
     </div>
 
@@ -24,17 +24,10 @@
     <div class="d-flex justify-content-start gap-3">
         <form action="{{ route('competencia-carteira.rotineiros', $competenciaId) }}" method="post">
             @csrf
-            <button type="submit" class="btn" style="background-color:rgb(91, 177, 217); color: white;">Inclui itens
-                rotineiros
+            <button type="submit" class="btn btn-info">
+               <i class="bi bi-floppy"></i> Incluir lançamentos rotineiros
             </button>
         </form>
-        <!-- <a class="btn" style="background-color:rgb(156, 217, 91); color: white;">Lançamentos do Carro</a> -->
-        <!-- <a class="btn"
-           style="background-color:rgb(217, 183, 91); color: white;"
-           href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}"
-        >
-            Lançamentos do Cartão de Crédito
-        </a> -->
     </div>
 
     <x-period-release.formulario-lancamento :competencia-id="$competenciaId"/>

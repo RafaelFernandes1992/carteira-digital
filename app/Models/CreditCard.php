@@ -22,7 +22,8 @@ class CreditCard extends Model
 
     public function getNome(): string
     {
-        return "$this->apelido - $this->numero_cartao";
+        //return "$this->apelido - $this->numero_cartao";
+        return "$this->apelido";
     }
 
     public function user(): BelongsTo

@@ -3,7 +3,8 @@
 @import "tabela-total.css";
 
 #chart {
-  max-width: 650px;
+  width: 100%;
+  max-width: none;
   margin: 35px auto;
 }
 
@@ -25,6 +26,14 @@ body {
   justify-content: end;
   gap: 0.9%;
   width: 500px;
+  margin-left: auto;
+}
+
+.box-search-charts{
+  display: flex;
+  justify-content: end;
+  gap: 3%;
+  width: 200px;
   margin-left: auto;
 }
 

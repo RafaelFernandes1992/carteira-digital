@@ -9,9 +9,8 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('carro.create') }}">
-            <button type="button" class="btn btn-secondary" title="Incluir">
-                <i class="bi bi-plus-square"></i>
-                <span>Novo</span>
+            <button type="button" class="btn btn-secondary" >
+                <i class="bi bi-plus-square"></i> Cadastrar
             </button>
         </a>
         <div class="box-search">
@@ -26,27 +25,29 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th scope="col" style="text-align: begin;">#</th>
-                <th scope="col" style="text-align: begin;">Descrição</th>
-                <th scope="col" style="text-align: begin;">Rotineira</th>
-                <th scope="col" style="text-align: begin;">Dedutível</th>
-                <th scope="col" style="text-align: begin;">Isenta</th>
-                <th scope="col" style="text-align: begin;">Tipo</th>
-                <th scope="col" style="text-align: center;">Data do registro</th>
-                <th scope="col" style="text-align: center;">Ações</th>
+                <th style="text-align: begin;">#</th>
+                <th style="text-align: begin;">Apelido</th>
+                <th style="text-align: begin;">Renavam</th>
+                <th style="text-align: begin;">Placa</th>
+                <th style="text-align: begin;">Marca</th>
+                <th style="text-align: begin;">Modelo</th>
+                <th style="text-align: begin;">Data da aquisição</th>
+                <th style="text-align: center;">Data do registro</th>
+                <th style="text-align: center;">Ações</th>
             </tr>
             </thead>
             <tbody>
             
                 <tr>
-                    <td style="width:05%; text-align: begin; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width:18%; text-align: begin; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width: 8%; text-align: begin; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width: 8%; text-align: begin; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width: 8%; text-align: begin; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width:12%; text-align: begin; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width: 9%; text-align: center; vertical-align: middle;">{{ 0 }}</td>
-                    <td style="width:14%; text-align: center; vertical-align: middle;">
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a class="btn btn-warning" href="#">
                                 <i class="bi bi-pencil"></i>
@@ -57,7 +58,6 @@
                                     <i class="bi bi-trash3"></i>
                                 </button>
                             </form>
-
                         </div>
                     </td>
                 </tr>

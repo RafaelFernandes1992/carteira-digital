@@ -9,9 +9,8 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('competencia-carteira.create') }}">
-            <button type="button" class="btn btn-secondary" title="Incluir">
-                <i class="bi bi-plus-square"></i>
-                <span>Novo</span> 
+            <button type="button" class="btn btn-secondary" >
+                <i class="bi bi-plus-square"></i> Cadastrar
             </button>
         </a>
         <div class="box-search">

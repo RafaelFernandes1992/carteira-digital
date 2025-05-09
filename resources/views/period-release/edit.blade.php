@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
     <a class="btn btn-secondary" href="{{ route('competencia.lancamento.create', $competenciaId) }}">    
-        <i class="bi bi-arrow-left-circle"></i> Cancelar
+        <i class="bi bi-arrow-left-square"></i> Voltar 
     </a>
 </div>
 
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-md-1">
-        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Salvar</button>
     </div>
 </form>
 

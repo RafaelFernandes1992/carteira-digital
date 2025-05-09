@@ -6,13 +6,13 @@
     <table class="table table-striped table-sm">
         <thead>
         <tr>
-            <th scope="col">Tipo</th>
-            <th scope="col">Descrição</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Situação</th>
-            <th scope="col">Data</th>
-            <th scope="col">Observação</th>
-            <th scope="col">Ações</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Situação</th>
+            <th>Data</th>
+            <th>Observação</th>
+            <th>Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -40,7 +40,8 @@
             </tr>
         @endforeach
             <tr>
-                <td colspan="2">Lançamentos do carro</td>
+                <td>Despesa</td>
+                <td><i class="bi bi-car-front"></i> Lançamentos do Carro</td>
                 <td colspan="4">0,00</td>
                 <td>
                     <a class="btn btn-light" href="#">
@@ -49,7 +50,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">Lançamentos do cartão</td>
+                <td>Despesa</td>
+                <td><i class="bi bi-credit-card-2-back"></i> Lançamentos do Cartão de Crédito</td>
                 <td colspan="4">0,00</td>
                 <td>
                     <a class="btn btn-light" href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">
@@ -58,9 +60,9 @@
                 </td>
             </tr>
         @if(count($items) === 0)
-            <tr>
+            <!-- <tr>
                 <td colspan="7">Nenhum registro encontrado.</td>
-            </tr>
+            </tr> -->
         @endif
         </tbody>
     </table>

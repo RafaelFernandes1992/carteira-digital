@@ -10,8 +10,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('cartao-credito.create') }}">
             <button type="button" class="btn btn-secondary">
-                <i class="bi bi-plus-square"></i>
-                <span>Novo</span>
+                <i class="bi bi-plus-square"></i> Cadastrar
             </button>
         </a>
         <div class="box-search">

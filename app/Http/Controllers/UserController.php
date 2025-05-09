@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\DestroyUser;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +17,6 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
         $users = User::all();
         $users = $users->map(function ($user) {
             
@@ -98,21 +98,22 @@ class UserController extends Controller
         }
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(DestroyUser $request)
     {
         try {
-            User::find($id)->delete();
+            $dados = $request->validated();
+            $model = User::where('id', $dados['id'])->firstOrFail();
 
-            return response()->json([
-                'message' => 'Usuário foi excluído com sucesso!',
-                'data' => null
-            ]);
+            $existe = $model->periodReleases()->exists();
+            if ($existe) {
+                return back()->withErrors(['error' => 'Não é possível excluir usuário com lançamentos no sistema!']);
+            }
+
+            $model->delete();
+            return back()->with(['message' => 'Usuário excluído com sucesso!']);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 }

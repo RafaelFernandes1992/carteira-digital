@@ -7,7 +7,7 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
     <a class="btn btn-secondary" href="{{ route('tipo-lancamento.index') }}">    
-        <i class="bi bi-arrow-left-circle"></i> Cancelar
+        <i class="bi bi-arrow-left-square"></i> Voltar 
     </a>
 </div>
 
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-md-2">
-        <label for="rotineira" class="form-label">Rotineira</label>
+        <label for="rotineira" class="form-label">Rotineiro</label>
         <select class="form-select" aria-label="Default select example" id="rotineira" name="rotineira" required>
             <option selected>Selecione...</option>
             <option value="1">Sim</option>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-md-2">
-        <label for="isenta" class="form-label">Isenta</label>
+        <label for="isenta" class="form-label">Isento</label>
         <select class="form-select" aria-label="Default select example" id="isenta" name="isenta">
             <option selected value ="" >Selecione...</option>
             <option value="1">Sim</option>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="col-md-12">
-        <button type="submit" class="btn btn-primary" name="gravar" id="gravar">Gravar</button>
+        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Salvar</button>
     </div>
 
 </form>

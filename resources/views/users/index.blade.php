@@ -37,7 +37,8 @@
                     <td style="width:14%; text-align: center; vertical-align: middle;">{{ $item['created_at'] }}</td>
                     <td style="width:9%; text-align: center; vertical-align: middle;">
                         <div class="d-flex justify-content-center gap-2">
-                            <form action="#" method="POST">
+                            <form action="{{ route('usuario.destroy', $item['id']) }}" method="POST">
+                                @method('DELETE')
                                 <button class="btn btn-danger" type="submit">
                                     <i class="bi bi-trash3"></i>
                                 </button>

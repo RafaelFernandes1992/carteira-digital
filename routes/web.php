@@ -81,6 +81,10 @@ Route::get('usuario/create', [UserController::class, 'create'])
     ->middleware('auth')
     ->name('usuario.create');
 
+Route::delete('usuario/{userId}', [UserController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('usuario.destroy');
+
 
 /*******************************************************************/
 

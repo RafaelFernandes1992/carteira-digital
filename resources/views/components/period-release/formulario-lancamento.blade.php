@@ -45,7 +45,7 @@
     </div>
 
     <div class="col-md-1">
-        <button type="submit" class="btn btn-primary" name="gravar" id="gravar">Gravar</button>
+        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Salvar</button>
     </div>
 </form>
 

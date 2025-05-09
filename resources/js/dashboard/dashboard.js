@@ -25,19 +25,19 @@ async function getTotalizarPorCompetenciaAnual() {
             }
         });
 
-        const options = defineOptionsToGraphCompetencia();
+        const options = defineOptionsToGraphCompetencia(anoAtual);
         options.series = [
             {
-                name: 'Investimento',
-                data: response.data.data.investimento
+                name: 'Receita',
+                data: response.data.data.receita
             },
             {
                 name: 'Despesa',
                 data: response.data.data.despesa
             },
             {
-                name: 'Receita',
-                data: response.data.data.receita
+                name: 'Investimento',
+                data: response.data.data.investimento
             }
         ];
 
@@ -48,21 +48,24 @@ async function getTotalizarPorCompetenciaAnual() {
     }
 }
 
-function defineOptionsToGraphCompetencia() {
+function defineOptionsToGraphCompetencia(anoAtual) {
     return  {
         chart: {
-            type: 'line'
+            type: 'line',
+            height: 400,
         },
+        colors: ['deepskyblue', 'lightsalmon', 'mediumseagreen'],
         xaxis: {
             categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
         },
         yaxis: {
             title: {
                 text: 'Valores'
-            }
+            },
+            tickAmount: 7 // Ajuste o número de ticks no eixo Y
         },
         title: {
-            text: 'Totalizadores por Competência (Ano Atual)',
+            text: `Totalizadores por Competência (${anoAtual})`,
             align: 'center'
         },
         legend: {

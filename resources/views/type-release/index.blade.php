@@ -9,9 +9,8 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
         <a href="{{ route('tipo-lancamento.create') }}">
-            <button type="button" class="btn btn-secondary" title="Incluir">
-                <i class="bi bi-plus-square"></i>
-                <span>Novo</span>
+            <button type="button" class="btn btn-secondary" >
+                <i class="bi bi-plus-square"></i> Cadastrar
             </button>
         </a>
         <div class="box-search">
@@ -29,8 +28,8 @@
                 <th scope="col" style="text-align: begin;">#</th>
                 <th scope="col" style="text-align: begin;">Tipo</th>
                 <th scope="col" style="text-align: begin;">Descrição</th>
-                <th scope="col" style="text-align: begin;">Rotineira</th>
-                <th scope="col" style="text-align: begin;">Isenta</th>
+                <th scope="col" style="text-align: begin;">Rotineiro</th>
+                <th scope="col" style="text-align: begin;">Isento</th>
                 <th scope="col" style="text-align: begin;">Dedutível</th>
                 <th scope="col" style="text-align: center;">Data do registro</th>
                 <th scope="col" style="text-align: center;">Ações</th>

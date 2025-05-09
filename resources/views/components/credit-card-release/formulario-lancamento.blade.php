@@ -57,7 +57,7 @@
     </div> -->
 
     <div class="col-md-12">
-        <button type="submit" class="btn btn-primary">Gravar</button>
+        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Salvar</button>
     </div>
 
 </form>
