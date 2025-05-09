@@ -87,21 +87,22 @@ function defineOptionsToGraphCompetencia(anoAtual) {
     return  {
         chart: {
             type: 'line',
-            height: 400,
+            height: 550,
         },
-        colors: ['deepskyblue', 'lightsalmon', 'mediumseagreen'],
+        colors: ['#28a745', 'rgb(210, 72, 30)', '#007bff'],
         xaxis: {
             categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
         },
         yaxis: {
             title: {
-                text: 'Valores'
+                text: 'V a l o r e s'
             },
-            tickAmount: 7 // Ajuste o número de ticks no eixo Y
+            tickAmount: 8 // Ajuste o número de ticks no eixo Y
         },
         title: {
-            text: `Totalizadores por Competência (${anoAtual})`,
-            align: 'center'
+           // text: `Receitas, Despesas e Investimentos por Competência (${anoAtual})`,
+           text: `Receitas, Despesas e Investimentos por Competência`,
+            align: 'left'
         },
         legend: {
             position: 'top'

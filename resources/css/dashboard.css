@@ -17,14 +17,14 @@
     margin-bottom: 0;
 }
 .text-blue {
-    color: #007bff;
+    color: #f4dd12;
 }
 .text-green {
     color: #28a745;
 }
 .text-red {
-    color: #dc3545;
+    color: rgb(210, 72, 30);
 }
 .text-purple {
-    color: #6f42c1;
+    color: #007bff;
 }

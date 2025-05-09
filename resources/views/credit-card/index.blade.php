@@ -15,7 +15,7 @@
         </a>
         <div class="box-search">
             <input type="search" class="form-control" placeholder="Digite um termo para pesquisar" id="pesquisar">
-            <button onclick="" class="btn btn-primary">
+            <button class="btn btn-primary">
                 <i class="bi bi-search"></i>
             </button>
         </div>
