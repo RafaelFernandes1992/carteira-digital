@@ -10,7 +10,7 @@
 </div>
 
 <form action="{{ route('competencia-carteira.store') }}" method="POST" class="row g-3">
-
+    @csrf
     <div class="col-md-3">
         <label for="inputmes" class="form-label">Mês <span style="color: red;">*</span></label>
         <select class="form-select" aria-label="Default select example" name="mes" required>

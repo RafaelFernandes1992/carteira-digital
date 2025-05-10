@@ -198,6 +198,16 @@ Route::post('carro/store', [CarController::class, 'store'])
     ->middleware('auth')
     ->name('carro.store');
 
+
+Route::get('carro/{carId}/edit', [CarController::class, 'edit'])
+   ->middleware('auth')
+   ->name('carro.edit');
+
+Route::put('carro/{carId}', [CarController::class, 'update'])
+   ->middleware('auth')
+   ->name('carro.update');
+
+
 Route::delete('carro/{carId}', [CarController::class, 'destroy'])
     ->middleware('auth')
     ->name('carro.destroy');

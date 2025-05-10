@@ -27,7 +27,7 @@
 
 
     <form action="{{ route('login.index') }}" method="POST">
-
+        @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>     
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Digite seu email" value="{{ old('email') }}">

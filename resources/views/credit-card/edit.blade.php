@@ -12,6 +12,7 @@
 
 <form action="{{ route('cartao-credito.update', $id) }}" method="POST" class="row g-3">
     @method('PUT')
+    @csrf
 
     <div class="col-md-4">
         <label for="numero_cartao" class="form-label">Número (4 últimos dígitos)</label>

@@ -25,14 +25,14 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th style="text-align: begin;">#</th>
-                <th style="text-align: begin;">Apelido</th>
-                <th style="text-align: begin;">Renavam</th>
-                <th style="text-align: begin;">Placa</th>
-                <th style="text-align: begin;">Marca</th>
-                <th style="text-align: begin;">Modelo</th>
-                <th style="text-align: begin;">Data da aquisição</th>
-                <th style="text-align: center;">Data do registro</th>
+                <th>#</th>
+                <th>Apelido</th>
+                <th>Renavam</th>
+                <th>Placa</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Data da aquisição</th>
+                <th>Data do Registro</th>
                 <th style="text-align: center;">Ações</th>
             </tr>
             </thead>
@@ -49,11 +49,12 @@
                     <td>{{ $item['created_at'] }}</td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
-                            <a class="btn btn-warning" href="#">
+                            <a class="btn btn-warning" href="{{ route('carro.edit', $item['id']) }}">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <form action="{{ route('carro.destroy', $item['id']) }}" method="POST">
                                 @method('DELETE')
+                                @csrf
                                 <button class="btn btn-danger" type="submit">
                                     <i class="bi bi-trash3"></i>
                                 </button>

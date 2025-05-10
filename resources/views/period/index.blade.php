@@ -25,14 +25,14 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Competência</th>
-                <th scope="col">Descrição</th>
-                <th scope="col" style="text-align: end;">Saldo Inicial</th>
-                <th scope="col" style="text-align: end;">Saldo Final</th>
-                <th scope="col" style="text-align: center;">Data registro</th>
-                <th scope="col" style="text-align: center;">Ações</th>
-                <th scope="col" style="text-align: center;">
+                <th>#</th>
+                <th>Competência</th>
+                <th>Descrição</th>
+                <th style="text-align: end;">Saldo Inicial</th>
+                <th style="text-align: end;">Saldo Final</th>
+                <th style="text-align: end;">Data do Registro</th>
+                <th style="text-align: center;">Ações</th>
+                <th style="text-align: center;">
                     <span>Lançamentos</span> 
                     <i class="bi bi-wallet2"></i>
                 </th>
@@ -56,6 +56,7 @@
 
                             <form action="{{ route('competencia-carteira.destroy', $item['id']) }}" method="POST">
                                 @method('DELETE')
+                                @csrf
                                 <button class="btn btn-danger" type="submit">
                                     <i class="bi bi-trash3"></i>
                                 </button>

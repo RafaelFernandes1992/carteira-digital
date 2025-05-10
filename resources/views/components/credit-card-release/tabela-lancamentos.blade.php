@@ -56,6 +56,7 @@
                         </a>
                         <form action="#" method="POST">
                             @method('DELETE')
+                            @csrf
                             <button class="btn btn-danger" type="submit">
                                 <i class="bi bi-trash3"></i>
                             </button>

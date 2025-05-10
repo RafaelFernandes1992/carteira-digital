@@ -31,6 +31,7 @@
                         </a>
                         <form action="{{ route('competencia.lancamento.destroy', $item['id']) }}" method="POST">
                             @method('DELETE')
+                            @csrf
                             <button class="btn btn-danger" type="submit">
                                 <i class="bi bi-trash3"></i>
                             </button>

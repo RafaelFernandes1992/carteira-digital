@@ -11,7 +11,7 @@
     
     <form action="{{ route('tipo-lancamento.update', $id) }}" method="POST" class="row g-3">
         @method('PUT')
-
+        @csrf
         <div class="col-md-2">
             <label for="tipo" class="form-label">Tipo</label>
             <select class="form-select" aria-label="Default select example" id="tipo" name="tipo" required>

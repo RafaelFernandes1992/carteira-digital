@@ -39,6 +39,7 @@
                         <div class="d-flex justify-content-center gap-2">
                             <form action="{{ route('usuario.destroy', $item['id']) }}" method="POST">
                                 @method('DELETE')
+                                @csrf
                                 <button class="btn btn-danger" type="submit">
                                     <i class="bi bi-trash3"></i>
                                 </button>

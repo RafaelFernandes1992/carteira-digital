@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h4>Cadastro de Cartão de Crédito</h4>
+<h4>Cadastra Cartão de Crédito</h4>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
     <a class="btn btn-secondary" href="{{ route('cartao-credito.index') }}">
@@ -11,7 +11,7 @@
 </div>
 
 <form action="{{ route('cartao-credito.store') }}" method="POST" class="row g-3">
-
+    @csrf
     <div class="col-md-4">
         <label for="numero_cartao" class="form-label">Número (4 últimos dígitos)</label>
         <input type="text" class="form-control" name="numero_cartao" id="numero_cartao" value="{{ old('numero_cartao') }}" 

@@ -3,7 +3,7 @@
 
 @section('content')
     
-<h4>Cadastrar Tipo de Lançamento</h4>
+<h4>Cadastra Tipo de Lançamento</h4>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
     <a class="btn btn-secondary" href="{{ route('tipo-lancamento.index') }}">    
@@ -12,7 +12,7 @@
 </div>
 
 <form action="{{ route('tipo-lancamento.store') }}" method="POST" class="row g-3">
-
+    @csrf
     <div class="col-md-2">
         <label for="tipo" class="form-label">Tipo</label>
         <select class="form-select" aria-label="Default select example" id="tipo" name="tipo" required>

@@ -11,6 +11,7 @@
     
     <form action="{{ route('competencia-carteira.update', $id) }}" method="POST" class="row g-3">
         @method('PUT')
+        @csrf
         <div class="col-md-3">
             <label for="inputmes" class="form-label">Mês</label>
             <select class="form-select" aria-label="Default select example" name="mes" required>

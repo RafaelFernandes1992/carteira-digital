@@ -4,7 +4,7 @@
 
 <div class="login-container">
 
-    <div class="login-title">Cadastrar Usuário</div>
+    <div class="login-title">Cadastra Usuário</div>
 
     {{-- Exibe erros de validação --}}
     @if ($errors->any())

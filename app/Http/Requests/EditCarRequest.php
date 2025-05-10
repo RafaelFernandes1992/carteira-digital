@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCarRequest extends FormRequest
+class EditCarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,9 @@ class UpdateCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:cars,id',
-            'apelido' => 'required|string|min:3|max:30',
-            'renavam' => 'required|string|digits:11',
-            'placa' => 'required|string|min:7|max:7',
-            'marca' => 'required|string|min:2|max:30',
-            'modelo' => 'required|string|min:2|max:30',
-            'data_aquisicao' => 'required|date|date_format:Y-m-d',
+            'id' => 'required|integer|exists:cars,id'
         ];
-
-
     }
-
     public function validationData(): array
     {
         return array_merge($this->all(), [

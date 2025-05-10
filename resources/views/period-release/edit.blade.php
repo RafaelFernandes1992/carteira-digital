@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h4>Editar Lançamento # {{ $id }}</h4>
+<h4>Edita Lançamento # {{ $id }}</h4>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
     <a class="btn btn-secondary" href="{{ route('competencia.lancamento.create', $competenciaId) }}">    
@@ -11,8 +11,9 @@
 </div>
 
 <form action="{{ route('lancamento.update', $id) }}" method="POST" class="row g-3 align-items-end">
-    @csrf
+    
     @method('PUT')
+    @csrf
 
     <div class="col-md-6">
         <label for="type_release_id" class="form-label">Descrição</label>

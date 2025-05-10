@@ -65,17 +65,17 @@ class CreditCardController extends Controller
         try {
             $dados = $request->validated();
             $user = Auth::user();
-            $typeRelease = CreditCard::where('user_id', $user->id)
+            $creditCard = CreditCard::where('user_id', $user->id)
                 ->where('id', $dados['id'])->firstOrFail();
 
             return view('credit-card.edit')
                 ->with([
-                    'id' => $typeRelease->id,
-                    'numero_cartao' => $typeRelease->numero_cartao,
-                    'apelido' => $typeRelease->apelido,
-                    'valor_limite' => $typeRelease->valor_limite,
-                    'dia_vencimento_fatura' => $typeRelease->dia_vencimento_fatura,
-                    'dia_fechamento_fatura' => $typeRelease->dia_fechamento_fatura,
+                    'id' => $creditCard->id,
+                    'numero_cartao' => $creditCard->numero_cartao,
+                    'apelido' => $creditCard->apelido,
+                    'valor_limite' => $creditCard->valor_limite,
+                    'dia_vencimento_fatura' => $creditCard->dia_vencimento_fatura,
+                    'dia_fechamento_fatura' => $creditCard->dia_fechamento_fatura,
                 ]);
 
         } catch (\Exception $e) {
@@ -87,9 +87,9 @@ class CreditCardController extends Controller
     {
         try {
             $dados = $request->validated();
-            $typerelease = CreditCard::where('user_id', Auth::user()->id)
+            $creditCard = CreditCard::where('user_id', Auth::user()->id)
                 ->where('id', $dados['id'])->firstOrFail();
-            $typerelease->update($dados);
+            $creditCard->update($dados);
 
             $dados['message'] = 'Cartão de Crédito atualizado com sucesso!';
             return redirect()->route('cartao-credito.index')->with($dados);
@@ -98,10 +98,6 @@ class CreditCardController extends Controller
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
 
     public function destroy(DestroyCreditCardRequest $request)
     {

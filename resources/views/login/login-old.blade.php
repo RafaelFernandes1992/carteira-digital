@@ -6,7 +6,6 @@
 
 @section('content')
 
-{{--todos os inputs, precisam ter o atributo html chamado 'name' --}}
 <div class="login-container">
     <div class="login-title">Carteira Digital (Assíncrono)</div>
 
