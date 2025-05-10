@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCreditCardReleaseRequest extends FormRequest
+class EditCreditCardReleaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,7 @@ class UpdateCreditCardReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:credit_card_releases,id',
-            'data_compra' => 'required|date',
-            'descricao' => 'required|string|max:255',
-            'quantidade_parcelas' => 'required|integer|min:1|max:18',
-            'valor' => 'required|numeric|min:0.01',
+            'id' => 'required|string|exists:credit_card_releases,id'
         ];
     }
 

@@ -97,7 +97,6 @@ Route::post('competencia-carteira/store', [PeriodController::class, 'store'])
     ->middleware('auth')
     ->name('competencia-carteira.store');
 
-/** A parte de UPDATE do CRUD*/
 Route::get('competencia-carteira/{competenciaId}/edit', [PeriodController::class, 'edit'])
     ->middleware('auth')
     ->name('competencia-carteira.edit');
@@ -105,12 +104,14 @@ Route::get('competencia-carteira/{competenciaId}/edit', [PeriodController::class
 Route::put('competencia-carteira/{competenciaId}', [PeriodController::class, 'update'])
     ->middleware('auth')
     ->name('competencia-carteira.update');
-/** -----------------------------*/
-
 
 Route::delete('competencia-carteira/{competenciaId}', [PeriodController::class, 'destroy'])
     ->middleware('auth')
     ->name('competencia-carteira.destroy');
+
+//Extra -- esse aqui serve para retornar os totalizadores da soma de receita, despesa, investimento da tela
+//retorna um array
+//Lançamentos da Competência da Carteira
 
 Route::get('/competencia-carteira/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
@@ -119,8 +120,9 @@ Route::post('/competencia-carteira/{competenciaId}/rotineiros', [PeriodControlle
     ->middleware('auth')
     ->name('competencia-carteira.rotineiros');
 
-/*******************************************************************/
 
+
+/*******************************************************************/
 
 Route::get('competencia/{competenciaId}/lancamento/create', [PeriodReleaseController::class, 'create'])
     ->middleware('auth')
@@ -130,19 +132,17 @@ Route::post('competencia/{competenciaId}/lancamento', [PeriodReleaseController::
     ->middleware('auth')
     ->name('competencia.lancamento.store');
 
-Route::delete('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'destroy'])
+Route::get('competencia/lancamento/{lancamentoId}/edit', [PeriodReleaseController::class, 'edit'])
+    ->middleware('auth')
+    ->name('competencia.lancamento.edit');
+
+Route::put('competencia/lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update'])
+    ->middleware('auth')
+    ->name('competencia.lancamento.update');
+
+Route::delete('competencia/lancamento/{lancamentoId}', [PeriodReleaseController::class, 'destroy'])
     ->middleware('auth')
     ->name('competencia.lancamento.destroy');
-
-/** A parte de UPDATE de um lancamento da competencia*/
-Route::get('lancamento/{lancamentoId}/edit', [PeriodReleaseController::class, 'edit'])
-    ->middleware('auth')
-    ->name('lancamento.edit');
-
-Route::put('lancamento/{lancamentoId}', [PeriodReleaseController::class, 'update'])
-    ->middleware('auth')
-    ->name('lancamento.update');
-/** -----------------------------*/
 
 /*******************************************************************/
 
@@ -185,7 +185,6 @@ Route::get('tipo-lancamento-getAll', [TypeReleaseController::class, 'getAll'])
 
 /*******************************************************************/
 
-
 Route::get('carro', [CarController::class, 'index'])
     ->middleware('auth')
     ->name('carro.index');
@@ -198,7 +197,6 @@ Route::post('carro/store', [CarController::class, 'store'])
     ->middleware('auth')
     ->name('carro.store');
 
-
 Route::get('carro/{carId}/edit', [CarController::class, 'edit'])
    ->middleware('auth')
    ->name('carro.edit');
@@ -207,14 +205,11 @@ Route::put('carro/{carId}', [CarController::class, 'update'])
    ->middleware('auth')
    ->name('carro.update');
 
-
 Route::delete('carro/{carId}', [CarController::class, 'destroy'])
     ->middleware('auth')
     ->name('carro.destroy');
 
-
 /*******************************************************************/
-
 
 Route::get('cartao-credito', [CreditCardController::class, 'index'])
     ->middleware('auth')
@@ -228,7 +223,6 @@ Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
     ->middleware('auth')
     ->name('cartao-credito.store');
 
-/** Inicio UPDATE do CRUD */
 Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, 'edit'])
     ->middleware('auth')
     ->name('cartao-credito.edit');
@@ -236,12 +230,10 @@ Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, '
 Route::put('cartao-credito/{creditCardId}', [CreditCardController::class, 'update'])
     ->middleware('auth')
     ->name('cartao-credito.update');
-/** Fim UPDATE do CRUD */
 
 Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'destroy'])
     ->middleware('auth')
     ->name('cartao-credito.destroy');
-
 
 /*******************************************************************/
 
@@ -252,36 +244,25 @@ Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'de
 
 //competencia/{competenciaId}/lancamento/create
 
-Route::get(
-    'competencia/{competenciaId}/cartao-credito/lancamento/create',
-    [CreditCardReleaseController::class, 'create']
-)->middleware('auth')
+Route::get('competencia/{competenciaId}/cartao-credito/lancamento/create',[CreditCardReleaseController::class, 'create'])
+    ->middleware('auth')
     ->name('competencia.cartao-credito.lancamento.create');
 
-Route::post(
-    'competencia/{competenciaId}/cartao-credito/lancamento',
-    [CreditCardReleaseController::class, 'store']
-)->middleware('auth')
+Route::post('competencia/{competenciaId}/cartao-credito/lancamento',[CreditCardReleaseController::class, 'store'])
+    ->middleware('auth')
     ->name('competencia.cartao-credito.lancamento.store');
 
-//Route::post('cartao-credito/store', [CreditCardController::class, 'store'])
-//    ->middleware('auth')
-//    ->name('cartao-credito.store');
-//
-///** Inicio UPDATE do CRUD */
-//Route::get('cartao-credito/{creditCardId}/edit', [CreditCardController::class, 'edit'])
-//    ->middleware('auth')
-//    ->name('cartao-credito.edit');
-//
-//Route::put('cartao-credito/{creditCardId}', [CreditCardController::class, 'update'])
-//    ->middleware('auth')
-//    ->name('cartao-credito.update');
-///** Fim UPDATE do CRUD */
-//
-//Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'destroy'])
-//    ->middleware('auth')
-//    ->name('cartao-credito.destroy');
+Route::get('cartao-credito/lancamento/{creditCardReleaseId}/edit', [CreditCardReleaseController::class, 'edit'])
+   ->middleware('auth')
+   ->name('cartao-credito.lancamento.edit');
 
+Route::put('cartao-credito/lancamento/{creditCardReleaseId}', [CreditCardReleaseController::class, 'update'])
+   ->middleware('auth')
+   ->name('cartao-credito.lancamento.update');
+
+Route::delete('cartao-credito/lancamento/{creditCardReleaseId}', [CreditCardReleaseController::class, 'destroy'])
+   ->middleware('auth')
+   ->name('cartao-credito.lancamento.destroy');
 
 /*******************************************************************/
 

@@ -7,7 +7,7 @@
     <table class="table table-striped table-sm">
         <thead>
             <tr>
-                <th scope="4">Totalizador por Cartão de Crédito</th>
+                <th>Totalizador por Cartão de Crédito</th>
                 <th>Valor</th>
                 <th>Informar pagamento da fatura</th>
             </tr>
@@ -15,9 +15,9 @@
         <tbody>
         @foreach($items as $item)
             <tr>
-                <td scope="4">{{ $item['nome_cartao'] }}</td>
-                <td>{{ $item['total'] }}</td>
-                <td>
+                <td style="vertical-align: middle;">{{ $item['nome_cartao'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['total'] }}</td>
+                <td style="vertical-align: middle;">
                     <a class="btn btn-info btn-sm" href="#">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
@@ -26,9 +26,9 @@
         @endforeach
         <tfoot>
             <tr>
-                <th scope="4">Soma</th>
-                <th>{{ $totalGeral }}</th>
-                <th></th>
+                <th style="vertical-align: middle;">Soma</th>
+                <th style="vertical-align: middle;">{{ $totalGeral }}</th>
+                <th style="vertical-align: middle;"></th>
             </tr>
         </tfoot>
         

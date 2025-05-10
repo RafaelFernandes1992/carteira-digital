@@ -4,25 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Http\Requests\CreateCreditCardReleaseRequest;
+use App\Http\Requests\DestroyCreditCardReleaseRequest;
+use App\Http\Requests\EditCreditCardReleaseRequest;
 use App\Models\CreditCard;
 use App\Models\CreditCardRelease;
 use App\Http\Requests\StoreCreditCardReleaseRequest;
 use App\Http\Requests\UpdateCreditCardReleaseRequest;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class CreditCardReleaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(CreateCreditCardReleaseRequest $request)
     {
         $data = $request->validated();
@@ -79,7 +77,8 @@ class CreditCardReleaseController extends Controller
                 'valor' => Helper::formatToCurrency($item->valor),
                 'valor_pago_fatura' => Helper::formatToCurrency($item->valor_pago_fatura),
                 'valor_parcela' => Helper::formatToCurrency($item->valor_parcela),
-                'nome_cartao' => $item->creditCard->getNome()
+                'nome_cartao' => $item->creditCard->getNome(),
+                'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s')
             ];
         });
 
@@ -93,9 +92,6 @@ class CreditCardReleaseController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCreditCardReleaseRequest $request)
     {
         try {
@@ -113,35 +109,61 @@ class CreditCardReleaseController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(CreditCardRelease $creditCardRelease)
+    public function edit(EditCreditCardReleaseRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            
+            $creditCardReleaseItens = CreditCardRelease::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            
+            return view('credit-card-release.edit')
+                ->with([
+                    'id' => $creditCardReleaseItens->id,
+                    'competenciaId' => $creditCardReleaseItens->period_id,
+                    'creditCardId' => $creditCardReleaseItens->credit_card_id,
+                    'descricao' => $creditCardReleaseItens->descricao,
+                    'valor' => $creditCardReleaseItens->valor,
+                    'quantidade_parcelas' => $creditCardReleaseItens->quantidade_parcelas,
+                    'data_compra' => $creditCardReleaseItens->data_compra
+                ]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CreditCardRelease $creditCardRelease)
+    public function update(UpdateCreditCardReleaseRequest $request)
     {
-        //
+        try {
+            $dados = $request->validated();
+            $dados['valor_parcela'] = $dados['valor'] / $dados['quantidade_parcelas'];
+            $creditCardReleaseItens = CreditCardRelease::where('user_id', Auth::user()->id)
+                ->where('id', $dados['id'])->firstOrFail();
+
+            $creditCardReleaseItens->update($dados);
+
+            $dados['message'] = 'Lançamento do cartão de crédito atualizado com sucesso!';
+            return redirect()->route('competencia.cartao-credito.lancamento.create', $creditCardReleaseItens->period_id)->with($dados);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCreditCardReleaseRequest $request, CreditCardRelease $creditCardRelease)
+    public function destroy(DestroyCreditCardReleaseRequest $request)
     {
-        //
-    }
+        try {
+            $dados = $request->validated();
+            $user = Auth::user();
+            $model = CreditCardRelease::where('user_id', $user->id)
+                ->where('id', $dados['id'])->firstOrFail();
+            $model->delete();
+            return back()->with(['message' => 'Lançamento do Cartão de Crédito excluído com sucesso!']);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CreditCardRelease $creditCardRelease)
-    {
-        //
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

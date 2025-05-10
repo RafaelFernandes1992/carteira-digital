@@ -27,34 +27,36 @@
     <table class="table table-striped table-sm">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Cartão</th>
-            <th scope="col">Descrição</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Quantidade Parcelas</th>
-            <th scope="col">Valor Parcela</th>
-            <th scope="col">Data Compra</th>
-            <th scope="col">Data Pagamento Fatura</th>
-            <th scope="col">Ações</th>
+            <th>#</th>
+            <th>Cartão</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Quantidade Parcelas</th>
+            <th>Valor Parcela</th>
+            <th>Data Compra</th>
+            <th>Data Pagamento Fatura</th>
+            <th>Data do Registro</th>
+            <th style="text-align: center;">Ações</th>
         </tr>
         </thead>
         <tbody>
         @foreach($items as $item)
             <tr>
-                <td>{{ $item['id'] }}</td>
-                <td>{{ $item['nome_cartao'] }}</td>
-                <td>{{ $item['descricao'] }}</td>
-                <td>{{ $item['valor'] }}</td>
-                <td>{{ $item['quantidade_parcelas'] }}</td>
-                <td>{{ $item['valor_parcela'] }}</td>
-                <td>{{ $item['data_compra'] }}</td>
-                <td>{{ $item['data_pagamento_fatura'] }}</td>
-                <td>
+                <td style="vertical-align: middle;">{{ $item['id'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['nome_cartao'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['descricao'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['valor'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['quantidade_parcelas'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['valor_parcela'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['data_compra'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['data_pagamento_fatura'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['created_at'] }}</td>
+                <td style="text-align: center;">
                     <div class="d-flex justify-content-center gap-2">
-                        <a class="btn btn-warning" href="#">
+                        <a class="btn btn-warning" href="{{ route('cartao-credito.lancamento.edit', $item['id']) }}">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="#" method="POST">
+                        <form action="{{ route('cartao-credito.lancamento.destroy', $item['id']) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger" type="submit">
@@ -67,7 +69,7 @@
         @endforeach
         @if(count($items) === 0)
             <tr>
-                <td colspan="9">Nenhum registro encontrado.</td>
+                <td colspan="10">Nenhum registro encontrado.</td>
             </tr>
         @endif
         </tbody>

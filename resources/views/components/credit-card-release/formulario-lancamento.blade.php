@@ -6,7 +6,7 @@
 <br>
 <form action="{{ route('competencia.cartao-credito.lancamento.store', $competenciaId) }}" method="POST"
       class="row g-3 align-items-end">
-
+    @csrf
     <div class="col-md-2">
         <label for="credit_card_id" class="form-label">Cartão Crédito
             <span class="text-danger">*</span>

@@ -21,21 +21,21 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col" style="text-align: center;">Data registro</th>
-                <th scope="col" style="text-align: center;">Deletar</th>
+                <th>#</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th style="text-align: begin;">Data do Registro</th>
+                <th style="text-align: center;">Deletar</th>
             </tr>
             </thead>
             <tbody>
             @foreach($items as $item)
                 <tr>
-                    <td style="width:05%; vertical-align: middle;">{{ $item['id'] }}</td>
-                    <td style="width:09%; vertical-align: middle;">{{ $item['nome'] }}</td>
-                    <td style="width:18%; vertical-align: middle;">{{ $item['email'] }}</td>
-                    <td style="width:14%; text-align: center; vertical-align: middle;">{{ $item['created_at'] }}</td>
-                    <td style="width:9%; text-align: center; vertical-align: middle;">
+                    <td style="vertical-align: middle;">{{ $item['id'] }}</td>
+                    <td style="vertical-align: middle;">{{ $item['nome'] }}</td>
+                    <td style="vertical-align: middle;">{{ $item['email'] }}</td>
+                    <td style="vertical-align: middle;">{{ $item['created_at'] }}</td>
+                    <td style="text-align: center; vertical-align: middle;">
                         <div class="d-flex justify-content-center gap-2">
                             <form action="{{ route('usuario.destroy', $item['id']) }}" method="POST">
                                 @method('DELETE')

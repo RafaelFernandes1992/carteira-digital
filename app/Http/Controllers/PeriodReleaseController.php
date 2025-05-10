@@ -120,7 +120,6 @@ class PeriodReleaseController extends Controller
         }
     }
 
-
     public function update(UpdatePeriodReleaseRequest $request)
     {
         try {

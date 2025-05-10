@@ -18,15 +18,15 @@
         <tbody>
         @foreach($items as $item)
             <tr>
-                <td>{{ $item['type_release']['tipo'] }}</td>
-                <td>{{ $item['type_release']['descricao'] }}</td>
-                <td>{{ $item['valor_total'] }}</td>
-                <td>{{ $item['situacao'] }}</td>
-                <td>{{ $item['data_debito_credito'] }}</td>
-                <td>{{ $item['observacao'] }}</td>
-                <td>
+                <td style="vertical-align: middle;">{{ $item['type_release']['tipo'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['type_release']['descricao'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['valor_total'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['situacao'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['data_debito_credito'] }}</td>
+                <td style="vertical-align: middle;">{{ $item['observacao'] }}</td>
+                <td style="vertical-align: middle;">
                     <div class="d-flex gap-2">
-                        <a class="btn btn-warning" href="{{ route('lancamento.edit', $item['id']) }}">
+                        <a class="btn btn-warning" href="{{ route('competencia.lancamento.edit', $item['id']) }}">
                             <i class="bi bi-pencil"></i>
                         </a>
                         <form action="{{ route('competencia.lancamento.destroy', $item['id']) }}" method="POST">
@@ -41,20 +41,20 @@
             </tr>
         @endforeach
             <tr>
-                <td>Despesa</td>
-                <td><i class="bi bi-car-front"></i> Lançamentos do Carro</td>
-                <td colspan="4">0,00</td>
-                <td>
+                <td style="vertical-align: middle;">Despesa</td>
+                <td style="vertical-align: middle;">Lançamentos do Carro</td>
+                <td style="vertical-align: middle;" colspan="4">0,00</td>
+                <td style="vertical-align: middle;">
                     <a class="btn btn-light" href="#">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
                 </td>
             </tr>
             <tr>
-                <td>Despesa</td>
-                <td><i class="bi bi-credit-card-2-back"></i> Lançamentos do Cartão de Crédito</td>
-                <td colspan="4">0,00</td>
-                <td>
+                <td style="vertical-align: middle;">Despesa</td>
+                <td style="vertical-align: middle;">Lançamentos do Cartão de Crédito</td>
+                <td style="vertical-align: middle;" colspan="4">0,00</td>
+                <td style="vertical-align: middle;">
                     <a class="btn btn-light" href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
