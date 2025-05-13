@@ -12,12 +12,11 @@
 
     <x-period-release.header
             :saldo_inicial="$period['saldo_inicial'] ?? 0"
-            :saldo_atual="$period['saldo_atual'] ?? 0"
-            :debitadas_total="$period['debitadas_total'] ?? 0"
-            :creditadas_total="$period['creditadas_total'] ?? 0"
-            :nao_debitadas_total="$period['nao_debitadas_total'] ?? 0"
-            :saldo_atual_previsto="$period['saldo_atual_previsto'] ?? 0"
-            :previsao_debitada="$period['previsao_debitada'] ?? 0"
+            :total_investimentos="$period['total_investimentos'] ?? 0"
+            :total_despesas="$period['total_despesas'] ?? 0"
+            :total_receitas="$period['total_receitas'] ?? 0"
+            :saldo_final="$period['saldo_final'] ?? 0"
+            :dizimo_calculado="$period['dizimo_calculado'] ?? 0"
     />
     <br>
 

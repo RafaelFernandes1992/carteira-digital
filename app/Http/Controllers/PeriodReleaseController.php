@@ -56,6 +56,38 @@ class PeriodReleaseController extends Controller
         return view('period-release.create')->with($dados);
     }
 
+    private function lidarComLancamento(PeriodRelease $model): void
+    {
+        // Etapa 1: Obter o período relacionado a esse lançamento
+        $period = $model->period;
+
+        // Etapa 2: Obter o valor atual do saldo
+        $saldoAtual = $period->saldo_atual;
+
+        // Etapa 3: Obter o valor do lançamento (positivo)
+        $valorDoLancamento = $model->valor_total;
+
+        // Etapa 4: Verificar a situação do lançamento
+        if ($model->situacao === 'debitado') {
+            // Se for um débito, subtrair o valor do lançamento do saldo atual
+            $novoSaldo = $saldoAtual - $valorDoLancamento;
+
+            // Atualizar o saldo do período no banco de dados
+            $period->update([
+                'saldo_atual' => $novoSaldo
+            ]);
+        }
+
+        if ($model->situacao === 'creditado') {
+            // Se for um crédito, somar o valor do lançamento ao saldo atual
+            $novoSaldo = $saldoAtual + $valorDoLancamento;
+
+            // Atualizar o saldo do período no banco de dados
+            $period->update([
+                'saldo_atual' => $novoSaldo
+            ]);
+        }
+    }
 
     public function store(StorePeriodReleaseRequest $request)
     {
@@ -74,24 +106,6 @@ class PeriodReleaseController extends Controller
         }
     }
 
-    private function lidarComLancamento(PeriodRelease $model): void
-    {
-
-        if ($model->situacao === 'debitado') {
-            $period = $model->period;
-            $result = $period->saldo_atual - $model->valor_total;
-
-            $period->update(['saldo_atual' => $result]);
-        }
-
-        if ($model->situacao === 'creditado') {
-            $period = $model->period;
-            $result = $period->saldo_atual + $model->valor_total;
-
-            $period->update(['saldo_atual' => $result]);
-        }
-    }
-
     public function edit(EditPeriodReleaseRequest $request)
     {
         try {
@@ -99,7 +113,10 @@ class PeriodReleaseController extends Controller
             $user = Auth::user();
 
             $item = PeriodRelease::where('user_id', $user->id)
-                ->where('id', $dados['id'])->firstOrFail();
+                ->where('id', $dados['id'])
+                ->firstOrFail();
+
+
 
             $types = TypeRelease::where('user_id', $user->id)->get();
 

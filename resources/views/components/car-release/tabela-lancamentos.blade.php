@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
     <div class="box-search">
-        <form class="box-search" action="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}"
+        <form class="box-search" action="{{ route('competencia.carro.lancamento.create', $competenciaId) }}"
             method="GET">
             <input type="search" class="form-control" placeholder="Digite um termo para pesquisar"
             name="search" id="search" value="{{ $search }}">
@@ -16,7 +16,7 @@
             </button>
         </form>
 
-        <a href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}"
+        <a href="{{ route('competencia.carro.lancamento.create', $competenciaId) }}"
             role="button" class="btn btn-secondary" title="Limpar">
             <i class="bi bi-trash3"></i>
         </a>

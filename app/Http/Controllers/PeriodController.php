@@ -65,6 +65,7 @@ class PeriodController extends Controller
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
     private function criaPeriodReleaseSeNaoExiste(array $data, int &$count): void
     {
         $existe = PeriodRelease
@@ -80,15 +81,13 @@ class PeriodController extends Controller
 
     private function getSituacaoByTipo(string $tipo): string
     {
-        if ($tipo !== 'receita') {
-            return 'nao_debitado';
+        if ($tipo === 'receita') {
+            return 'creditado';
         }
-        return 'creditado';
+        return 'nao_debitado';
     }
 
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $user = Auth::user();
@@ -138,36 +137,6 @@ class PeriodController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
-    }
-
-    public function getDetalhesCompetenciaById(string $id): array
-    {
-        $period = Period::find($id);
-        $userId = $period->user_id;
-        $this->validateScope($userId);
-
-        $somaDebitadas = PeriodRelease::where('period_id', $id)
-            ->where('situacao', 'debitado')
-            ->sum('valor_total');
-
-        $somaCreditadas = PeriodRelease::where('period_id', $id)
-            ->where('situacao', 'creditado')
-            ->sum('valor_total');
-
-        $somaNaoDebitadas = PeriodRelease::where('period_id', $id)
-            ->where('situacao', 'nao_debitado')
-            ->sum('valor_total');
-
-        //debitada + não debitada = previsão debitada
-        //saldo atual = saldo atual - não debitada
-
-        return [
-            'debitadas_total' => number_format((float)$somaDebitadas, 2, ',', '.'),
-            'creditadas_total' => number_format((float)$somaCreditadas, 2, ',', '.'),
-            'nao_debitadas_total' => number_format((float)$somaNaoDebitadas, 2, ',', '.'),
-            'saldo_atual_previsto' => number_format((float)$period->saldo_atual - $somaNaoDebitadas, 2, ',', '.'),
-            'previsao_debitada' => number_format((float)$somaDebitadas + $somaNaoDebitadas, 2, ',', '.'),
-        ];
     }
 
     /**

@@ -1,51 +1,42 @@
 @props([
     'saldo_inicial' => 0,
-    'saldo_atual' => 0,
-    'debitadas_total' => 0,
-    'creditadas_total' => 0,
-    'nao_debitadas_total' => 0,
-    'saldo_atual_previsto' => 0,
-    'previsao_debitada' => 0,
+    'total_investimentos' => 0,
+    'total_despesas' => 0,
+    'total_receitas' => 0,
+    'saldo_final' => 0,
+    'dizimo_calculado' => 0,
 ])
 
 <div class="row g-3 align-items-end">
 
     <div class="col-md-2">
         <label class="form-label">Dízimo calculado</label>
-        <input type="number" class="form-control" value="{{ 0 }}" disabled>
+        <input type="text" class="form-control" value="{{ $dizimo_calculado }}" disabled>
     </div>
 
     <div class="col-md-2">
         <label class="form-label">Saldo Inicial</label>
-        <input type="number" class="form-control" value="{{ $saldo_inicial }}" disabled>
+        <input type="text" class="form-control" value="{{ $saldo_inicial }}" disabled>
     </div>
+
     <div class="col-md-2">
         <label class="form-label">Receitas</label>
-        <input type="number" class="form-control" value="{{ $creditadas_total }}" disabled>
+        <input type="text" class="form-control" value="{{ $total_receitas }}" disabled>
     </div>
+
     <div class="col-md-2">
-        <label class="form-label">Despesas
-            @if($nao_debitadas_total > 0)
-                <span class="badge bg-danger-subtle text-danger-emphasis rounded-pill">
-                    {{$previsao_debitada}}
-                </span>
-            @endif
-        </label>
-        <input type="number" class="form-control" value="{{ $debitadas_total }}" disabled>
+        <label class="form-label">Despesas</label>
+        <input type="text" class="form-control" value="{{ $total_despesas }}" disabled>
     </div>
+
     <div class="col-md-2">
         <label class="form-label">Investimentos</label>
-        <input type="number" class="form-control" value="{{ 0 }}" disabled>
+        <input type="text" class="form-control" value="{{ $total_investimentos }}" disabled>
     </div>
+
     <div class="col-md-2">
-        <label class="form-label">Saldo Final
-            @if($nao_debitadas_total > 0)
-                <span class="badge bg-success-subtle text-success-emphasis rounded-pill">
-                    {{$saldo_atual_previsto}}
-                </span>
-            @endif
-        </label>
-        <input type="number" class="form-control" value="{{ $saldo_atual }}" disabled>
+        <label class="form-label">Saldo Final</label>
+        <input type="text" class="form-control" value="{{ $saldo_final }}" disabled>
     </div>
 
 </div>

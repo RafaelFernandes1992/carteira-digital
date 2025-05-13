@@ -35,4 +35,9 @@ class Period extends Model
     {
         return $this->hasMany(CreditCardRelease::class);
     }
+
+    public function carReleases(): HasMany
+    {
+        return $this->hasMany(CarRelease::class);
+    }
 }

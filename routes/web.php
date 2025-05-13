@@ -5,6 +5,7 @@ use App\Http\Controllers\CreditCardReleaseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontRenderController;
 use App\Http\Controllers\PeriodController;
+use App\Services\PeriodService;
 use App\Http\Controllers\PeriodReleaseController;
 use App\Http\Controllers\TypeReleaseController;
 use App\Http\Controllers\UserController;
@@ -114,7 +115,7 @@ Route::delete('competencia-carteira/{competenciaId}', [PeriodController::class, 
 //retorna um array
 //Lançamentos da Competência da Carteira
 
-Route::get('/competencia-carteira/detalhes/{id}', [PeriodController::class, 'getDetalhesCompetenciaById'])
+Route::get('/competencia-carteira/detalhes/{id}', [PeriodService::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
 
 Route::post('/competencia-carteira/{competenciaId}/rotineiros', [PeriodController::class, 'addRoutineItems'])
