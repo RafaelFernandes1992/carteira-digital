@@ -20,6 +20,11 @@ class Period extends Model
         'user_id',
     ];
 
+    public function getNomeCompetencia(): string
+    {
+        return "($this->mes/$this->ano - $this->descricao)";
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

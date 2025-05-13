@@ -75,20 +75,42 @@ class DashboardController extends Controller
         ];
 
         $result = Period::where('ano', $ano)
-            ->where('user_id', $user->id)
-            ->with('periodReleases.typeRelease')
-            ->get();
+        ->where('user_id', $user->id)
+        ->with([
+            'periodReleases.typeRelease',
+            'carReleases',
+            'creditCardReleases',
+        ])
+        ->get();
 
         foreach ($result as $period) {
+            $mes = $period->mes;
+            $mesIndex = $arrayAnos[$mes - 1];
+
             foreach ($period->periodReleases as $release) {
-                $mes = $period->mes;
-                $mesIndex = $arrayAnos[$mes - 1];
+
                 $tipo = strtolower($release->typeRelease->tipo);
 
                 if (isset($totalizadores[$tipo])) {
                     $totalizadores[$tipo][$mesIndex] += (float) $release->valor_total;
                 }
             }
+
+            // CarReleases (somente se 'debitado')
+            foreach ($period->carReleases as $release) {
+                //if ($release->situacao === 'debitado') {
+                    $totalizadores['despesa'][$mesIndex] += (float) $release->valor;
+                //}
+            }
+
+            // CreditCardReleases (somente se 'debitado')
+            foreach ($period->creditCardReleases as $release) {
+                //if ($release->situacao === 'debitado') {
+                    $totalizadores['despesa'][$mesIndex] += (float) $release->valor_parcela;
+                //}
+            }
+
+
         }
 
         foreach ($totalizadores as &$tipo) {

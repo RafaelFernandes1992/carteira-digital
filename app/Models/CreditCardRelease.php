@@ -27,6 +27,7 @@ class CreditCardRelease extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
     public function creditCard(): BelongsTo
     {
         return $this->belongsTo(CreditCard::class);

@@ -7,6 +7,7 @@ use App\Http\Requests\EditPeriodReleaseRequest;
 use App\Models\PeriodRelease;
 use App\Http\Requests\StorePeriodReleaseRequest;
 use App\Http\Requests\UpdatePeriodReleaseRequest;
+use App\Models\Period;
 use App\Models\TypeRelease;
 use App\Services\PeriodService;
 use Carbon\Carbon;
@@ -50,6 +51,8 @@ class PeriodReleaseController extends Controller
             ];
         });
         $dados['competenciaId'] = $competenciaId;
+        $period = Period::findOrFail($competenciaId);
+        $dados['nome_competencia'] = $period->getNomeCompetencia();
 
         //dd($dados['items']);
 

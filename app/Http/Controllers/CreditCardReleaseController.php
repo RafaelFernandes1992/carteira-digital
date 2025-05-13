@@ -12,6 +12,8 @@ use App\Http\Requests\StoreCreditCardReleaseRequest;
 use App\Http\Requests\UpdateCreditCardReleaseRequest;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\Period;
+
 
 class CreditCardReleaseController extends Controller
 {
@@ -82,13 +84,16 @@ class CreditCardReleaseController extends Controller
             ];
         });
 
+        $period = Period::findOrFail($competenciaId);
+
         return view('credit-card-release.create')->with([
             'items' => $items,
             'competenciaId' => $competenciaId,
             'cartoes' => $cartoes,
             'totalCartoes' => $totalCartoes,
             'totalGeral' => Helper::formatToCurrency($totalGeral),
-            'search' => $search
+            'search' => $search,
+            'nome_competencia' => $period->getNomeCompetencia(),
         ]);
     }
 

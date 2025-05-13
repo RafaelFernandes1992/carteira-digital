@@ -1,5 +1,7 @@
 @props([
-    'items' => []
+    'items' => [],
+    'total_despesas_carro' => 0,
+    'total_despesas_cartao_credito' => 0,
 ])
 <br>
 <div class="table-responsive small">
@@ -43,7 +45,10 @@
             <tr>
                 <td style="vertical-align: middle;">Despesa</td>
                 <td style="vertical-align: middle;">Lançamentos do Carro</td>
-                <td style="vertical-align: middle;" colspan="4">0,00</td>
+                <td style="vertical-align: middle;">{{ $total_despesas_carro }}</td>
+                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;"></td>                
+                <td style="vertical-align: middle;"></td>
                 <td style="vertical-align: middle;">
                     <a class="btn btn-light" 
                     href="{{ route('competencia.carro.lancamento.create', $competenciaId) }}">
@@ -54,7 +59,11 @@
             <tr>
                 <td style="vertical-align: middle;">Despesa</td>
                 <td style="vertical-align: middle;">Lançamentos do Cartão de Crédito</td>
-                <td style="vertical-align: middle;" colspan="4">0,00</td>
+                <td style="vertical-align: middle;">{{ $total_despesas_cartao_credito }}</td>
+                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;"></td>                
+                <td style="vertical-align: middle;"></td>
+
                 <td style="vertical-align: middle;">
                     <a class="btn btn-light" 
                     href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">

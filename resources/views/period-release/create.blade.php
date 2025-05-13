@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h4><i class="bi bi-wallet2"></i> Lançamentos da Carteira - Competência # {{ $competenciaId }} </h4>
+    <h4><i class="bi bi-wallet2"></i> Lançamentos da Carteira - Competência # {{ $competenciaId }} {{ $nome_competencia }} </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
         <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">    
@@ -31,5 +31,10 @@
 
     <x-period-release.formulario-lancamento :competencia-id="$competenciaId"/>
 
-    <x-period-release.tabela-lancametos :items="$items" :competencia-id="$competenciaId"/>
+    <x-period-release.tabela-lancametos 
+        :items="$items" 
+        :competencia-id="$competenciaId"
+        :total_despesas_carro="$period['total_despesas_carro'] ?? 0"
+        :total_despesas_cartao_credito="$period['total_despesas_cartao_credito'] ?? 0"
+    />
 @endsection

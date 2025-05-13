@@ -96,12 +96,15 @@ class PeriodController extends Controller
         $this->periodService = $periodService;
     }
 
-
-
     public function index()
     {
         $user = Auth::user();
-        $periods = Period::where('user_id', $user->id)->get();
+        
+        $periods = Period::where('user_id', $user->id)
+            ->orderBy('ano', 'desc')
+            ->orderBy('mes', 'desc')
+            ->get();
+
         $periods = $periods->map(function ($period) {
             $competencia = Carbon::createFromDate($period->ano, $period->mes, 1);
 
@@ -119,9 +122,6 @@ class PeriodController extends Controller
         return view('period.index')->with(['items' => $periods]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $anoAtual = Carbon::now()->format('Y');
@@ -133,9 +133,7 @@ class PeriodController extends Controller
             ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StorePeriodRequest $request)
     {
         try {
@@ -143,25 +141,15 @@ class PeriodController extends Controller
             $dados['user_id'] = auth()->user()->id;
             Period::create($dados);
 
-            $dados['message'] = 'Competência criada com sucesso';
-            return redirect()->route('competencia-carteira.index')->with('message', 'Competência criada com sucesso');
+            $dados['message'] = 'Competência criada com sucesso!';
+            return redirect()->route('competencia-carteira.index')->with('message', 'Competência criada com sucesso!');
 
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Period $period)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(EditPeriodRequest $request)
     {
         try {
@@ -185,9 +173,6 @@ class PeriodController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePeriodRequest $request)
     {
         try {
@@ -204,9 +189,6 @@ class PeriodController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(DestroyPeriodRequest $request)
     {
         try {

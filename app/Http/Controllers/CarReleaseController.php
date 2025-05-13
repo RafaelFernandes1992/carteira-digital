@@ -12,6 +12,8 @@ use App\Http\Requests\StoreCarReleaseRequest;
 use App\Http\Requests\EditCarReleaseRequest;
 use App\Http\Requests\UpdateCarReleaseRequest;
 use App\Http\Requests\DestroyCarReleaseRequest;
+use App\Models\Period;
+
 
 class CarReleaseController extends Controller
 {
@@ -75,13 +77,16 @@ class CarReleaseController extends Controller
             ];
         });
 
+        $period = Period::findOrFail($competenciaId);
+
         return view('car-release.create')->with([
             'items' => $items,
             'competenciaId' => $competenciaId,
             'carros' => $carros,
             'totalCarros' => $totalCarros,
             'totalGeral' => Helper::formatToCurrency($totalGeral),
-            'search' => $search
+            'search' => $search,
+            'nome_competencia' => $period->getNomeCompetencia(),
         ]);
     }
 
