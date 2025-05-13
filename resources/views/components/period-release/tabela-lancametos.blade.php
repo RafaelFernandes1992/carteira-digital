@@ -45,7 +45,8 @@
                 <td style="vertical-align: middle;">Lançamentos do Carro</td>
                 <td style="vertical-align: middle;" colspan="4">0,00</td>
                 <td style="vertical-align: middle;">
-                    <a class="btn btn-light" href="#">
+                    <a class="btn btn-light" 
+                    href="{{ route('competencia.carro.lancamento.create', $competenciaId) }}">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
                 </td>
@@ -55,7 +56,8 @@
                 <td style="vertical-align: middle;">Lançamentos do Cartão de Crédito</td>
                 <td style="vertical-align: middle;" colspan="4">0,00</td>
                 <td style="vertical-align: middle;">
-                    <a class="btn btn-light" href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">
+                    <a class="btn btn-light" 
+                    href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
                 </td>

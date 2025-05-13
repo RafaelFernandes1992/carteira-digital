@@ -36,7 +36,7 @@
 
     <div class="col-md-3">
         <label for="inputsldInicial" class="form-label">Saldo Inicial <span style="color: red;">*</span></label>
-        <input type="number" class="form-control" name="saldo_inicial" step="0.01"  placeholder="0,00" value ="{{ old('saldo_inicial') }}" required>
+        <input type="number" class="form-control" name="saldo_inicial" step="0.01"  placeholder="0,00" value ="{{ old('saldo_inicial') ?? '0.00' }}" required>
     </div>
 
     <div class="col-md-4">

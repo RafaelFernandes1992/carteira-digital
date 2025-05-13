@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCarReleaseRequest extends FormRequest
+class CreateCarReleaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,14 @@ class UpdateCarReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:car_releases,id',
-            'descricao' => 'required|string|max:255',
-            'valor' => 'required|numeric|min:0.01',
-            'data_despesa' => 'required|date',
+            'competenciaId' => 'required|integer|exists:periods,id',
+            'search' => 'nullable|string|max:50',
         ];
     }
-
     public function validationData(): array
     {
         return array_merge($this->all(), [
-            'id' => $this->route('carReleaseId'),
+            'competenciaId' => $this->route('competenciaId'),
         ]);
     }
 }

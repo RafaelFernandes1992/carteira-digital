@@ -20,6 +20,11 @@ class Car extends Model
         'user_id',
     ];
 
+    public function getNome(): string
+    {
+        return "$this->apelido";
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -18,13 +18,14 @@ return new class extends Migration
             $table->decimal('valor', 10);
             $table->string('descricao');
 
-            $table->unsignedBigInteger('period_release_id');
+            $table->unsignedBigInteger('period_id');
             $table->unsignedBigInteger('car_id');
             $table->unsignedBigInteger('user_id');
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('period_release_id')->references('id')->on('period_releases');
+            $table->foreign('period_id')->references('id')->on('periods');
             $table->foreign('car_id')->references('id')->on('cars');
+            $table->foreign('user_id')->references('id')->on('users');
+
 
             $table->softDeletes();
             $table->timestamps();

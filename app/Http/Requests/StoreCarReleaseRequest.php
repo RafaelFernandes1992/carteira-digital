@@ -11,7 +11,7 @@ class StoreCarReleaseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class StoreCarReleaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'car_id' => 'required|integer|exists:cars,id',
+            'period_id' => 'required|integer|exists:periods,id',
+            'data_despesa' => 'required|date',
+            'valor' => 'required|numeric|min:0.01',
+            'descricao' => 'required|string|max:255',
         ];
+    }
+
+    public function validationData(): array
+    {
+        return array_merge($this->all(), [
+            'period_id' => $this->route('competenciaId'),
+        ]);
     }
 }

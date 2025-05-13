@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CreditCardController;
+use App\Http\Controllers\CarReleaseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -235,14 +236,9 @@ Route::delete('cartao-credito/{creditCardId}', [CreditCardController::class, 'de
     ->middleware('auth')
     ->name('cartao-credito.destroy');
 
-/*******************************************************************/
 
 
-//Route::get('cartao-credito', [CreditCardController::class, 'index'])
-//    ->middleware('auth')
-//    ->name('cartao-credito.index');
-
-//competencia/{competenciaId}/lancamento/create
+/*****************LANCAMENTOS DO CARTÃO**************************************************/
 
 Route::get('competencia/{competenciaId}/cartao-credito/lancamento/create',[CreditCardReleaseController::class, 'create'])
     ->middleware('auth')
@@ -265,6 +261,32 @@ Route::delete('cartao-credito/lancamento/{creditCardReleaseId}', [CreditCardRele
    ->name('cartao-credito.lancamento.destroy');
 
 /*******************************************************************/
+
+
+/*******************************************************************/
+
+Route::get('competencia/{competenciaId}/carro/lancamento/create',[CarReleaseController::class, 'create'])
+    ->middleware('auth')
+    ->name('competencia.carro.lancamento.create');
+
+Route::post('competencia/{competenciaId}/carro/lancamento',[CarReleaseController::class, 'store'])
+    ->middleware('auth')
+    ->name('competencia.carro.lancamento.store');
+
+Route::get('carro/lancamento/{carReleaseId}/edit', [CarReleaseController::class, 'edit'])
+   ->middleware('auth')
+   ->name('carro.lancamento.edit');
+
+Route::put('carro/lancamento/{carReleaseId}', [CarReleaseController::class, 'update'])
+   ->middleware('auth')
+   ->name('carro.lancamento.update');
+
+Route::delete('carro/lancamento/{carReleaseId}', [CarReleaseController::class, 'destroy'])
+   ->middleware('auth')
+   ->name('carro.lancamento.destroy');
+
+/*******************************************************************/
+
 
 
 Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorCompetenciaAnual']);

@@ -28,7 +28,6 @@ return new class extends Migration
 
             $table->foreign('period_id')->references('id')->on('periods');
             $table->foreign('credit_card_id')->references('id')->on('credit_cards');
-
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->softDeletes();

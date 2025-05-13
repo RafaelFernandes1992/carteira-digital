@@ -15,7 +15,7 @@ class CarRelease extends Model
         'data_despesa',
         'valor',
         'descricao',
-        'period_release_id',
+        'period_id',
         'car_id',
         'user_id',
     ];
