@@ -56,48 +56,12 @@ class PeriodReleaseController extends Controller
         return view('period-release.create')->with($dados);
     }
 
-    private function lidarComLancamento(PeriodRelease $model): void
-    {
-        // Etapa 1: Obter o período relacionado a esse lançamento
-        $period = $model->period;
-
-        // Etapa 2: Obter o valor atual do saldo
-        $saldoAtual = $period->saldo_atual;
-
-        // Etapa 3: Obter o valor do lançamento (positivo)
-        $valorDoLancamento = $model->valor_total;
-
-        // Etapa 4: Verificar a situação do lançamento
-        if ($model->situacao === 'debitado') {
-            // Se for um débito, subtrair o valor do lançamento do saldo atual
-            $novoSaldo = $saldoAtual - $valorDoLancamento;
-
-            // Atualizar o saldo do período no banco de dados
-            $period->update([
-                'saldo_atual' => $novoSaldo
-            ]);
-        }
-
-        if ($model->situacao === 'creditado') {
-            // Se for um crédito, somar o valor do lançamento ao saldo atual
-            $novoSaldo = $saldoAtual + $valorDoLancamento;
-
-            // Atualizar o saldo do período no banco de dados
-            $period->update([
-                'saldo_atual' => $novoSaldo
-            ]);
-        }
-    }
-
     public function store(StorePeriodReleaseRequest $request)
     {
         try {
             $dados = $request->validated();
             $dados['user_id'] = auth()->user()->id;
-            $model = PeriodRelease::create($dados);
-
-            $this->lidarComLancamento($model);
-
+            PeriodRelease::create($dados);
             $dados['message'] = 'Lançamento incluído com sucesso!';
 
             return back()->with($dados);

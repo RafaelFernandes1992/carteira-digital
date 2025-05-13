@@ -16,7 +16,6 @@ return new class extends Migration
             $table->smallInteger('mes');
             $table->smallInteger('ano');
             $table->decimal('saldo_inicial', 10)->default(0);
-            $table->decimal('saldo_atual', 10)->default(0);
             $table->string('descricao');
             $table->string('observacao')->nullable();
             $table->unsignedBigInteger('user_id');

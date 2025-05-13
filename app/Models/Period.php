@@ -15,7 +15,6 @@ class Period extends Model
         'mes',
         'ano',
         'saldo_inicial',
-        'saldo_atual',
         'descricao',
         'observacao',
         'user_id',

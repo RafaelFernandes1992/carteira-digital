@@ -14,6 +14,7 @@ use App\Traits\ValidateScopeTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\PeriodService;
 
 class PeriodController extends Controller
 {
@@ -87,6 +88,15 @@ class PeriodController extends Controller
         return 'nao_debitado';
     }
 
+    protected PeriodService $periodService;
+
+    //injeção de dependência, conceito de SOLID e POO
+    public function __construct(PeriodService $periodService)
+    {
+        $this->periodService = $periodService;
+    }
+
+
 
     public function index()
     {
@@ -94,12 +104,15 @@ class PeriodController extends Controller
         $periods = Period::where('user_id', $user->id)->get();
         $periods = $periods->map(function ($period) {
             $competencia = Carbon::createFromDate($period->ano, $period->mes, 1);
+
+            $detalhes = $this->periodService->getDetalhesCompetenciaById($period->id);
+
             return [
                 'id' => $period->id,
                 'competencia' => $competencia->format('m/Y'),
                 'descricao' => $period->descricao,
                 'saldo_inicial' => number_format($period->saldo_inicial, 2, ',', '.'),
-                'saldo_atual' => number_format($period->saldo_atual, 2, ',', '.'),
+                'saldo_atual' => $detalhes['saldo_final'], // já vem formatado pelo service
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
@@ -128,7 +141,7 @@ class PeriodController extends Controller
         try {
             $dados = $request->validated();
             $dados['user_id'] = auth()->user()->id;
-            $dados['saldo_atual'] = $dados['saldo_inicial'];
+            //$dados['saldo_atual'] = $dados['saldo_inicial'];
             Period::create($dados);
 
             $dados['message'] = 'Competência criada com sucesso';
