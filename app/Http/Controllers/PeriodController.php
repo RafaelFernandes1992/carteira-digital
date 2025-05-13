@@ -112,7 +112,7 @@ class PeriodController extends Controller
                 'competencia' => $competencia->format('m/Y'),
                 'descricao' => $period->descricao,
                 'saldo_inicial' => number_format($period->saldo_inicial, 2, ',', '.'),
-                'saldo_atual' => $detalhes['saldo_final'], // já vem formatado pelo service
+                'saldo_final' => $detalhes['saldo_final'], // já vem formatado pelo service
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
@@ -141,7 +141,6 @@ class PeriodController extends Controller
         try {
             $dados = $request->validated();
             $dados['user_id'] = auth()->user()->id;
-            //$dados['saldo_atual'] = $dados['saldo_inicial'];
             Period::create($dados);
 
             $dados['message'] = 'Competência criada com sucesso';

@@ -45,7 +45,7 @@
                     <td style="width:09%; vertical-align: middle;">{{ $item['competencia'] }}</td>
                     <td style="width:18%; vertical-align: middle;">{{ $item['descricao'] }}</td>
                     <td style="width:9%; text-align: end; vertical-align: middle;">{{ $item['saldo_inicial'] }}</td>
-                    <td style="width:9%; text-align: end; vertical-align: middle;">{{ $item['saldo_atual'] }}</td>
+                    <td style="width:9%; text-align: end; vertical-align: middle;">{{ $item['saldo_final'] }}</td>
                     <td style="width:14%; text-align: end; vertical-align: middle;">{{ $item['created_at'] }}</td>
 
                     <td style="width:9%; text-align: center; vertical-align: middle;">
