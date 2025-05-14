@@ -22,7 +22,7 @@ class Period extends Model
 
     public function getNomeCompetencia(): string
     {
-        return "($this->mes/$this->ano - $this->descricao)";
+        return "$this->mes/$this->ano - $this->descricao";
     }
 
     public function user(): BelongsTo

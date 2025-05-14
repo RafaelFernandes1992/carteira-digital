@@ -101,7 +101,7 @@ function defineOptionsToGraphCompetencia(anoAtual) {
         },
         title: {
            // text: `Receitas, Despesas e Investimentos por Competência (${anoAtual})`,
-           text: `Receitas, Despesas e Investimentos por Competência`,
+           text: `Totalizador de Receitas, Despesas e Investimentos por mês`,
             align: 'left'
         },
         legend: {

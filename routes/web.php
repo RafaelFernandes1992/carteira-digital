@@ -13,6 +13,7 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\CarReleaseController;
+use App\Http\Controllers\AlertController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -295,6 +296,11 @@ Route::get('/dashboard/cards', [DashboardController::class, 'quantitativosCards'
 
 
 
-Route::get('alerta-notificacao', function () {
-    return view('alert-notification.index');
-})->middleware('auth')->name('alerta-notificacao.index');
+// Route::get('alerta-notificacao', function () {
+//     return view('alert-notification.index');
+// })->middleware('auth')->name('alerta-notificacao.index');
+
+
+
+Route::get('alerta-notificacao', [AlertController::class, 'alertasDespesas'])->name('alerta-notificacao.index');
+Route::put('alerta-notificacao/{id}/pagar', [AlertController::class, 'marcarComoPago'])->name('alerta-notificacao.marcarComoPago');

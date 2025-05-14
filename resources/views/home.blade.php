@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="row pt-4 g-3">
+    <div class="row pt-3 g-3">
         
         <div class="col-md-3">
             <div class="card shadow-sm">

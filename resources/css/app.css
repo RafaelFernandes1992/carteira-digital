@@ -24,13 +24,7 @@ body {
   margin-left: auto;
 }
 
-.box-search-charts{
-  display: flex;
-  justify-content: end;
-  gap: 3%;
-  width: 200px;
-  margin-left: auto;
-}
+
 
 h4 {
   color: #007bff !important;

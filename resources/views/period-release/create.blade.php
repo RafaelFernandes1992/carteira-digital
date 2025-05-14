@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h4><i class="bi bi-wallet2"></i> Lançamentos da Carteira - Competência # {{ $competenciaId }} {{ $nome_competencia }} </h4>
+    <h4><i class="bi bi-wallet2"></i> Lançamentos da Carteira - Competência: {{ $nome_competencia }} </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
         <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">    
