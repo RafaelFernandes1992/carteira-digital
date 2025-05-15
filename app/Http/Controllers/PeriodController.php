@@ -106,13 +106,14 @@ class PeriodController extends Controller
             ->get();
 
         $periods = $periods->map(function ($period) {
-            $competencia = Carbon::createFromDate($period->ano, $period->mes, 1);
-
+            $competencia = Carbon::createFromDate($period->ano, $period->mes, 1)->format('m/Y');
+            $competenciaAtual = Carbon::now()->format('m/Y');
             $detalhes = $this->periodService->getDetalhesCompetenciaById($period->id);
 
             return [
                 'id' => $period->id,
-                'competencia' => $competencia->format('m/Y'),
+                'competencia' => $competencia,
+                'competenciaAtual' => $competenciaAtual,
                 'descricao' => $period->descricao,
                 'saldo_inicial' => number_format($period->saldo_inicial, 2, ',', '.'),
                 'saldo_final' => $detalhes['saldo_final'], // já vem formatado pelo service
@@ -199,6 +200,14 @@ class PeriodController extends Controller
 
             $existePeriodRelease = $model->periodReleases()->exists();
             if ($existePeriodRelease) {
+                return back()->withErrors(['error' => 'Não é possível excluir competência com lançamentos!']);
+            }
+            $existeCarRelease = $model->carReleases()->exists();
+            if ($existeCarRelease) {
+                return back()->withErrors(['error' => 'Não é possível excluir competência com lançamentos!']);
+            }
+            $existeCreditCardRelease = $model->creditCardReleases()->exists();
+            if ($existeCreditCardRelease) {
                 return back()->withErrors(['error' => 'Não é possível excluir competência com lançamentos!']);
             }
 

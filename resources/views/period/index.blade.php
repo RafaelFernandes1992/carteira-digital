@@ -8,11 +8,11 @@
     </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
-        <a href="{{ route('competencia-carteira.create') }}">
-            <button type="button" class="btn btn-secondary" >
-                <i class="bi bi-plus-square"></i> Cadastrar
-            </button>
+
+        <a href="{{ route('competencia-carteira.create') }}" class="btn btn-secondary">
+            <i class="bi bi-plus-square"></i> Cadastrar
         </a>
+
         <div class="box-search">
             <input type="search" class="form-control" placeholder="Digite um termo para pesquisar" id="pesquisar">
             <button onclick="" class="btn btn-primary" title="Pesquisar">
@@ -33,16 +33,22 @@
                 <th style="text-align: end;">Data do Registro</th>
                 <th style="text-align: center;">Ações</th>
                 <th style="text-align: center;">
-                    <span>Lançamentos</span> 
-                    <i class="bi bi-wallet2"></i>
+                    <i class="bi bi-wallet2"></i><span> Lançamentos da Carteira</span>
                 </th>
             </tr>
             </thead>
             <tbody>
             @foreach($items as $item)
-                <tr>
+                @php
+                    $classeLinha = $item['competencia'] === $item['competenciaAtual'] ? 'table-primary fw-bold' : '';
+                @endphp
+                <tr class="{{ $classeLinha }}">
                     <td style="width:05%; vertical-align: middle;">{{ $item['id'] }}</td>
-                    <td style="width:09%; vertical-align: middle;">{{ $item['competencia'] }}</td>
+                    <td style="width:09%; vertical-align: middle;">{{ $item['competencia'] }}
+                        @if ($item['competencia'] === $item['competenciaAtual'])
+                            <span class="badge bg-info ms-2">Atual</span>
+                        @endif
+                    </td>
                     <td style="width:18%; vertical-align: middle;">{{ $item['descricao'] }}</td>
                     <td style="width:9%; text-align: end; vertical-align: middle;">{{ $item['saldo_inicial'] }}</td>
                     <td style="width:9%; text-align: end; vertical-align: middle;">{{ $item['saldo_final'] }}</td>

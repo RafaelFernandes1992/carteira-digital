@@ -13,12 +13,6 @@
                 <i class="bi bi-plus-square"></i> Cadastrar
             </button>
         </a>
-        <div class="box-search">
-            <input type="search" class="form-control" placeholder="Digite um termo para pesquisar" id="pesquisar">
-            <button onclick="" class="btn btn-primary" title="Pesquisar">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
     </div>
 
     <div class="table-responsive small">

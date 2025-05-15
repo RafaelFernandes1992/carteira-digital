@@ -21,7 +21,8 @@ class AlertController extends Controller
             return [
                 'id' => $item->id,
                 'competencia' => $item->period ? $item->period->getNomeCompetencia() : 'Competência não informada',
-                'descricao' => $item->typeRelease->descricao ?? 'Tipo não informado',
+                'tipo' => ucfirst($item->typeRelease->tipo) ?? 'Tipo não informado',
+                'descricao' => $item->typeRelease->descricao ?? 'Descrição não informada',
                 'valor_total' => number_format($item->valor_total, 2, ',', '.'),
                 'data_debito_credito' => \Carbon\Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
                 'observacao' => $item->observacao ?? '---',

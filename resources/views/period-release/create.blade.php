@@ -6,7 +6,7 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
         <a class="btn btn-secondary" href="{{ route('competencia-carteira.index') }}">    
-            <i class="bi bi-arrow-left-square"></i> Voltar 
+            <i class="bi bi-arrow-left"></i> Voltar 
         </a>
     </div>
 
@@ -23,8 +23,8 @@
     <div class="d-flex justify-content-start gap-3">
         <form action="{{ route('competencia-carteira.rotineiros', $competenciaId) }}" method="post">
             @csrf
-            <button type="submit" class="btn btn-info">
-               <i class="bi bi-floppy"></i> Incluir lançamentos rotineiros
+            <button type="submit" class="btn btn-success">
+               <i class="bi bi-check2-circle"></i> Incluir lançamentos rotineiros
             </button>
         </form>
     </div>

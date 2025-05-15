@@ -18,30 +18,47 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($items as $item)
-            <tr>
-                <td style="vertical-align: middle;">{{ $item['type_release']['tipo'] }}</td>
-                <td style="vertical-align: middle;">{{ $item['type_release']['descricao'] }}</td>
-                <td style="vertical-align: middle;">{{ $item['valor_total'] }}</td>
-                <td style="vertical-align: middle;">{{ $item['situacao'] }}</td>
-                <td style="vertical-align: middle;">{{ $item['data_debito_credito'] }}</td>
-                <td style="vertical-align: middle;">{{ $item['observacao'] }}</td>
-                <td style="vertical-align: middle;">
-                    <div class="d-flex gap-2">
-                        <a class="btn btn-warning" href="{{ route('competencia.lancamento.edit', $item['id']) }}">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('competencia.lancamento.destroy', $item['id']) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-danger" type="submit">
-                                <i class="bi bi-trash3"></i>
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
+            @foreach($items as $item)
+                @php
+                    $classeLinha = $item['situacao'] === 'Não Debitado' ? 'table-warning fw-bold' : '';
+                    switch ($item['situacao']) {
+                        case 'Não Debitado':
+                            $classeBadge = 'bg-danger text-white';
+                            break;
+                        case 'Debitado':
+                            $classeBadge = 'bg-success text-white';
+                            break;
+                        default:
+                            $classeBadge = 'bg-info text-white';
+                            break;
+                    }
+                @endphp
+                <tr class="{{ $classeLinha }}">
+                    <td style="vertical-align: middle;">{{ $item['type_release']['tipo'] }}</td>
+                    <td style="vertical-align: middle;">{{ $item['type_release']['descricao'] }}</td>
+                    <td style="vertical-align: middle;">{{ $item['valor_total'] }}</td>
+                    <td style="vertical-align: middle;">
+                        <span class="badge {{ $classeBadge }} ">{{ $item['situacao'] }}</span>
+                    </td>
+                    <td style="vertical-align: middle;">{{ $item['data_debito_credito'] }}</td>
+                    <td style="vertical-align: middle;">{{ $item['observacao'] }}</td>
+                    <td style="vertical-align: middle;">
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-warning" href="{{ route('competencia.lancamento.edit', $item['id']) }}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="{{ route('competencia.lancamento.destroy', $item['id']) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger" type="submit">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+
             <tr>
                 <td style="vertical-align: middle;">Despesa</td>
                 <td style="vertical-align: middle;">Lançamentos do Carro</td>

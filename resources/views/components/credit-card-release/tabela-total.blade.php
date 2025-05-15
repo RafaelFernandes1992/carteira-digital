@@ -18,7 +18,8 @@
                 <td style="vertical-align: middle;">{{ $item['nome_cartao'] }}</td>
                 <td style="vertical-align: middle;">{{ $item['total'] }}</td>
                 <td style="vertical-align: middle;">
-                    <a class="btn btn-info btn-sm" href="#">
+                    <a class="btn btn-light"
+                    href="{{ route('cartao-credito.pagamento-fatura', ['competenciaId' => $item['competenciaId'], 'creditCardId' => $item['creditCardId']]) }}">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
                 </td>

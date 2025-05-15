@@ -13,6 +13,11 @@
     </div>
 
 @else
+        <div class="pt-3">
+            <div class="alert alert-light">
+                <i class="bi bi-exclamation-triangle-fill text-warning"></i></i></i> <span class="text-danger">Você possui despesas e/ou investimentos com situação "Não Debitado". Verificar e atualizar.</span>
+            </div>
+        </div>
 
     @foreach($alertas as $competencia => $itens)
 
@@ -21,11 +26,12 @@
             @foreach($itens as $item)
                 <div class="col">
                     <div class="card">
-                        <div class="card-header fw-bold d-flex justify-content-between">
+                        <div class="card-header bg-warning fw-bold d-flex justify-content-between">
                             {{ $item['descricao'] }} R$ {{ $item['valor_total'] }}
                             <span class="badge bg-danger">{{ $item['situacao'] }}</span>
                         </div>
                         <div class="card-body">
+                            <p class="small">Tipo: {{ $item['tipo'] }}</p>
                             <p class="small">Data Prevista: {{ $item['data_debito_credito'] }}</p>
                             <p class="small">Observação: {{ $item['observacao'] }}</p>
                             <p class="small">Última atualização: {{ $item['updated_at'] }}</p>
@@ -33,14 +39,14 @@
 
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
-                                <a class="btn btn-warning" href="{{ route('competencia.lancamento.edit', $item['id']) }}">
+                                <a class="btn btn-outline-warning" href="{{ route('competencia.lancamento.edit', $item['id']) }}">
                                     <i class="bi bi-pencil"></i> Editar
                                 </a>
                                 <form method="POST" action="{{ route('alerta-notificacao.marcarComoPago', $item['id']) }}">
                                     @csrf
                                     @method('PUT')
                                     <button class="btn btn-success">
-                                        <i class="bi bi-check2-circle"></i> Alterar para Debitada
+                                        <i class="bi bi-check2-circle"></i> Alterar para Debitado
                                     </button>
                                 </form>
                             </div>

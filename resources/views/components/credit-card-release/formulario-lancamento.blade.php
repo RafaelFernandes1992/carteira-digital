@@ -19,11 +19,6 @@
         </select>
     </div>
 
-    <!-- <div class="col-md-4">
-        <label for="data_pagamento_fatura" class="form-label">Pago em</label>
-        <input class="form-control" type="date" name="data_pagamento_fatura" id="data_pagamento_fatura">
-    </div> -->
-
     <div class="col-md-5">
         <label for="descricao" class="form-label">Descrição
             <span class="text-danger">*</span>
@@ -49,12 +44,6 @@
         </label>
         <input class="form-control" type="date" name="data_compra" id="data_compra" value="{{ date('Y-m-d') }}">
     </div>
-
-
-    <!-- <div class="col-md-4">
-        <label for="valor_pago_fatura" class="form-label">Valor Pago da Fatura</label>
-        <input class="form-control" type="number" step="0.01" name="valor_pago_fatura" id="valor_pago_fatura">
-    </div> -->
 
     <div class="col-md-12">
         <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i> Salvar</button>

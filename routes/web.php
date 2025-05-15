@@ -262,6 +262,13 @@ Route::delete('cartao-credito/lancamento/{creditCardReleaseId}', [CreditCardRele
    ->middleware('auth')
    ->name('cartao-credito.lancamento.destroy');
 
+
+Route::get('competencia/{competenciaId}/cartao-credito/{creditCardId}/pagamento-fatura/', [CreditCardReleaseController::class, 'fatura'])
+    ->name('cartao-credito.pagamento-fatura');
+
+Route::post('cartao-credito/pagar-fatura', [CreditCardReleaseController::class, 'pagarFatura'])
+    ->name('cartao-credito.pagar-fatura');
+
 /*******************************************************************/
 
 

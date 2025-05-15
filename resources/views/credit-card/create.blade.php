@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
     <a class="btn btn-secondary" href="{{ route('cartao-credito.index') }}">
-        <i class="bi bi-arrow-left-square"></i> Voltar 
+        <i class="bi bi-arrow-left"></i> Voltar 
     </a>
 </div>
 

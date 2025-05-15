@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Requests\CreateCreditCardReleaseRequest;
 use App\Http\Requests\DestroyCreditCardReleaseRequest;
 use App\Http\Requests\EditCreditCardReleaseRequest;
+use App\Http\Requests\PagarFaturaRequest;
 use App\Models\CreditCard;
 use App\Models\CreditCardRelease;
 use App\Http\Requests\StoreCreditCardReleaseRequest;
@@ -64,8 +65,10 @@ class CreditCardReleaseController extends Controller
                 ->sum('valor_parcela');
 
             $totalCartoes[] = [
+                'creditCardId' => $cartao->id,
                 'nome_cartao' => $cartao->getNome(),
-                'total' => Helper::formatToCurrency($total)
+                'total' => Helper::formatToCurrency($total),
+                'competenciaId' => $competenciaId,
             ];
         }
 
@@ -171,4 +174,42 @@ class CreditCardReleaseController extends Controller
             return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+    public function fatura($competenciaId, $creditCardId)
+    {
+        $user = Auth::user();
+
+        $total = CreditCardRelease::where('user_id', $user->id)
+            ->where('period_id', $competenciaId)
+            ->where('credit_card_id', $creditCardId)
+            ->sum('valor_parcela');
+
+        $nomeCartao = CreditCard::find($creditCardId)?->getNome();
+        $competencia = Period::findOrFail($competenciaId)->getNomeCompetencia();
+
+        return view('credit-card-release.pagar-fatura', [
+            'competenciaId' => $competenciaId,
+            'creditCardId' => $creditCardId,
+            'valor' => $total,
+            'nomeCartao' => $nomeCartao,
+            'nomeCompetencia' => $competencia
+        ]);
+    }
+
+    public function pagarFatura(PagarFaturaRequest $request)
+    {
+        $dados = $request->validated();
+        CreditCardRelease::where('user_id', Auth::user()->id)
+        ->where('period_id', $dados['competencia_id'])
+        ->where('credit_card_id', $dados['credit_card_id'])
+        ->update([
+            'valor_pago_fatura' => $dados['valor_pago_fatura'],
+            'data_pagamento_fatura' => $dados['data_pagamento_fatura'],
+        ]);
+
+        return redirect()->route('competencia.cartao-credito.lancamento.create', $dados['competencia_id'])
+            ->with('message', 'Informe do pagamento da fatura do cartão de crédito salvo com sucesso!');
+    }
+
+
 }

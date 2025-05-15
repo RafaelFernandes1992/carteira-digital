@@ -7,7 +7,7 @@
       class="row g-3 align-items-end">
     @csrf
     <div class="col-md-2">
-        <label for="tipoOperacao" class="form-label">Tipo *</label>
+        <label for="tipoOperacao" class="form-label">Tipo <span class="text-danger">*</span></label>
         <select class="form-select" aria-label="Default select example" id="tipoOperacao" name="tipoOperacao" required>
             <option selected value="despesa">Despesa</option>
             <option value="receita">Receita</option>
@@ -16,16 +16,16 @@
     </div>
 
     <div class="col-md-4">
-        <label for="type_release_id" class="form-label">Descrição *</label>
+        <label for="type_release_id" class="form-label">Descrição <span class="text-danger">*</span></label>
         <select class="form-select" aria-label="Default select example" id="type_release_id" name="type_release_id" required></select>
     </div>
 
     <div class="col-md-2">
-        <label for="valor_total" class="form-label">Valor *</label>
+        <label for="valor_total" class="form-label">Valor <span class="text-danger">*</span></label>
         <input type="number" class="form-control" step="0.01" id="valor_total" name="valor_total" placeholder="0,00" required>
     </div>
     <div class="col-md-2">
-        <label for="situacao" class="form-label">Situação *</label>
+        <label for="situacao" class="form-label">Situação <span class="text-danger">*</span></label>
         <select class="form-select" aria-label="Default select example" id="situacao" name="situacao" required>
             <option selected>Selecione...</option>
             <option value="creditado">Creditado</option>
@@ -35,8 +35,8 @@
     </div>
 
     <div class="col-md-2">
-        <label for="data_debito_credito" class="form-label">Data *</label>
-        <input type="date" class="form-control" id="data_debito_credito" name="data_debito_credito" required>
+        <label for="data_debito_credito" class="form-label">Data <span class="text-danger">*</span></label>
+        <input type="date" class="form-control" id="data_debito_credito" name="data_debito_credito" value="{{ date('Y-m-d') }}" required>
     </div>
     
     <div class="col-md-11">

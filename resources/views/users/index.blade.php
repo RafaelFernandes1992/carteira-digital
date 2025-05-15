@@ -9,12 +9,7 @@
     </h4>
 
     <div class="pt-3 pb-3 mb-3 border-bottom">
-        <div class="box-search">
-            <input type="search" class="form-control" placeholder="Digite um termo para pesquisar" id="pesquisar">
-            <button onclick="" class="btn btn-primary" title="Pesquisar">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
+
     </div>
 
     <div class="table-responsive small">
