@@ -15,18 +15,18 @@
         <input type="hidden" name="credit_card_id" value="{{ $creditCardId }}">
 
         <div class="col-md-3">
-            <label for="data_pagamento_fatura" class="form-label">Data do Pagamento</label>
-            <input type="date" name="data_pagamento_fatura" id="data_pagamento_fatura" class="form-control" value="{{ date('Y-m-d') }}" required>
-        </div>
-
-        <div class="col-md-3">
             <label class="form-label">Valor Calculado para Fatura</label>
             <input type="number" step="0.01" class="form-control" value="{{ $valor }}" readonly disabled>
         </div>
 
         <div class="col-md-3">
+            <label for="data_pagamento_fatura" class="form-label">Data do Pagamento</label>
+            <input type="date" name="data_pagamento_fatura" id="data_pagamento_fatura" class="form-control" value="{{ $data_pagamento_fatura }}" required>
+        </div>
+
+        <div class="col-md-3">
             <label class="form-label">Valor Pago Efetivamente</label>
-            <input type="number" step="0.01" name="valor_pago_fatura" id="valor_pago_fatura"  class="form-control" value="{{ $valor }}" required>
+            <input type="number" step="0.01" name="valor_pago_fatura" id="valor_pago_fatura"  class="form-control" value="{{ $valorPagoFatura }}" required>
         </div>
 
         <div class="col-md-12">

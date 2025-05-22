@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Http\Requests\AddRoutineItemsRequest;
 use App\Http\Requests\DestroyPeriodRequest;
 use App\Http\Requests\EditPeriodRequest;
@@ -96,14 +96,45 @@ class PeriodController extends Controller
         $this->periodService = $periodService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $search = $request['search'] ?? null;
         
-        $periods = Period::where('user_id', $user->id)
-            ->orderBy('ano', 'desc')
-            ->orderBy('mes', 'desc')
-            ->get();
+        $query = Period::where('user_id', $user->id);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('descricao', 'like', '%' . $search . '%');
+
+                // Busca por competência no formato MM/YYYY
+                $competenciaParts = explode('/', $search);
+                if (count($competenciaParts) == 2) {
+                    $mes = ltrim($competenciaParts[0], '0'); // remove zero à esquerda
+                    $ano = $competenciaParts[1];
+                    $q->orWhere(function ($sub) use ($mes, $ano) {
+                        $sub->where('mes', $mes)
+                            ->where('ano', $ano);
+                    });
+                }
+
+                // Se digitou só número, busca por mes ou ano
+                if (is_numeric($search)) {
+                    $q->orWhere('mes', $search)
+                    ->orWhere('ano', $search);
+                }
+
+                // Busca pelo saldo_inicial se digitou um número decimal
+                $valorNumerico = str_replace(',', '.', $search);
+                if (is_numeric($valorNumerico)) {
+                    $q->orWhere('saldo_inicial', $valorNumerico);
+                }
+            });
+        }
+
+        $periods = $query->orderBy('ano', 'desc')
+                    ->orderBy('mes', 'desc')
+                    ->get();
 
         $periods = $periods->map(function ($period) {
             $competencia = Carbon::createFromDate($period->ano, $period->mes, 1)->format('m/Y');
@@ -120,7 +151,11 @@ class PeriodController extends Controller
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
-        return view('period.index')->with(['items' => $periods]);
+        return view('period.index')->with([
+            'items' => $periods,
+            'search' => $search,
+        ]);
+        //return view('period.index')->with(['items' => $periods]);
     }
 
     public function create()

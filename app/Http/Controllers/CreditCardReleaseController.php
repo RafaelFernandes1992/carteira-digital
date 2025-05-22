@@ -86,6 +86,7 @@ class CreditCardReleaseController extends Controller
                 'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s')
             ];
         });
+        //dd($items);
 
         $period = Period::findOrFail($competenciaId);
 
@@ -183,8 +184,21 @@ class CreditCardReleaseController extends Controller
             ->where('period_id', $competenciaId)
             ->where('credit_card_id', $creditCardId)
             ->sum('valor_parcela');
+    
+        $valor_pago_fatura = CreditCardRelease::where('user_id', $user->id)
+            ->where('period_id', $competenciaId)
+            ->where('credit_card_id', $creditCardId)
+            ->orderBy('updated_at', 'asc')
+            ->value('valor_pago_fatura');
+
+        $data_pagamento_fatura = CreditCardRelease::where('user_id', $user->id)
+            ->where('period_id', $competenciaId)
+            ->where('credit_card_id', $creditCardId)
+            ->orderBy('updated_at', 'asc')
+            ->value('data_pagamento_fatura');
 
         $nomeCartao = CreditCard::find($creditCardId)?->getNome();
+
         $competencia = Period::findOrFail($competenciaId)->getNomeCompetencia();
 
         return view('credit-card-release.pagar-fatura', [
@@ -192,7 +206,9 @@ class CreditCardReleaseController extends Controller
             'creditCardId' => $creditCardId,
             'valor' => $total,
             'nomeCartao' => $nomeCartao,
-            'nomeCompetencia' => $competencia
+            'nomeCompetencia' => $competencia,
+            'valorPagoFatura' =>$valor_pago_fatura,
+            'data_pagamento_fatura' => $data_pagamento_fatura
         ]);
     }
 

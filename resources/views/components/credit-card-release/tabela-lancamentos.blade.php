@@ -31,12 +31,12 @@
             <th>Cartão</th>
             <th>Descrição</th>
             <th>Valor</th>
-            <th>Quantidade Parcelas</th>
+            <th>Parcela(s)</th>
             <th>Valor Parcela</th>
             <th>Data Compra</th>
-            <th>Data Pagamento Fatura</th>
             <th>Data do Registro</th>
             <th style="text-align: center;">Ações</th>
+            <th style="text-align: center;">Informado Pagamento</th>
         </tr>
         </thead>
         <tbody>
@@ -49,7 +49,6 @@
                 <td style="vertical-align: middle;">{{ $item['quantidade_parcelas'] }}</td>
                 <td style="vertical-align: middle;">{{ $item['valor_parcela'] }}</td>
                 <td style="vertical-align: middle;">{{ $item['data_compra'] }}</td>
-                <td style="vertical-align: middle;">{{ $item['data_pagamento_fatura'] }}</td>
                 <td style="vertical-align: middle;">{{ $item['created_at'] }}</td>
                 <td style="text-align: center;">
                     <div class="d-flex justify-content-center gap-2">
@@ -65,6 +64,14 @@
                         </form>
                     </div>
                 </td>
+                <td style="vertical-align: middle; text-align: center;">
+                    @if($item['data_pagamento_fatura'] <> '-' )
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                    @else
+                        <i class="bi bi-x-circle-fill text-danger"></i>
+                    @endif
+                </td>
+
             </tr>
         @endforeach
         @if(count($items) === 0)

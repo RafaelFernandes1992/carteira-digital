@@ -8,16 +8,24 @@
     </h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
-
         <a href="{{ route('competencia-carteira.create') }}" class="btn btn-secondary">
             <i class="bi bi-plus-square"></i> Cadastrar
         </a>
-
         <div class="box-search">
-            <input type="search" class="form-control" placeholder="Digite um termo para pesquisar" id="pesquisar">
-            <button onclick="" class="btn btn-primary" title="Pesquisar">
-                <i class="bi bi-search"></i>
-            </button>
+            <form class="box-search" action="{{ route('competencia-carteira.index') }}"
+                method="GET">
+                <input type="search" class="form-control" placeholder="Digite um termo para pesquisar"
+                name="search" id="search" value="{{ $search }}">
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+            <a href="{{ route('competencia-carteira.index') }}"
+                role="button" class="btn btn-secondary" title="Limpar">
+                <i class="bi bi-trash3"></i>
+            </a>
         </div>
     </div>
 

@@ -8,14 +8,17 @@
 
     <div class="pt-3">
         <div class="alert alert-light">
-            <i class="bi bi-stars text-warning"></i></i></i> <span class="text-success">Parabéns! Todas as suas despesas e investimentos estão em dia.</span>
+            <i class="bi bi-stars text-warning"></i> 
+            <span class="text-success fw-bold" >Parabéns! Todas as suas despesas e investimentos estão em dia.</span>
         </div>
     </div>
 
 @else
         <div class="pt-3">
             <div class="alert alert-light">
-                <i class="bi bi-exclamation-triangle-fill text-warning"></i></i></i> <span class="text-danger">Você possui despesas e/ou investimentos com situação "Não Debitado". Verificar e atualizar.</span>
+                <i class="bi bi-exclamation-triangle-fill text-warning"></i> 
+                <span class="text-danger fw-bold">Você possui despesas e/ou investimentos com situação "Não Debitado". 
+                    Verificar e atualizar.</span>
             </div>
         </div>
 

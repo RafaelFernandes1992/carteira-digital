@@ -59,27 +59,13 @@
                 </tr>
             @endforeach
 
-            @if(count($items) === 0)
-                <tr>
-                    <td colspan="7">Nenhum registro encontrado.</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
-
-    <h5>Lançamentos Apartados</h5>
-    <table class="table table-striped table-sm">
-        <thead>
             <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Ir para Lançamentos</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="vertical-align: middle;">Lançamentos de Despesas dos Carros</td>
+                <td style="vertical-align: middle;">Despesa</td>
+                <td style="vertical-align: middle;">Lançamentos do Carro</td>
                 <td style="vertical-align: middle;">{{ $total_despesas_carro }}</td>
+                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;"></td>                
+                <td style="vertical-align: middle;"></td>
                 <td style="vertical-align: middle;">
                     <a class="btn btn-light" 
                     href="{{ route('competencia.carro.lancamento.create', $competenciaId) }}">
@@ -88,8 +74,13 @@
                 </td>
             </tr>
             <tr>
-                <td style="vertical-align: middle;">Lançamentos de Despesas dos Cartões de Crédito</td>
+                <td style="vertical-align: middle;">Despesa</td>
+                <td style="vertical-align: middle;">Lançamentos do Cartão de Crédito</td>
                 <td style="vertical-align: middle;">{{ $total_despesas_cartao_credito }}</td>
+                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;"></td>                
+                <td style="vertical-align: middle;"></td>
+
                 <td style="vertical-align: middle;">
                     <a class="btn btn-light" 
                     href="{{ route('competencia.cartao-credito.lancamento.create', $competenciaId) }}">
@@ -97,6 +88,13 @@
                     </a>
                 </td>
             </tr>
+        @if(count($items) === 0)
+            <!-- <tr>
+                <td colspan="7">Nenhum registro encontrado.</td>
+            </tr> -->
+        @endif
         </tbody>
     </table>
+
+
 </div>
