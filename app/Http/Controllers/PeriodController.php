@@ -43,11 +43,8 @@ class PeriodController extends Controller
                 $this->criaPeriodReleaseSeNaoExiste($dadosParaPeriodRelease, $count);
             }
 
-
-
             DB::commit();
 
-            
             if ($count > 0) {
                 $message = 'Itens rotineiros incluídos com sucesso!';
                 return redirect()->route('competencia.lancamento.create', $dados['id'])
@@ -133,14 +130,13 @@ class PeriodController extends Controller
         }
 
         $periods = $query->orderBy('ano', 'desc')
-                    ->orderBy('mes', 'desc')
-                    ->get();
-
-        $periods = $periods->map(function ($period) {
+            ->orderBy('mes', 'desc')
+            ->paginate(10);
+        
+        $periods->getCollection()->transform(function ($period) {
             $competencia = Carbon::createFromDate($period->ano, $period->mes, 1)->format('m/Y');
             $competenciaAtual = Carbon::now()->format('m/Y');
             $detalhes = $this->periodService->getDetalhesCompetenciaById($period->id);
-
             return [
                 'id' => $period->id,
                 'competencia' => $competencia,
@@ -151,11 +147,11 @@ class PeriodController extends Controller
                 'created_at' => Carbon::parse($period->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
+
         return view('period.index')->with([
-            'items' => $periods,
+            'periods' => $periods,
             'search' => $search,
         ]);
-        //return view('period.index')->with(['items' => $periods]);
     }
 
     public function create()

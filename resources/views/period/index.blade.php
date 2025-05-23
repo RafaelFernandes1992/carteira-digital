@@ -46,7 +46,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($items as $item)
+            @foreach($periods as $item)
                 @php
                     $classeLinha = $item['competencia'] === $item['competenciaAtual'] ? 'table-primary fw-bold' : '';
                 @endphp
@@ -86,6 +86,10 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-end">
+        {{ $periods->appends(['search' => $search])->links() }}
     </div>
 
 @endsection

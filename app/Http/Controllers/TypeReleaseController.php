@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\TypeRelease;
 use App\Http\Requests\DestroyTypeReleaseRequest;
 use App\Http\Requests\StoreTypeReleaseRequest;
@@ -13,23 +13,57 @@ use Illuminate\Support\Facades\Auth;
 class TypeReleaseController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $itens = TypeRelease::where('user_id', $user->id)->get();
-        $itens = $itens->map(function ($item) {
-            
+        $search = $request->input('search');
+
+        $query = TypeRelease::where('user_id', $user->id);
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('descricao', 'like', '%' . $search . '%')
+                  ->orWhere('tipo', 'like', '%' . $search . '%');
+            });
+        }
+
+        // $itens = $query->orderBy('tipo', 'asc')
+        //     ->orderBy('descricao', 'asc')
+        //     ->get();
+
+        // $itens = $itens->map(function ($item) {
+        //     return [
+        //         'id' => $item->id,
+        //         'tipo' => ucfirst($item->tipo),
+        //         'descricao' => $item->descricao,
+        //         'rotineira' => $item->rotineira ? 'Sim' : 'Não',
+        //         'isenta' => $item->isenta ? 'Sim' : 'Não',
+        //         'dedutivel' => $item->dedutivel ? 'Sim' : 'Não', 
+        //         'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s'),
+        //     ];
+        // });
+
+        $itens = $query->orderBy('tipo', 'asc')
+            ->orderBy('descricao', 'asc')
+            ->paginate(10);
+
+        $itens->getCollection()->transform(function ($item) {
             return [
                 'id' => $item->id,
                 'tipo' => ucfirst($item->tipo),
                 'descricao' => $item->descricao,
                 'rotineira' => $item->rotineira ? 'Sim' : 'Não',
                 'isenta' => $item->isenta ? 'Sim' : 'Não',
-                'dedutivel' => $item->dedutivel ? 'Sim' : 'Não', 
+                'dedutivel' => $item->dedutivel ? 'Sim' : 'Não',
                 'created_at' => Carbon::parse($item->updated_at)->format('d/m/Y H:i:s'),
             ];
         });
-        return view('type-release.index')->with(['itens' => $itens]);
+
+        return view('type-release.index')->with([
+            'itens' => $itens,
+            'search' => $search,
+        ]);
+
     }
 
     public function create()

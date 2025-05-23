@@ -14,6 +14,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\CarReleaseController;
 use App\Http\Controllers\AlertController;
+use App\Http\Controllers\WalletReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -302,12 +303,17 @@ Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorC
 Route::get('/dashboard/cards', [DashboardController::class, 'quantitativosCards']);
 
 
-
 // Route::get('alerta-notificacao', function () {
 //     return view('alert-notification.index');
 // })->middleware('auth')->name('alerta-notificacao.index');
 
 
+Route::get('alerta-notificacao', [AlertController::class, 'alertasDespesas'])
+    ->name('alerta-notificacao.index');
+Route::put('alerta-notificacao/{id}/pagar', [AlertController::class, 'marcarComoPago'])
+    ->name('alerta-notificacao.marcarComoPago');
 
-Route::get('alerta-notificacao', [AlertController::class, 'alertasDespesas'])->name('alerta-notificacao.index');
-Route::put('alerta-notificacao/{id}/pagar', [AlertController::class, 'marcarComoPago'])->name('alerta-notificacao.marcarComoPago');
+Route::get('/relatorio-carteira', [WalletReportController::class, 'index'])
+    ->name('relatorio-carteira.index');
+Route::get('relatorio-carteira/pdf', [WalletReportController::class, 'downloadPdf'])
+->name('relatorio-carteira.pdf');
