@@ -193,7 +193,7 @@ class PeriodController extends Controller
             return view('period.edit')
                 ->with([
                     'id' => $period->id,
-                    'mes' => $period->mes,
+                    'mes' => str_pad($period->mes, 2, '0', STR_PAD_LEFT),
                     'ano' => $period->ano,
                     'saldoInicial' => $period->saldo_inicial,
                     'descricao' => $period->descricao,

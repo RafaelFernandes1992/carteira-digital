@@ -317,3 +317,7 @@ Route::get('/relatorio-carteira', [WalletReportController::class, 'index'])
     ->name('relatorio-carteira.index');
 Route::get('relatorio-carteira/pdf', [WalletReportController::class, 'downloadPdf'])
 ->name('relatorio-carteira.pdf');
+
+Route::get('relatorio-carteira-anual-por-tipo', [WalletReportController::class, 'reportByType'])
+    ->middleware('auth')
+    ->name('relatorio-carteira.anual-por-tipo');

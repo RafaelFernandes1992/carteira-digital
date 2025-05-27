@@ -2,15 +2,25 @@
 namespace App\Http\Controllers;
 use App\Models\Period;
 use App\Models\PeriodRelease;
+use App\Models\TypeRelease;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\PeriodService;
 
 class WalletReportController extends Controller
 {
+    private PeriodService $periodService;
+
+    public function __construct(PeriodService $periodService)
+    {
+        $this->periodService = $periodService;
+    }
+
     public function index(Request $request)
     {
+        
         $user = auth()->user();
 
         // Buscar todas as competências do usuário
@@ -61,23 +71,20 @@ class WalletReportController extends Controller
                 ];
             });
 
-        // return view('wallet-report.index', [
-        //     'competencias' => $competencias,
-        //     'competenciaSelecionada' => $competenciaSelecionada,
-        //     'items' => $items,
-        //     'nomeCompetencia' => Carbon::createFromDate($period->ano, $period->mes, 1)->format('m/Y'),
-        // ]);
+        $detalhes = $this->periodService->getDetalhesCompetenciaById($competenciaSelecionada);
 
         return view('wallet-report.index', [
             'competencias' => $competenciasSelect,
             'competenciaSelecionada' => $competenciaSelecionada,
             'items' => $items,
             'nomeCompetencia' => $period->getNomeCompetencia(),
+            'detalhes' => $detalhes,
         ]);
     }
 
     public function downloadPdf(Request $request)
     {
+        
         $user = auth()->user();
 
         // Buscar competências
@@ -95,6 +102,7 @@ class WalletReportController extends Controller
         $competenciaSelecionada = $request->input('competencia_id')
             ?? ($competenciaAtual ? $competenciaAtual->id : ($competencias->first()->id ?? null));
 
+        
         if (!$competenciaSelecionada) {
             return back()->with('error', 'Nenhuma competência encontrada.');
         }
@@ -122,17 +130,79 @@ class WalletReportController extends Controller
 
         $nomeCompetencia = Carbon::createFromDate($period->ano, $period->mes, 1)->format('m-Y');
         $nomeArquivo = "relatorio_carteira_{$nomeCompetencia}.pdf";
+        $detalhes = $this->periodService->getDetalhesCompetenciaById($competenciaSelecionada);
+
 
         $dados = [
             'items' => $items,
             'nomeCompetencia' => $nomeCompetencia,
             'competenciaSelecionada' => $competenciaSelecionada,
+            'detalhes' => $detalhes,
         ];
 
         $pdf = PDF::loadView('wallet-report.pdf', $dados);
 
         return $pdf->download($nomeArquivo);
     }
+
+public function reportByType(Request $request)
+{
+    $user = auth()->user();
+
+    // Buscar filtros do formulário
+    $ano = $request->input('ano');
+    $tipo = $request->input('tipo');
+    $descricaoId = $request->input('descricao');
+
+    // Carregar anos disponíveis
+    $anos = Period::where('user_id', $user->id)
+                ->selectRaw('DISTINCT ano')
+                ->orderBy('ano', 'desc')
+                ->pluck('ano');
+
+    // Tipos fixos
+    $tipos = [
+        'Receita' => 'Receita',
+        'Despesa' => 'Despesa',
+        'Investimento' => 'Investimento',
+    ];
+
+    // Carregar descrições conforme o tipo selecionado
+    $descricoes = [];
+    if ($tipo) {
+        $descricoes = TypeRelease::where('tipo', $tipo)
+                                ->orderBy('descricao')
+                                ->get();
+    }
+
+    // Consultar lançamentos se ano e tipo estão preenchidos
+    $lancamentos = [];
+
+    if ($ano && $tipo) {
+        $query = PeriodRelease::with(['period', 'typeRelease'])
+            ->whereHas('period', function ($q) use ($user, $ano) {
+                $q->where('user_id', $user->id)
+                  ->where('ano', $ano);
+            })
+            ->whereHas('typeRelease', function ($q) use ($tipo) {
+                $q->where('tipo', $tipo);
+            });
+
+        // Se descrição foi selecionada, aplica o filtro
+        if (!empty($descricaoId)) {
+            $query->where('type_release_id', $descricaoId);
+        }
+
+        $lancamentos = $query->orderBy('data_debito_credito')->get();
+    }
+
+    return view('wallet-report.index-by-type', compact(
+        'anos', 'tipos', 'descricoes', 
+        'ano', 'tipo', 'descricaoId', 
+        'lancamentos'
+    ));
+}
+
 
 
 }

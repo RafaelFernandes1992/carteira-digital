@@ -76,8 +76,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                    Receitas, Despesas e Investimentos
+                <a class="nav-link d-flex align-items-center gap-2" href="{{route('relatorio-carteira.anual-por-tipo') }}">
+                    Anual por Tipo de Lançamento
                 </a>
             </li>
 
