@@ -145,63 +145,141 @@ class WalletReportController extends Controller
         return $pdf->download($nomeArquivo);
     }
 
-public function reportByType(Request $request)
-{
-    $user = auth()->user();
+    public function reportByType(Request $request)
+    {
+        $user = auth()->user();
 
-    // Buscar filtros do formulário
-    $ano = $request->input('ano');
-    $tipo = $request->input('tipo');
-    $descricaoId = $request->input('descricao');
+        // Buscar filtros do formulário
+        $ano = $request->input('ano');
+        $tipo = $request->input('tipo');
+        $descricaoId = $request->input('descricao');
 
-    // Carregar anos disponíveis
-    $anos = Period::where('user_id', $user->id)
-                ->selectRaw('DISTINCT ano')
-                ->orderBy('ano', 'desc')
-                ->pluck('ano');
+        // Carregar anos disponíveis
+        $anos = Period::where('user_id', $user->id)
+                    ->selectRaw('DISTINCT ano')
+                    ->orderBy('ano', 'desc')
+                    ->pluck('ano');
 
-    // Tipos fixos
-    $tipos = [
-        'Receita' => 'Receita',
-        'Despesa' => 'Despesa',
-        'Investimento' => 'Investimento',
-    ];
+        // Tipos fixos
+        $tipos = [
+            'Receita' => 'Receita',
+            'Despesa' => 'Despesa',
+            'Investimento' => 'Investimento',
+        ];
 
-    // Carregar descrições conforme o tipo selecionado
-    $descricoes = [];
-    if ($tipo) {
-        $descricoes = TypeRelease::where('tipo', $tipo)
-                                ->orderBy('descricao')
-                                ->get();
+        // Carregar descrições conforme o tipo selecionado
+        $descricoes = [];
+        if ($tipo) {
+            $descricoes = TypeRelease::where('tipo', $tipo)
+                                    ->orderBy('descricao')
+                                    ->get();
+        }
+
+        // Consultar lançamentos se ano e tipo estão preenchidos
+        $lancamentos = collect(); // Começa vazio como coleção
+
+        if ($ano && $tipo) {
+            $query = PeriodRelease::with(['period', 'typeRelease'])
+                ->whereHas('period', function ($q) use ($user, $ano) {
+                    $q->where('user_id', $user->id)
+                    ->where('ano', $ano);
+                })
+                ->whereHas('typeRelease', function ($q) use ($tipo) {
+                    $q->where('tipo', $tipo);
+                });
+
+            // Se descrição foi selecionada, aplica o filtro
+            if (!empty($descricaoId)) {
+                $query->where('type_release_id', $descricaoId);
+            }
+
+            $lancamentos = $query->orderBy('data_debito_credito')->get();
+
+            // Aplicar o map para formatar os dados
+            $lancamentos = $lancamentos->map(function (PeriodRelease $item) {
+                return [
+                    'id' => $item->id,
+                    'competencia' => sprintf('%02d/%d', $item->period->mes, $item->period->ano),
+                    'data_debito_credito' => \Carbon\Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
+                    'descricao' => $item->typeRelease->descricao ?? '-',
+                    'valor_total' => number_format($item->valor_total, 2, ',', '.'),
+                    'situacao' => $item->getSituacaoFormatada(),
+                    'observacao' => $item->observacao,
+                ];
+            });
+        }
+
+        return view('wallet-report.index-by-type', compact(
+            'anos', 'tipos', 'descricoes', 
+            'ano', 'tipo', 'descricaoId', 
+            'lancamentos'
+        ));
     }
 
-    // Consultar lançamentos se ano e tipo estão preenchidos
-    $lancamentos = [];
+    public function anualPorTipoDownloadPdf(Request $request)
+    {
+        $user = auth()->user();
 
-    if ($ano && $tipo) {
-        $query = PeriodRelease::with(['period', 'typeRelease'])
-            ->whereHas('period', function ($q) use ($user, $ano) {
+        $ano = $request->input('ano');
+        $tipo = $request->input('tipo');
+        $descricaoId = $request->input('descricao');
+
+        if (!$ano || !$tipo) {
+            return back()->with('error', 'Ano e Tipo de lançamento são obrigatórios para gerar o PDF.');
+        }
+
+        // Buscar descrições possíveis para exibir no PDF
+        $descricoes = TypeRelease::where('tipo', $tipo)
+                        ->where('user_id', $user->id)
+                        ->orderBy('descricao')
+                        ->get();
+
+        // Consultar os lançamentos com os filtros aplicados
+        $query = PeriodRelease::whereHas('period', function ($q) use ($user, $ano) {
                 $q->where('user_id', $user->id)
-                  ->where('ano', $ano);
+                ->where('ano', $ano);
             })
             ->whereHas('typeRelease', function ($q) use ($tipo) {
                 $q->where('tipo', $tipo);
-            });
+            })
+            ->with(['period', 'typeRelease']);
 
-        // Se descrição foi selecionada, aplica o filtro
-        if (!empty($descricaoId)) {
+        if ($descricaoId) {
             $query->where('type_release_id', $descricaoId);
         }
 
         $lancamentos = $query->orderBy('data_debito_credito')->get();
-    }
 
-    return view('wallet-report.index-by-type', compact(
-        'anos', 'tipos', 'descricoes', 
-        'ano', 'tipo', 'descricaoId', 
-        'lancamentos'
-    ));
-}
+        // Formatar os lançamentos da mesma forma do outro método
+        $items = $lancamentos->map(function (PeriodRelease $item) {
+            return [
+                'id' => $item->id,
+                'competencia' => sprintf('%02d/%d', $item->period->mes, $item->period->ano),
+                'data_debito_credito' => \Carbon\Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
+                'descricao' => $item->typeRelease->descricao ?? '-',
+                'valor_total' => number_format($item->valor_total, 2, ',', '.'),
+                'situacao' => $item->getSituacaoFormatada(),
+                'observacao' => $item->observacao,
+            ];
+        });
+
+        // Nome do arquivo
+        $nomeArquivo = "relatorio_anual_por_tipo_{$ano}_{$tipo}.pdf";
+
+        // Dados para a view
+        $dados = [
+            'ano' => $ano,
+            'tipo' => ucfirst($tipo),
+            'descricaoId' => $descricaoId,
+            'descricoes' => $descricoes,
+            'items' => $items,
+        ];
+
+        // Gerar o PDF
+        $pdf = PDF::loadView('wallet-report.by-type-pdf', $dados);
+
+        return $pdf->download($nomeArquivo);
+    }
 
 
 

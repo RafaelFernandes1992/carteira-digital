@@ -43,7 +43,7 @@
                     <tr>
                         <td>{{ $item['type_release']['tipo'] ?? '-' }}</td>
                         <td>{{ $item['type_release']['descricao'] ?? '-' }}</td>
-                        <td>{{ $item['valor_total'] }}</td>
+                        <td>R$ {{ $item['valor_total'] }}</td>
                         <td>{{ $item['situacao'] }}</td>
                         <td>{{ $item['data_debito_credito'] }}</td>
                     </tr>
@@ -51,43 +51,56 @@
                 <tr>
                     <td>Despesa</td>
                     <td>Lançamentos Carro</td>
-                    <td>{{ $detalhes['total_despesas_carro'] }}</td>
+                    <td>R$ {{ $detalhes['total_despesas_carro'] }}</td>
                     <td>Debitado</td>
                     <td>-</td>
                 </tr>
                 <tr>
                     <td>Despesa</td>
                     <td>Lançamentos do Cartão de Crédito</td>
-                    <td>{{ $detalhes['total_despesas_cartao_credito'] }}</td>
+                    <td>R$ {{ $detalhes['total_despesas_cartao_credito'] }}</td>
                     <td>Debitado</td>
                     <td>-</td>
                 </tr>
             </tbody>
             <tfoot class="table-light">
                 <tr>
-                    <th colspan="5">Totalizadores</th>
+                    <th colspan="5" class="text-start fw-bold">Totalizadores</th>
                 </tr>
                 <tr>
-                    <th colspan="2">{{ $detalhes['saldo_inicial'] >= 0 ? '(+)' : '(-)' }} Saldo Inicial</th>
-                    <th colspan="3">{{ $detalhes['saldo_inicial'] }}</th>
+                    <td colspan="2" class="text-start">
+                        {{ $detalhes['saldo_inicial'] >= 0 ? '(+)' : '(-)' }} Saldo Inicial
+                    </td>
+                    <td colspan="3" class="text-start">
+                        R$ {{ $detalhes['saldo_inicial'] }}
+                    </td>
                 </tr>
                 <tr>
-                    <th colspan="2">(+) Receitas</th>
-                    <th colspan="3">{{ $detalhes['total_receitas'] }}</th>
+                    <td colspan="2" class="text-start"> (+) Receitas</td>
+                    <td colspan="3" class="text-start">
+                        R$ {{ $detalhes['total_receitas'] }}
+                    </td>
                 </tr>
                 <tr>
-                    <th colspan="2">(-) Despesas</th>
-                    <th colspan="3">{{ $detalhes['total_despesas'] }}</th>
+                    <td colspan="2" class="text-start"> (-) Despesas</td>
+                    <td colspan="3" class="text-start">
+                        R$ {{ $detalhes['total_despesas'] }}
+                    </td>
                 </tr>
                 <tr>
-                    <th colspan="2">(-) Investimentos</th>
-                    <th colspan="3">{{ $detalhes['total_investimentos'] }}</th>
+                    <td colspan="2" class="text-start"> (-) Investimentos</td>
+                    <td colspan="3" class="text-start">
+                        R$ {{ $detalhes['total_investimentos'] }}
+                    </td>
                 </tr>
                 <tr>
-                    <th colspan="2">(=) Saldo Final</th>
-                    <th colspan="3">{{ $detalhes['saldo_final'] }}</th>
+                    <td colspan="2" class="text-start"> (=) Saldo Final</td>
+                    <td colspan="3" class="text-start fw-bold">
+                        R$ {{ $detalhes['saldo_final'] }}
+                    </td>
                 </tr>
             </tfoot>
+
         </table>
     </div>
     @else

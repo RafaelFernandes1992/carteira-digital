@@ -298,26 +298,31 @@ Route::delete('carro/lancamento/{carReleaseId}', [CarReleaseController::class, '
 /*******************************************************************/
 
 
-
-Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorCompetenciaAnual']);
-Route::get('/dashboard/cards', [DashboardController::class, 'quantitativosCards']);
-
-
-// Route::get('alerta-notificacao', function () {
-//     return view('alert-notification.index');
-// })->middleware('auth')->name('alerta-notificacao.index');
+Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorCompetenciaAnual'])
+    ->middleware('auth');
+Route::get('/dashboard/cards', [DashboardController::class, 'quantitativosCards'])
+    ->middleware('auth');
 
 
 Route::get('alerta-notificacao', [AlertController::class, 'alertasDespesas'])
+    ->middleware('auth')
     ->name('alerta-notificacao.index');
 Route::put('alerta-notificacao/{id}/pagar', [AlertController::class, 'marcarComoPago'])
+    ->middleware('auth')
     ->name('alerta-notificacao.marcarComoPago');
 
-Route::get('/relatorio-carteira', [WalletReportController::class, 'index'])
+Route::get('relatorio-carteira', [WalletReportController::class, 'index'])
+    ->middleware('auth')
     ->name('relatorio-carteira.index');
 Route::get('relatorio-carteira/pdf', [WalletReportController::class, 'downloadPdf'])
-->name('relatorio-carteira.pdf');
+    ->middleware('auth')
+    ->name('relatorio-carteira.pdf');
 
 Route::get('relatorio-carteira-anual-por-tipo', [WalletReportController::class, 'reportByType'])
     ->middleware('auth')
     ->name('relatorio-carteira.anual-por-tipo');
+Route::get('relatorio-carteira-anual-por-tipo/pdf', [WalletReportController::class, 'anualPorTipoDownloadPdf'])
+    ->middleware('auth')
+    ->name('relatorio-carteira.anual-por-tipo.pdf');
+
+
