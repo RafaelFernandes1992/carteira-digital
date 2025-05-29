@@ -5,7 +5,7 @@
 <h4><i class="bi bi-file-earmark-text"></i> Relatório - Lançamentos da Carteira</h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
-        <label class="form-label m-0">Baixar:
+        <label class="form-label m-0">Exportar:
         <a href="{{ route('relatorio-carteira.pdf', ['competencia_id' => $competenciaSelecionada]) }}" class="btn btn-danger btn-sm">
             <i class="bi bi-file-earmark-pdf"></i> PDF
         </a></label>

@@ -4,7 +4,7 @@
     <h4><i class="bi bi-file-earmark-text"></i> Relatório - Anual por Tipo de Lançamento</h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3 border-bottom">
-        <label class="form-label m-0">Baixar:
+        <label class="form-label m-0">Exportar:
             <a href="{{ route('relatorio-carteira.anual-por-tipo.pdf', ['ano' => $ano, 'tipo' => $tipo, 'descricao' => $descricaoId]) }}" 
                 class="btn btn-danger btn-sm" target="_blank">
                 <i class="bi bi-file-earmark-pdf"></i> PDF

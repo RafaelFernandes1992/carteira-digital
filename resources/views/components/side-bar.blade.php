@@ -70,13 +70,6 @@
                 </a>
             </li>
 
-            <!-- <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('usuario.perfil') }}">
-                    <i class="bi bi-person"></i> 
-                    <span>Meu Perfil</span>  
-                </a>
-            </li> -->
-
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
@@ -99,16 +92,5 @@
 
         </ul>
     </div>
-    <!-- <form action="{{ route('usuario.logout') }}" method="POST">
-        <div class="d-flex justify-content-center py-3">
-            <button type="submit" class="btn btn-secondary"> 
-                <i class="bi bi-power"></i> 
-                <span>Sair</span>
-            </button>
-        </div>
-    </form> -->
-
-
-
 
 </div>
