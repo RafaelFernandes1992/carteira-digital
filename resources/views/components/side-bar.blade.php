@@ -6,6 +6,22 @@
             Carteira Digital
         </h3>
 
+        <div class="dropdown d-flex justify-content-center py-3">
+            <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                Olá, {{ Auth::user()->nome }}
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="userMenuLink">
+                <li><a class="dropdown-item" href="{{ route('usuario.perfil') }}"><i class="bi bi-person"></i> Meu Perfil</a></li>
+                <li>
+                    <form action="{{ route('usuario.logout') }}" method="POST" class="m-0 px-3">
+                        @csrf
+                        <button type="submit" class="dropdown-item btn btn-link p-0"><i class="bi bi-box-arrow-right"></i> Sair</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
         <ul class="nav flex-column">
 
             <li class="nav-item">
@@ -54,12 +70,12 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('usuario.index') }}">
+            <!-- <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('usuario.perfil') }}">
                     <i class="bi bi-person"></i> 
-                    <span>Usuários</span>  
+                    <span>Meu Perfil</span>  
                 </a>
-            </li>
+            </li> -->
 
         </ul>
 
@@ -83,13 +99,16 @@
 
         </ul>
     </div>
-    <form action="{{ route('usuario.logout') }}" method="POST">
+    <!-- <form action="{{ route('usuario.logout') }}" method="POST">
         <div class="d-flex justify-content-center py-3">
             <button type="submit" class="btn btn-secondary"> 
                 <i class="bi bi-power"></i> 
                 <span>Sair</span>
             </button>
         </div>
-    </form>
+    </form> -->
+
+
+
 
 </div>

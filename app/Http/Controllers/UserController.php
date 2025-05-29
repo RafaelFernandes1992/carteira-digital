@@ -49,54 +49,36 @@ class UserController extends Controller
         }
     }
 
-    public function show(int $id) : JsonResponse
+
+
+    public function edit()
     {
-        try {
-            $user = User::find($id);
-            $message = $user ? 'Registros encontrados' : 'Nenhum registro encontrado';
-
-            return response()->json([
-                'message' => $message,
-                'data' => $user ?? []
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
-        }
+        $user = Auth::user();
+        return view('users.edit', compact('user'));
     }
 
-    public function edit(){
-
-    }
-
-    public function update(UpdateUserRequest $request, int $id): JsonResponse
+    public function update(UpdateUserRequest $request)
     {
         try {
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
             $dados = $request->validated();
-            User::find($id)->update($dados);
 
-            $entityUpdated = User::findOrFail($id);
+            // Se informou nova senha, atualiza
+            if (!empty($dados['password'])) {
+                $dados['password'] = bcrypt($dados['password']);
+            } else {
+                unset($dados['password']); // Não atualiza senha se não foi informada
+            }
 
-            return response()->json([
-                'message' => 'Usuário atualizado com sucesso!',
-                'data' => $entityUpdated
-            ]);
+            $user->update($dados);
 
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'message' => 'Recurso não encontrado',
-                'data' => null
-            ], 404);
+            return back()->with('message', 'Dados atualizados com sucesso!');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'data' => null
-            ], 500);
+            return back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
 
     public function destroy(DestroyUser $request)
     {

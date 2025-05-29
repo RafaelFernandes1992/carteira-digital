@@ -70,21 +70,26 @@ Route::get('/esqueci-senha/{token}', [PasswordController::class, 'showResetForm'
 
 Route::get('/cadastro', [UserController::class, 'create'])
     ->name('users.create');
+
 Route::post('/cadastro', [UserController::class, 'store'])
     ->name('users.store');
-
 
 Route::get('usuario', [UserController::class, 'index'])
     ->middleware('auth')
     ->name('usuario.index');
 
-Route::get('usuario/create', [UserController::class, 'create'])
-    ->middleware('auth')
-    ->name('usuario.create');
-
 Route::delete('usuario/{userId}', [UserController::class, 'destroy'])
     ->middleware('auth')
     ->name('usuario.destroy');
+
+Route::get('/usuario/perfil', [UserController::class, 'edit'])
+    ->middleware('auth')
+    ->name('usuario.perfil');
+
+Route::put('/usuario/perfil', [UserController::class, 'update'])
+    ->middleware('auth')
+    ->name('usuario.perfil.update');
+
 
 
 /*******************************************************************/
@@ -115,7 +120,6 @@ Route::delete('competencia-carteira/{competenciaId}', [PeriodController::class, 
 
 //Extra -- esse aqui serve para retornar os totalizadores da soma de receita, despesa, investimento da tela
 //retorna um array
-//Lançamentos da Competência da Carteira
 
 Route::get('/competencia-carteira/detalhes/{id}', [PeriodService::class, 'getDetalhesCompetenciaById'])
     ->middleware('auth');
@@ -302,7 +306,6 @@ Route::get('/dashboard/competencia', [DashboardController::class, 'totalizarPorC
     ->middleware('auth');
 Route::get('/dashboard/cards', [DashboardController::class, 'quantitativosCards'])
     ->middleware('auth');
-
 
 Route::get('alerta-notificacao', [AlertController::class, 'alertasDespesas'])
     ->middleware('auth')

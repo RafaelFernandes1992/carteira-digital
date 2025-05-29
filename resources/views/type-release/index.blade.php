@@ -76,8 +76,18 @@
         </table>
     </div>
 
-    <div class="mt-3 d-flex justify-content-end">
-        {{ $itens->appends(['search' => $search])->links() }}
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+        {{-- Informação de registros --}}
+        <div class="text-muted pt-0 pb-4">
+            Mostrando de {{ $itens->firstItem() ?? 0 }} até {{ $itens->lastItem() ?? 0 }} de {{ $itens->total() }} registros
+        </div>
+
+        {{-- Navegação da paginação --}}
+        <div>
+            {{ $itens->appends(['search' => $search])->links() }}
+        </div>
+
     </div>
 
 

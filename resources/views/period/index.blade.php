@@ -88,8 +88,19 @@
         </table>
     </div>
 
-    <div class="mt-3 d-flex justify-content-end">
-        {{ $periods->appends(['search' => $search])->links() }}
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+        {{-- Informação de registros --}}
+        <div class="text-muted pt-0 pb-4">
+            Mostrando de {{ $periods->firstItem() ?? 0 }} até {{ $periods->lastItem() ?? 0 }} de {{ $periods->total() }} registros
+        </div>
+
+        {{-- Navegação da paginação --}}
+        <div>
+            {{ $periods->appends(['search' => $search])->links() }}
+        </div>
+
     </div>
 
 @endsection
