@@ -2,10 +2,10 @@
     'items' => [], 
     'totalGeral'
 ])
-
+<div class="p-3 bg-light border rounded">
 <div class="table-responsive small">
-    <table class="table table-striped table-sm">
-        <thead>
+    <table class="table table-sm">
+        <thead class="table-light">
             <tr>
                 <th>Totalizador por Carro</th>
                 <th>Valor</th>
@@ -34,4 +34,5 @@
         @endif
         </tbody>
     </table>
+</div>
 </div>
