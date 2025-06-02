@@ -52,14 +52,6 @@ class CreditCardController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(CreditCard $creditCards)
-    {
-        //
-    }
-
     public function edit(EditCreditCardRequest $request)
     {
         try {

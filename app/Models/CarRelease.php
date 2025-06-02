@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CarRelease extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'data_despesa',
@@ -30,8 +30,8 @@ class CarRelease extends Model
         return $this->belongsTo(Car::class);
     }
 
-    public function periodRelease(): BelongsTo
+    public function period(): BelongsTo
     {
-        return $this->belongsTo(PeriodRelease::class);
+        return $this->belongsTo(Period::class);
     }
 }

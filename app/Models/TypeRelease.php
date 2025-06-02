@@ -21,12 +21,13 @@ class TypeRelease extends Model
         'user_id'
     ];
 
-    //um type-release pertence a um usuário
+    // Um TypeRelease pertence a um User
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    // Um TypeRelease possui muitos PeriodReleases
     public function periodReleases(): HasMany
     {
         return $this->hasMany(PeriodRelease::class);

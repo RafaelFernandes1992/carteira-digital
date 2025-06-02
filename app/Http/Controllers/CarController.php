@@ -53,11 +53,6 @@ class CarController extends Controller
         }
     }
 
-    public function show(Car $car)
-    {
-        //
-    }
-
     public function edit(EditCarRequest $request)
     {
         try {
