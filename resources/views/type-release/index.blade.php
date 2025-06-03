@@ -37,7 +37,7 @@
                 <th scope="col" style="text-align: begin;">Tipo</th>
                 <th scope="col" style="text-align: begin;">Descrição</th>
                 <th scope="col" style="text-align: begin;">Rotineiro</th>
-                <th scope="col" style="text-align: begin;">Isento</th>
+                <th scope="col" style="text-align: begin;">Isenta</th>
                 <th scope="col" style="text-align: begin;">Dedutível</th>
                 <th scope="col" style="text-align: begin;">Data do Registro</th>
                 <th scope="col" style="text-align: center;">Ações</th>
@@ -50,8 +50,20 @@
                     <td style="text-align: begin; vertical-align: middle;">{{ $item['tipo'] }}</td>
                     <td style="text-align: begin; vertical-align: middle;">{{ $item['descricao'] }}</td>
                     <td style="text-align: begin; vertical-align: middle;">{{ $item['rotineira'] }}</td>
-                    <td style="text-align: begin; vertical-align: middle;">{{ $item['isenta'] }}</td>
-                    <td style="text-align: begin; vertical-align: middle;">{{ $item['dedutivel'] }}</td>
+                    <td style="text-align: begin; vertical-align: middle;">
+                        @if($item['tipo'] === 'Despesa' || $item['tipo'] === 'Investimento')
+                            ---
+                        @else
+                            {{ $item['isenta'] }}
+                        @endif
+                    </td>
+                    <td style="text-align: begin; vertical-align: middle;">
+                        @if($item['tipo'] === 'Receita')
+                            ---
+                        @else
+                            {{ $item['dedutivel'] }}
+                        @endif
+                    </td>
                     <td style="text-align: begin; vertical-align: middle;">{{ $item['created_at'] }}</td>
                     <td style="text-align: center; vertical-align: middle;">
                         <div class="d-flex justify-content-center gap-2">

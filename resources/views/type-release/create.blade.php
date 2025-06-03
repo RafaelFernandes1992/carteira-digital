@@ -37,8 +37,8 @@
         </select>
     </div>
 
-    <div class="col-md-2">
-        <label for="isenta" class="form-label">Isento</label>
+    <div class="col-md-2" id="div-isenta">
+        <label for="isenta" class="form-label">Isenta</label>
         <select class="form-select" aria-label="Default select example" id="isenta" name="isenta">
             <option selected value ="" >Selecione...</option>
             <option value="1">Sim</option>
@@ -46,7 +46,7 @@
         </select>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-2" id="div-dedutivel">
         <label for="dedutivel" class="form-label">Dedutível</label>
         <select class="form-select" aria-label="Default select example" id="dedutivel" name="dedutivel">
             <option selected value ="" >Selecione...</option>
@@ -62,3 +62,38 @@
 </form>
 
 @endsection
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tipoSelect = document.getElementById('tipo');
+        const divDedutivel = document.getElementById('div-dedutivel');
+        const divIsenta = document.getElementById('div-isenta');
+
+        console.log('Script carregado'); // teste se o script está rodando
+
+        function verificarTipo() {
+            const tipo = tipoSelect.value;
+            console.log('Tipo selecionado:', tipo); // debug para ver o valor selecionado
+
+            if (tipo === 'receita') {
+                divDedutivel.style.display = 'none';
+                divIsenta.style.display = 'block';
+                    // Força dedutivel a 0 para evitar null no envio
+                    document.getElementById('dedutivel').value = "0";
+            } else if (tipo === 'despesa' || tipo === 'investimento') {
+                divDedutivel.style.display = 'block';
+                divIsenta.style.display = 'none';
+                    // Força dedutivel a 0 para evitar null no envio
+                    document.getElementById('isenta').value = "0";
+            } else {
+                divDedutivel.style.display = 'block';
+                divIsenta.style.display = 'block';
+            }
+        }
+
+        tipoSelect.addEventListener('change', verificarTipo);
+
+        verificarTipo();
+    });
+</script>

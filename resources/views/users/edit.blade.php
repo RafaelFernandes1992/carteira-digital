@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4><i class="bi bi-person"></i> Editar Perfil</h4>
+    <h4><i class="bi bi-person"></i> Meu Perfil</h4>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3 mb-3">
         <a class="btn btn-secondary" href="{{ route('inicio') }}">

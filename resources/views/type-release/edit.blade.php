@@ -34,7 +34,7 @@
             </select>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2" id="div-isenta">
             <label for="isenta" class="form-label">Isento</label>
             <select class="form-select" aria-label="Default select example" id="isenta" name="isenta">
                 <option {{$isenta === 1 ? 'selected' : ''}} value="1">Sim</option>
@@ -42,7 +42,7 @@
             </select>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2" id="div-dedutivel">
             <label for="dedutivel" class="form-label">Dedutível</label>
             <select class="form-select" aria-label="Default select example" id="dedutivel" name="dedutivel">
                 <option {{$dedutivel === 1 ? 'selected' : ''}} value="1">Sim</option>
@@ -55,3 +55,32 @@
         </div>
     </form>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tipoSelect = document.getElementById('tipo');
+        const divDedutivel = document.getElementById('div-dedutivel');
+        const divIsenta = document.getElementById('div-isenta');
+
+        function verificarTipo() {
+            const tipo = tipoSelect.value;
+
+            if (tipo === 'receita') {
+                divDedutivel.style.display = 'none';
+                divIsenta.style.display = 'block';
+                document.getElementById('dedutivel').value = "0";
+            } else if (tipo === 'despesa' || tipo === 'investimento') {
+                divDedutivel.style.display = 'block';
+                divIsenta.style.display = 'none';
+                document.getElementById('isenta').value = "0";
+            } else {
+                divDedutivel.style.display = 'block';
+                divIsenta.style.display = 'block';
+            }
+        }
+
+        tipoSelect.addEventListener('change', verificarTipo);
+
+        verificarTipo(); // chama ao carregar para ajustar visibilidade
+    });
+</script>
