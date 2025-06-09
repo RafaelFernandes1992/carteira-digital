@@ -20,41 +20,45 @@ class WalletReportController extends Controller
 
     public function index(Request $request)
     {
-        
         $user = auth()->user();
 
-        // Buscar todas as competências do usuário
+        // Buscar todas as competências do usuário ordenadas por ano/mes (mais recentes primeiro)
         $competencias = Period::where('user_id', $user->id)
-            ->orderBy('ano', 'desc')
-            ->orderBy('mes', 'desc')
+            ->orderByDesc('ano')
+            ->orderByDesc('mes')
             ->get();
 
-        $competenciasSelect = $competencias->mapWithKeys(function ($period) {
-            return [$period->id => $period->getNomeCompetencia()];
-        });
+        // Criar lista de opções para select (id => "nome da competência")
+        $competenciasSelect = $competencias->mapWithKeys(fn($period) => [
+            $period->id => $period->getNomeCompetencia()
+        ]);
 
-
-        $now = Carbon::now();
-
-        // Buscar competência atual (mês/ano igual ao atual)
-        $competenciaAtual = Period::where('ano', $now->year)
-            ->where('mes', $now->month)
-            ->first();
-
-        $competenciaSelecionada = $request->input('competencia_id')
-            ?? ($competenciaAtual ? $competenciaAtual->id : ($competencias->first()['id'] ?? null));
-
-        if (!$competenciaSelecionada) {
+        // Se não houver nenhuma competência, retornar com erro
+        if ($competencias->isEmpty()) {
             return back()->with('error', 'Nenhuma competência encontrada.');
         }
 
-        // Dados da competência selecionada
-        $period = Period::findOrFail($competenciaSelecionada);
+        // Pega ID da competência selecionada (vinda da requisição ou define a atual automaticamente)
+        $competenciaSelecionada = $request->input('competencia_id');
 
-        // Lançamentos da competência
-        $items = PeriodRelease::where('period_id', $competenciaSelecionada)
+        if (!$competenciaSelecionada) {
+            // Define como padrão a competência do mês atual, se existir
+            $now = now(); // mesmo que Carbon::now()
+            $competenciaAtual = $competencias->firstWhere(fn($p) => $p->ano == $now->year && $p->mes == $now->month);
+
+            $competenciaSelecionada = $competenciaAtual?->id ?? $competencias->first()->id;
+        }
+
+        // Verifica se a competência pertence ao usuário
+        $period = $competencias->firstWhere('id', $competenciaSelecionada);
+        if (!$period) {
+            abort(403, 'Recurso não pertence ao usuário autenticado');
+        }
+
+        // Carrega os lançamentos dessa competência
+        $items = PeriodRelease::where('period_id', $period->id)
             ->with('typeRelease:id,tipo,descricao')
-            ->orderBy('created_at', 'desc')
+            ->orderByDesc('created_at')
             ->get()
             ->map(function (PeriodRelease $item) {
                 return [
@@ -62,7 +66,7 @@ class WalletReportController extends Controller
                     'valor_total' => number_format($item->valor_total, 2, ',', '.'),
                     'observacao' => $item->observacao,
                     'situacao' => $item->getSituacaoFormatada(),
-                    'data_debito_credito' => Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
+                    'data_debito_credito' => optional(Carbon::parse($item->data_debito_credito))->format('d/m/Y'),
                     'type_release' => $item->typeRelease ? [
                         'id' => $item->typeRelease->id,
                         'tipo' => ucfirst($item->typeRelease->tipo),
@@ -71,11 +75,12 @@ class WalletReportController extends Controller
                 ];
             });
 
-        $detalhes = $this->periodService->getDetalhesCompetenciaById($competenciaSelecionada);
+        // Buscar dados agregados da competência
+        $detalhes = $this->periodService->getDetalhesCompetenciaById($period->id);
 
         return view('wallet-report.index', [
             'competencias' => $competenciasSelect,
-            'competenciaSelecionada' => $competenciaSelecionada,
+            'competenciaSelecionada' => $period->id,
             'items' => $items,
             'nomeCompetencia' => $period->getNomeCompetencia(),
             'detalhes' => $detalhes,
@@ -84,34 +89,41 @@ class WalletReportController extends Controller
 
     public function downloadPdf(Request $request)
     {
-        
         $user = auth()->user();
 
-        // Buscar competências
+        // Buscar todas as competências do usuário
         $competencias = Period::where('user_id', $user->id)
-            ->orderBy('ano', 'desc')
-            ->orderBy('mes', 'desc')
+            ->orderByDesc('ano')
+            ->orderByDesc('mes')
             ->get();
 
-        $now = Carbon::now();
-
-        $competenciaAtual = Period::where('ano', $now->year)
-            ->where('mes', $now->month)
-            ->first();
-
-        $competenciaSelecionada = $request->input('competencia_id')
-            ?? ($competenciaAtual ? $competenciaAtual->id : ($competencias->first()->id ?? null));
-
-        
-        if (!$competenciaSelecionada) {
+        // Verifica se o usuário tem competências
+        if ($competencias->isEmpty()) {
             return back()->with('error', 'Nenhuma competência encontrada.');
         }
 
-        $period = Period::findOrFail($competenciaSelecionada);
+        // Tenta obter o ID da competência selecionada
+        $competenciaSelecionada = $request->input('competencia_id');
 
-        $items = PeriodRelease::where('period_id', $competenciaSelecionada)
+        if (!$competenciaSelecionada) {
+            $now = now();
+
+            // Tenta encontrar a competência atual (ano/mes) entre as do usuário
+            $competenciaAtual = $competencias->firstWhere(fn($p) => $p->ano == $now->year && $p->mes == $now->month);
+            $competenciaSelecionada = $competenciaAtual?->id ?? $competencias->first()->id;
+        }
+
+        // Garante que a competência pertence ao usuário autenticado
+        $period = $competencias->firstWhere('id', $competenciaSelecionada);
+
+        if (!$period) {
+            abort(403, 'Recurso não pertence ao usuário autenticado');
+        }
+
+        // Busca lançamentos da competência
+        $items = PeriodRelease::where('period_id', $period->id)
             ->with('typeRelease:id,tipo,descricao')
-            ->orderBy('created_at', 'desc')
+            ->orderByDesc('created_at')
             ->get()
             ->map(function (PeriodRelease $item) {
                 return [
@@ -119,7 +131,7 @@ class WalletReportController extends Controller
                     'valor_total' => number_format($item->valor_total, 2, ',', '.'),
                     'observacao' => $item->observacao,
                     'situacao' => $item->getSituacaoFormatada(),
-                    'data_debito_credito' => Carbon::parse($item->data_debito_credito)->format('d/m/Y'),
+                    'data_debito_credito' => optional(Carbon::parse($item->data_debito_credito))->format('d/m/Y'),
                     'type_release' => $item->typeRelease ? [
                         'id' => $item->typeRelease->id,
                         'tipo' => ucfirst($item->typeRelease->tipo),
@@ -128,22 +140,26 @@ class WalletReportController extends Controller
                 ];
             });
 
+        // Nome do arquivo e nome da competência
         $nomeCompetencia = Carbon::createFromDate($period->ano, $period->mes, 1)->format('m-Y');
         $nomeArquivo = "relatorio_carteira_{$nomeCompetencia}.pdf";
-        $detalhes = $this->periodService->getDetalhesCompetenciaById($competenciaSelecionada);
 
+        // Busca os detalhes agregados
+        $detalhes = $this->periodService->getDetalhesCompetenciaById($period->id);
 
+        // Monta os dados para a view
         $dados = [
             'items' => $items,
             'nomeCompetencia' => $nomeCompetencia,
-            'competenciaSelecionada' => $competenciaSelecionada,
+            'competenciaSelecionada' => $period->id,
             'detalhes' => $detalhes,
         ];
 
+        // Gera e retorna o PDF
         $pdf = PDF::loadView('wallet-report.pdf', $dados);
-
         return $pdf->download($nomeArquivo);
     }
+
 
     public function reportByType(Request $request)
     {

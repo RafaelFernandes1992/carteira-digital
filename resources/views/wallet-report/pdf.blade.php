@@ -40,7 +40,11 @@
             </thead>
             <tbody>
                 @foreach($items as $item)
-                    <tr>
+                    <tr
+                        @if ($item['situacao'] === 'Não Debitado')
+                            style="background-color: #fff3cd;"
+                        @endif
+                    >
                         <td>{{ $item['type_release']['tipo'] ?? '-' }}</td>
                         <td>{{ $item['type_release']['descricao'] ?? '-' }}</td>
                         <td>R$ {{ $item['valor_total'] }}</td>
@@ -97,6 +101,24 @@
                     <td colspan="2" class="text-start"> (=) Saldo Final</td>
                     <td colspan="3" class="text-start fw-bold">
                         R$ {{ $detalhes['saldo_final'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-start">(-) Despesas não debitadas</td>
+                    <td colspan="3" class="text-start fw-bold">
+                        R$ {{ $detalhes['total_despesas_nao_debitadas'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-start">(-) Investimentos não debitados</td>
+                    <td colspan="3" class="text-start fw-bold">
+                        R$ {{ $detalhes['total_investimentos_nao_debitados'] }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"class="text-start" >(=) Saldo Final Previsto</td>
+                    <td colspan="3" class="text-start fw-bold">
+                        R$ {{ $detalhes['saldo_final_previsto'] }}
                     </td>
                 </tr>
             </tfoot>

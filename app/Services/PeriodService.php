@@ -33,9 +33,24 @@ class PeriodService
                 $query->where('tipo', 'investimento');
             })
             ->sum('valor_total');
+
+        $somaInvestimentosNaoDebitados = PeriodRelease::where('period_id', $id)
+            ->where('situacao', 'nao_debitado')
+            ->whereHas('typeRelease', function ($query) {
+                $query->where('tipo', 'investimento');
+            })
+            ->sum('valor_total');
         
         $somaDespesas = PeriodRelease::where('period_id', $id)
             ->where('situacao', 'debitado')
+            ->whereHas('typeRelease', function ($query) {
+                $query->where('tipo', 'despesa');
+            })
+            ->sum('valor_total');
+
+
+        $somaDespesasNaoDebitadas = PeriodRelease::where('period_id', $id)
+            ->where('situacao', 'nao_debitado')
             ->whereHas('typeRelease', function ($query) {
                 $query->where('tipo', 'despesa');
             })
@@ -73,6 +88,8 @@ class PeriodService
 
         $saldo_final =  $saldoInicial + $somaReceitas - $somaInvestimentos - $total_despesas;
 
+        $saldo_final_previsto = $saldo_final - $somaDespesasNaoDebitadas - $somaInvestimentosNaoDebitados;
+
         return [
             'saldo_inicial' => number_format((float)$period->saldo_inicial,2, ',', '.'),
             'total_investimentos' => number_format((float)$somaInvestimentos,2, ',', '.'),
@@ -82,6 +99,9 @@ class PeriodService
             'total_despesas_cartao_credito' => number_format((float)$somaLancamentosCartaoCredito, 2, ',', '.'),
             'total_despesas' => number_format((float)$total_despesas, 2, ',', '.'),
             'saldo_final' => number_format((float)$saldo_final, 2, ',', '.'),
+            'total_despesas_nao_debitadas' => number_format((float)$somaDespesasNaoDebitadas, 2, ',', '.'),
+            'total_investimentos_nao_debitados' => number_format((float)$somaInvestimentosNaoDebitados, 2, ',', '.'),
+            'saldo_final_previsto' => number_format((float)$saldo_final_previsto, 2, ',', '.'),
         ]; 
     }
 
