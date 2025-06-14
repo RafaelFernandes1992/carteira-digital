@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\PeriodService;
+use Illuminate\Support\Str;
 
 class WalletReportController extends Controller
 {
@@ -142,7 +143,15 @@ class WalletReportController extends Controller
 
         // Nome do arquivo e nome da competência
         $nomeCompetencia = Carbon::createFromDate($period->ano, $period->mes, 1)->format('m-Y');
-        $nomeArquivo = "relatorio_carteira_{$nomeCompetencia}.pdf";
+        $dataHoraAtual = Carbon::now()->format('Y-m-d_H-i-s');
+
+        // Pega o nome do usuário logado e transforma em um formato seguro para nome de arquivo
+        $nomeUsuario = Str::ascii($user->nome);
+        $nomeUsuario = str_replace(' ', '_', $nomeUsuario);
+        $nomeUsuario = preg_replace('/[^A-Za-z0-9_\-]/', '', $nomeUsuario);
+
+
+        $nomeArquivo = "relatorio_carteira_{$nomeUsuario}_{$nomeCompetencia}_emissao_{$dataHoraAtual}.pdf";
 
         // Busca os detalhes agregados
         $detalhes = $this->periodService->getDetalhesCompetenciaById($period->id);

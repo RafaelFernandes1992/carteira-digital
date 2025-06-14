@@ -52,7 +52,7 @@
                 @endforeach
                 <tr>
                     <td>Despesa</td>
-                    <td>Lançamentos Carro</td>
+                    <td>Lançamentos do Carro</td>
                     <td>R$ {{ $detalhes['total_despesas_carro'] }}</td>
                     <td>Debitado</td>
                     <td>-</td>
