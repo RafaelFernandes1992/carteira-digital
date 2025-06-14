@@ -69,7 +69,7 @@ class CarReleaseController extends Controller
         $items = $items->map(function (CarRelease $item) {
             return [
                 'id' => $item->id,
-                'data_despesa' => Helper::formatDate($item->data_pagamento_fatura),
+                'data_despesa' => Helper::formatDate($item->data_despesa),
                 'descricao' => $item->descricao,
                 'valor' => Helper::formatToCurrency($item->valor),
                 'nome_carro' => $item->car->getNome(),
